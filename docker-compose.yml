@@ -1,0 +1,17 @@
+
+version: "3"
+services:
+  backend:
+    build:
+      context: ./be
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./be:/usr/src/app/be
+  frontend:
+    build:
+      context: ./fe
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./fe:/usr/src/app/fe
