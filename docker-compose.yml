@@ -14,4 +14,4 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./fe:/usr/src/app/fe
+      - ./fe:/usr/src/app
