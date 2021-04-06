@@ -1,11 +1,12 @@
 import React from "react";
+import HomeCarousel from "../components/HomeCarousel";
 import TopBar from "../components/TopBar";
 
 export default function HomePage() {
   return (
     <div>
       <TopBar></TopBar>
-      <p> bananans </p>
+      <HomeCarousel></HomeCarousel>
     </div>
   );
 }
