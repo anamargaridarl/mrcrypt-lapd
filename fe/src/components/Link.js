@@ -1,22 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+
+//@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
 
+//@stylying
 import { purple } from "../styles/colors";
 
-const useStyles = makeStyles((theme) => ({
-  //   text: {
-  //     "&:hover": {
-  //       fontWeight: "bold",
-  //     },
-  //   },
-}));
+const useStyles = makeStyles({
+  text: {
+    padding: 0,
+    color: (props) => props.textColor,
+    fontWeight: (props) => props.fontWeight,
+    "&:hover": {
+      fontWeight: "bold",
+    },
+  },
+});
 
 export default function Link({ url, name, tColor }) {
-  const classes = useStyles();
   const history = useHistory();
   const [textColor, setTextColor] = useState(tColor);
   const [fontWeight, setFontWeight] = useState("normal");
+  let props = {
+    fontWeight: fontWeight,
+    textColor: textColor,
+  };
+  const { text } = useStyles(props);
 
   useEffect(() => {
     getColor();
@@ -37,14 +47,12 @@ export default function Link({ url, name, tColor }) {
 
   return (
     <div
-      className={classes.text}
       onClick={() => {
-        history.push("/");
+        if (name.toLowerCase() == "mrcrypt") history.push("/");
+        else history.push("/" + name.toLowerCase());
       }}
     >
-      <p style={{ color: textColor, fontWeight: fontWeight, padding: 0 }}>
-        {name}
-      </p>
+      <p className={text}>{name}</p>
     </div>
   );
 }

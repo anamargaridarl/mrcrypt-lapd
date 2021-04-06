@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+//@core-material-ui
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+
+//@components
 import Link from "./Link";
+import LogoTitle from "./LogoTitle";
 
+//@stylying
 import { makeStyles } from "@material-ui/core/styles";
-
 import { purple, white, black } from "../styles/colors";
 
 const useStyles = makeStyles((theme) => ({
@@ -33,7 +37,7 @@ export default function TopBar() {
         <Grid item xs={12} sm={6} md={6} lg={6}>
           <Grid container>
             <Paper square className={classes.logo} elevation={0}>
-              <Link tColor={white} name={"MRCRYPT"} />
+              <LogoTitle tColor={white} name={"MRCRYPT"} />
             </Paper>
           </Grid>
         </Grid>
