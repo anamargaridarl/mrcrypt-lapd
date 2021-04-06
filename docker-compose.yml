@@ -7,7 +7,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./be:/usr/src/app/be
+      - ./be:/usr/src/app
   frontend:
     build:
       context: ./fe

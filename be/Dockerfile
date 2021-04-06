@@ -9,10 +9,7 @@ COPY package.json package-lock.json ./
 RUN npm install
 
 # Copying app source
-COPY src/ src/
-
-# Copying .env files
-COPY .env* ./
+COPY . ./
 
 CMD ["npm", "start"]
 
