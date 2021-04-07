@@ -7,7 +7,7 @@ import Grid from "@material-ui/core/Grid";
 import Link from "./Link";
 import LogoTitle from "./LogoTitle";
 
-//@stylying
+//@styling
 import { makeStyles } from "@material-ui/core/styles";
 import { purple, white, black } from "../styles/colors";
 
