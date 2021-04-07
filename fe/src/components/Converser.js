@@ -1,13 +1,13 @@
 import React from 'react';
 //@core-material-ui
-import { Card, Grid, MenuItem, makeStyles, TextField } from '@material-ui/core';
+import { Card, Grid, MenuItem, makeStyles, TextField, Button } from '@material-ui/core';
 //@components
-import Link from './Link'
+import ConversationRatio from './ConversionRatio'
 //@styling
-import {gray, black, dark_gray, white} from '../styles/colors'
+import {gray, dark_gray, white, purple} from '../styles/colors'
 import {font_family, header_font_size} from '../styles/fonts'
 
-const useStyles = makeStyles((theme) =>({
+const useStyles = makeStyles((_) =>({
   card_holder: {
     backgroundColor: gray,
     marginLeft: '4em',
@@ -37,6 +37,19 @@ const useStyles = makeStyles((theme) =>({
     "& .MuiInputBase-input": {
       backgroundColor: white,
     }
+  },
+  button: {
+    backgroundColor: purple,
+    color: white,
+    margin: '3em',
+    padding: '2em',
+    fontWeight: 'bold',
+    fontSize: header_font_size,
+    borderRadius: '0px',
+    '&:hover': {
+      backgroundColor: purple,
+      boxShadow: 'none',
+    },
   }
 }));
 
@@ -63,10 +76,33 @@ const currencies = [
 export default function Converser() {
   const classes = useStyles();
 
-  const [currency, setCurrency] = React.useState('BTC');
+  let [nameFrom, setCurrencyFrom] = React.useState('BTC');
+  let [nameTo, setCurrencyTo] = React.useState('ETC');
+  let [valueFrom, setValueFrom] = React.useState(0);
+  let [valueTo, setValueTo] = React.useState(0);
 
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
+  const handleDropFrom = (event) => {
+    setCurrencyFrom(event.target.value);
+    nameFrom = event.target.value;
+  };
+
+  const handleDropTo = (event) => {
+    setCurrencyTo(event.target.value);
+    nameTo = event.target.value;
+  };
+
+  const handleValueFrom = (event) => {
+    if(parseInt(event.target.value) < 0) 
+      event.target.value = parseInt(event.target.value) + 1
+    setValueFrom(event.target.value)
+    valueFrom = event.target.value;
+  };
+
+  const handleValueTo = (event) => {
+    if(parseInt(event.target.value) < 0) 
+      event.target.value = parseInt(event.target.value) + 1
+    setValueTo(event.target.value)
+    valueTo = event.target.value;
   };
 
   return (
@@ -89,8 +125,10 @@ export default function Converser() {
               id="convert-from"
               type="number" 
               InputLabelProps={{ shrink: true }}
-              placeholder="0" 
-              variant="outlined">
+              defaultValue="0"
+              onChange={handleValueFrom}
+              variant="outlined"
+              >
             </TextField>
           </Grid>
         </Grid>
@@ -101,8 +139,10 @@ export default function Converser() {
               id="convert-to"
               type="number" 
               InputLabelProps={{ shrink: true }}
-              placeholder="0" 
-              variant="outlined">
+              defaultValue="0"
+              onChange={handleValueTo}
+              variant="outlined"
+              >
             </TextField>
           </Grid>
         </Grid>
@@ -113,8 +153,8 @@ export default function Converser() {
               id="drop-from"
               select
               label="Currency"
-              value={currency}
-              onChange={handleChange}
+              value={nameFrom}
+              onChange={handleDropFrom}
               helperText="Please select your currency"
               variant="outlined"
               >
@@ -133,8 +173,8 @@ export default function Converser() {
               id="drop-to"
               select
               label="Currency"
-              value={currency}
-              onChange={handleChange}
+              value={nameTo}
+              onChange={handleDropTo}
               helperText="Please select your currency"
               variant="outlined"
               >
@@ -147,10 +187,14 @@ export default function Converser() {
           </Grid>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <Link tColor={black} name={"CurrentRatio"} />
+          <ConversationRatio valueFrom={valueFrom} valueTo={valueTo} nameFrom={nameFrom} nameTo={nameTo}/>
         </Grid>
-        <Grid item sx={12} sm={12} md={12} lg={12}> 
-          <Link tColor={black} name={"ConvertButton"} />
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <Grid className={classes.input} container justify="center">
+            <Button className={classes.button} variant="contained">
+              Convert
+            </Button>
+          </Grid> 
         </Grid>
       </Grid>
     </Card>

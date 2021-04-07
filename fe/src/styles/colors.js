@@ -3,5 +3,7 @@ const white = "#ffffff"
 const black = "#000000"
 const gray = "#F5F5F5";
 const dark_gray = "#565656";
+const green = "#047817";
+const red = "#EB2E2E";
 
-export { purple, white, black, gray, dark_gray};
+export { purple, white, black, gray, dark_gray, green, red};
