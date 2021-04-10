@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import ConverserPage from "./pages/ConverserPage";
 import HomePage from "./pages/HomePage";
+import NewsPage from "./pages/NewsPage";
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
         </Route>
         <Route path="/converser" exact>
           <ConverserPage></ConverserPage>
+        </Route>
+        <Route path="/news" exact>
+          <NewsPage></NewsPage>
         </Route>
       </Switch>
     </main>
