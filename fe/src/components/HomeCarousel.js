@@ -1,18 +1,14 @@
 import Carousel from "react-multi-carousel";
 
 //@core-material-ui
-import { Paper } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-
-//@components
-import TinyChart from "./TinyChart";
-
-//@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
 
 //@stylying
 import "react-multi-carousel/lib/styles.css";
-import { grey, green, purple } from "../styles/colors";
+import { grey } from "../styles/colors";
+
+//@components
+import CarouselItem from "./CarouselItem";
 
 const responsive = {
   superLargeDesktop: {
@@ -41,69 +37,75 @@ const responsive = {
 const useStyles = makeStyles({
   background: {
     backgroundColor: grey,
-  },
-  paper: {
-    width: "13em",
-    margin: "2em 1em",
-    padding: "0.5em",
-    justifyContent: "center",
-  },
-  body: {
-    margin: "0 1em",
-  },
-  innerElement: {
-    width: "80%",
-  },
-  growthElement: {
-    color: green,
-  },
+  }
 });
 
+//fetch data from backend for the items
+
+const data = [
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: 163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: -163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  }
+]
 function Carousel2() {
   const { background } = useStyles();
 
   return (
     <div>
       <Carousel className={background} responsive={responsive}>
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
-        <Item />
+        {data.map((element) => {
+            return (<CarouselItem name={element.name} value={element.value} growth={element.growth}/>)
+          })       
+        }
       </Carousel>
     </div>
-  );
-}
-
-function Item() {
-  const { paper, innerElement, growthElement, body } = useStyles();
-
-  return (
-    <Paper className={paper}>
-      <Grid
-        className={body}
-        container
-        justify="flex-start"
-        alignItems="flex-start"
-      >
-        <p>ACTIVE CONTRIBUTERS</p>
-        <Grid container className={innerElement} justify="space-between">
-          <Grid item>
-            {" "}
-            <b>377.780 </b>
-          </Grid>
-          <Grid item className={growthElement}>
-            +163.50%
-          </Grid>
-        </Grid>
-        <TinyChart widthContainer={"80%"} heightContainer={70} strokeColor={purple}></TinyChart>
-      </Grid>
-    </Paper>
   );
 }
 

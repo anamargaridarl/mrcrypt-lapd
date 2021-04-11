@@ -34,7 +34,7 @@ export default function TopBar() {
   return (
     <div>
       <Grid className={classes.back} container justify="space-around">
-        <Grid item xs={12} sm={6} md={6} lg={6}>
+        <Grid item xs={12} sm={6} md={6} lg={5}>
           <Grid container>
             <Paper square className={classes.logo} elevation={0}>
               <LogoTitle tColor={white} name={"MRCRYPT"} />
@@ -50,7 +50,7 @@ export default function TopBar() {
         <Grid className={classes.spacing} item xs={12} sm={6} md={6} lg={1}>
           <Link tColor={black} name={"Converser"} />
         </Grid>
-        <Grid className={classes.spacing} item xs={12} sm={6} md={6} lg={1}>
+        <Grid className={classes.spacing} item xs={12} sm={6} md={6} lg={2}>
           <Link tColor={black} name={"Social Media Trends"} />
         </Grid>
       </Grid>

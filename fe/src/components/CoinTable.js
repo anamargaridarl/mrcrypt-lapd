@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 //@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,17 +11,196 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
+//@core-material-ui:icons
+import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+
 //@components
 import TinyChart from "./TinyChart";
 
 //@stylying
-import { lightGreen } from "../styles/colors";
+import { lightGreen, darkGrey, red, green } from "../styles/colors";
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
+  tableHead:{
+    "& .MuiTableCell-head": {
+    fontWeight: "bold",
+    color: darkGrey
+    }
+  }
 });
+
+
+//Example data TODO: fetch data from backend
+const data = [
+  {
+    id: 1,
+    coin: "Bitcoin",
+    imageUrl: "./assets/bitcoin.png",
+    price: "$55.232.56",
+    twentyfour: -0.24,
+    seven: -0.34,
+    cap: "$2.044.111.343",
+    volume: "$2.044.111.343",
+    volatility: 0.041,
+    data: [
+      {
+        name: "Page A",
+        pv: 2400,
+      },
+      {
+        name: "Page B",
+        pv: 1398,
+      },
+      {
+        name: "Page C",
+        pv: 9800,
+      },
+      {
+        name: "Page D",
+        pv: 3908,
+      },
+      {
+        name: "Page E",
+        pv: 4800,
+      },
+      {
+        name: "Page F",
+        pv: 3800,
+      },
+      {
+        name: "Page G",
+        pv: 4300,
+      },
+    ]
+  },
+  {
+    id: 2,
+    coin: "Bitcoin",
+    imageUrl: "./assets/bitcoin.png",
+    price: "$55.232.56",
+    twentyfour: -0.24,
+    seven: 0.34,
+    cap: "$2.044.111.343",
+    volume: "$2.044.111.343",
+    volatility: 0.041,
+    data: [
+      {
+        name: "Page A",
+        pv: 2400,
+      },
+      {
+        name: "Page B",
+        pv: 1398,
+      },
+      {
+        name: "Page C",
+        pv: 9800,
+      },
+      {
+        name: "Page D",
+        pv: 3908,
+      },
+      {
+        name: "Page E",
+        pv: 4800,
+      },
+      {
+        name: "Page F",
+        pv: 3800,
+      },
+      {
+        name: "Page G",
+        pv: 4300,
+      },
+    ]
+  },
+  {
+    id: 3,
+    coin: "Bitcoin",
+    imageUrl: "./assets/bitcoin.png",
+    price: "$55.232.56",
+    twentyfour: -0.54,
+    seven: 0.34,
+    cap: "$2.044.111.343",
+    volume: "$2.044.111.343",
+    volatility: 0.041,
+    data: [
+      {
+        name: "Page A",
+        pv: 2400,
+      },
+      {
+        name: "Page B",
+        pv: 1398,
+      },
+      {
+        name: "Page C",
+        pv: 9800,
+      },
+      {
+        name: "Page D",
+        pv: 3908,
+      },
+      {
+        name: "Page E",
+        pv: 4800,
+      },
+      {
+        name: "Page F",
+        pv: 3800,
+      },
+      {
+        name: "Page G",
+        pv: 4300,
+      },
+    ]
+},
+  {
+    id: 4,
+    coin: "Bitcoin",
+    imageUrl: "./assets/bitcoin.png",
+    price: "$55.232.56",
+    twentyfour: -0.24,
+    seven: 0.34,
+    cap: "$2.044.111.343",
+    volume: "$2.044.111.343",
+    volatility: 0.041,
+    data: [
+      {
+        name: "Page A",
+        pv: 2400,
+      },
+      {
+        name: "Page B",
+        pv: 1398,
+      },
+      {
+        name: "Page C",
+        pv: 9800,
+      },
+      {
+        name: "Page D",
+        pv: 3908,
+      },
+      {
+        name: "Page E",
+        pv: 4800,
+      },
+      {
+        name: "Page F",
+        pv: 3800,
+      },
+      {
+        name: "Page G",
+        pv: 4300,
+      },
+    ]
+  },
+]
 
 function createData(
   nb,
@@ -49,86 +228,49 @@ function createData(
   };
 }
 
-const imageCoin = (
-  <img alt="Coin" width={"25px"} src={"./assets/bitcoin.png"} />
-);
-
-const rows = [
-  createData(
-    1,
-    "Bitcoin",
-    imageCoin,
-    "$55.232.56",
-    -0.24,
-    -0.34,
-    "$2.044.111.343",
-    "$2.044.111.343",
-    0.041,
-    <TinyChart
-      widthContainer={"50%"}
-      heightContainer={60}
-      strokeColor={lightGreen}
-    ></TinyChart>
-  ),
-  createData(
-    2,
-    "Bitcoin",
-    imageCoin,
-    "$55.232.56",
-    -0.24,
-    -0.34,
-    "$2.044.111.343",
-    "$2.044.111.343",
-    0.041,
-    <TinyChart
-      widthContainer={"50%"}
-      heightContainer={60}
-      strokeColor={lightGreen}
-    ></TinyChart>
-  ),
-  createData(
-    3,
-    "Bitcoin",
-    imageCoin,
-    "$55.232.56",
-    -0.24,
-    -0.34,
-    "$2.044.111.343",
-    "$2.044.111.343",
-    0.041,
-    <TinyChart
-      widthContainer={"50%"}
-      heightContainer={60}
-      strokeColor={lightGreen}
-    ></TinyChart>
-  ),
-  createData(
-    4,
-    "Bitcoin",
-    imageCoin,
-    "$55.232.56",
-    -0.24,
-    -0.34,
-    "$2.044.111.343",
-    "$2.044.111.343",
-    0.041,
-    <TinyChart
-      widthContainer={"50%"}
-      heightContainer={60}
-      strokeColor={lightGreen}
-    ></TinyChart>
-  ),
-];
+const imageCoin = (url) => {
+  return (<img alt="Coin" width={"25px"} src={url} />)
+}
 
 export default function BasicTable() {
+
+  const [rows, setRows] = useState([])
+
+  const createRows = () => {
+
+    const rows = data.map((element) => {
+      return createData(
+        element.id,
+        element.coin,
+        imageCoin(element.imageUrl),
+        element.price,
+        element.twentyfour,
+        element.seven,
+        element.cap,
+        element.volume,
+        element.volatility,
+        <TinyChart
+          widthContainer={"50%"}
+          heightContainer={60}
+          strokeColor={lightGreen}
+          dataAux= {element.data}
+        ></TinyChart>
+      )
+    })
+    setRows(rows)
+  };
+
+  useEffect(() => {
+    createRows();
+  }, [])
   const classes = useStyles();
 
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>#</TableCell>
+        <TableHead  >
+          <TableRow className={classes.tableHead}>
+            <TableCell align="left" >#</TableCell>
             <TableCell align="left">Coin</TableCell>
             <TableCell align="left">Price</TableCell>
             <TableCell align="left">24H %</TableCell>
@@ -151,8 +293,8 @@ export default function BasicTable() {
                 </Grid>
               </TableCell>
               <TableCell align="left">{row.price}</TableCell>
-              <TableCell align="left">{row.twentyfour}</TableCell>
-              <TableCell align="left">{row.seven}</TableCell>
+              <TableCell style= {{color:row.twentyfour < 0? red : green }} align="left">{row.twentyfour < 0 ? <Grid container><ArrowDropDownIcon/> {Math.abs(row.twentyfour)} </Grid>: <Grid container><ArrowDropUpIcon/> {Math.abs(row.twentyfour)} </Grid> }</TableCell>
+              <TableCell style= {{color:row.seven < 0? red : green }} align="left">{row.seven < 0 ? <Grid container><ArrowDropDownIcon/> {Math.abs(row.seven)} </Grid>: <Grid container><ArrowDropUpIcon/> {Math.abs(row.seven)} </Grid>}</TableCell>
               <TableCell align="left">{row.cap}</TableCell>
               <TableCell align="left">{row.volume}</TableCell>
               <TableCell align="left">{row.volatility}</TableCell>
