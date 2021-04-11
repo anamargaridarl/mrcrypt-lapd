@@ -6,11 +6,13 @@ import Grid from "@material-ui/core/Grid";
 
 //@components
 import TinyChart from "./TinyChart";
-import "react-multi-carousel/lib/styles.css";
 
 //@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import { grey, green } from "../styles/colors";
+
+//@stylying
+import "react-multi-carousel/lib/styles.css";
+import { grey, green, purple } from "../styles/colors";
 
 const responsive = {
   superLargeDesktop: {
@@ -99,7 +101,7 @@ function Item() {
             +163.50%
           </Grid>
         </Grid>
-        <TinyChart></TinyChart>
+        <TinyChart widthContainer={"80%"} heightContainer={70} strokeColor={purple}></TinyChart>
       </Grid>
     </Paper>
   );

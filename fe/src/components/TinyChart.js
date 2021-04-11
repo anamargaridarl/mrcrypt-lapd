@@ -3,12 +3,11 @@ import { LineChart, Line, ResponsiveContainer } from "recharts";
 
 //@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
-import { purple } from "../styles/colors";
 
 const useStyles = makeStyles({
   chart: {
     "& path.recharts-curve": {
-      stroke: purple,
+      stroke: (props) => props.strokeColor,
     },
   },
 });
@@ -58,18 +57,24 @@ const data = [
   },
 ];
 
-export default function TinyChart() {
-  const { chart } = useStyles();
+export default function TinyChart({
+  widthContainer,
+  heightContainer,
+  strokeColor,
+}) {
+  const props = {
+    strokeColor: strokeColor,
+  };
+  const { chart } = useStyles(props);
 
   return (
-    <ResponsiveContainer width="80%" height={70}>
+    <ResponsiveContainer width={widthContainer} height={heightContainer}>
       <LineChart width={300} height={100} data={data}>
         <Line
           className={chart}
           type="monotone"
           dot={false}
           dataKey="pv"
-          stroke="#8884d8"
           strokeWidth={2}
         />
       </LineChart>
