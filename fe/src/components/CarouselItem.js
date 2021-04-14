@@ -67,7 +67,7 @@ export default function CarouselItem({name, value, growth}) {
 
     const { paper, innerElement, growthElement, body } = useStyles();
     return (
-             <Paper className={paper}>
+      <Paper className={paper}>
       <Grid
         className={body}
         container

@@ -14,6 +14,7 @@ import { purple, white, black } from "../styles/colors";
 const useStyles = makeStyles((theme) => ({
   back: {
     backgroundColor: "#F5F5F5",
+    fontSize:"1.15em"
   },
   spacing: {
     margin: "1em",
