@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 //@stylying
 import "react-multi-carousel/lib/styles.css";
-import { grey } from "../styles/colors";
+import { gray } from "../styles/colors";
 
 //@components
 import CarouselItem from "./CarouselItem";
@@ -36,7 +36,7 @@ const responsive = {
 
 const useStyles = makeStyles({
   background: {
-    backgroundColor: grey,
+    backgroundColor: gray,
   }
 });
 

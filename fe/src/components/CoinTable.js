@@ -19,7 +19,7 @@ import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import TinyChart from "./TinyChart";
 
 //@stylying
-import { lightGreen, darkGrey, red, green } from "../styles/colors";
+import { lightGreen, darkGray, red, green } from "../styles/colors";
 
 const useStyles = makeStyles({
   table: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   tableHead:{
     "& .MuiTableCell-head": {
     fontWeight: "bold",
-    color: darkGrey
+    color: darkGray
     }
   }
 });

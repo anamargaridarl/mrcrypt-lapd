@@ -5,6 +5,7 @@ import HomeCarousel from "../components/HomeCarousel";
 import TopBar from "../components/TopBar";
 import CoinTable from "../components/CoinTable";
 import Container from "@material-ui/core/Container";
+import PageHeader from '../components/PageHeader'
 
 //@stylying
 import { makeStyles } from "@material-ui/core/styles";
