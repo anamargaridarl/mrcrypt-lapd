@@ -39,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid #DDDDDD",
     fontSize: 12,
     fontFamily: font_family,
+    userSelect: "none",
+    cursor: "pointer",
   },
   purpleTag: {
     background: purple,

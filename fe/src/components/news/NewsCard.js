@@ -33,6 +33,8 @@ const useStyles = makeStyles((theme) => ({
   readMore: {
     fontWeight: "bold",
     color: purple,
+    userSelect: "none",
+    cursor: "pointer",
   },
   line: {
     margin: "15px 0 8px 0",
