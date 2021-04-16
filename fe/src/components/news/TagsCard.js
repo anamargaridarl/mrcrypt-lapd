@@ -3,10 +3,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import Divider from "@material-ui/core/Divider";
-import { gray, dark_gray, white, purple } from "../../styles/colors";
-import { font_family } from "../../styles/fonts";
+import { gray, darkGray, white, purple } from "../../styles/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     margin: "auto 0",
-    fontFamily: font_family,
     fontSize: 12,
     fontWeight: "bold",
   },
@@ -39,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 15,
     border: "1px solid #DDDDDD",
     fontSize: 12,
-    fontFamily: font_family,
     userSelect: "none",
     cursor: "pointer",
   },
@@ -49,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   normalTag: {
     background: white,
-    color: dark_gray,
+    color: darkGray,
   },
 }));
 

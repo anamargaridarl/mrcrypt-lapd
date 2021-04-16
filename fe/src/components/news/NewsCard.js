@@ -5,7 +5,6 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
 import { white, purple } from "../../styles/colors";
-import { font_family } from "../../styles/fonts";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
     flex: "2 0 0%",
     margin: "auto 0",
     justifyContent: "center",
-    fontFamily: font_family,
     fontSize: "11px",
   },
   title: {

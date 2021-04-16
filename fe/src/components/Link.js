@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-
 //@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
 
-//@stylying
+//@styling
 import { purple } from "../styles/colors";
 
 const useStyles = makeStyles({
@@ -48,7 +47,7 @@ export default function Link({ url, name, tColor }) {
   return (
     <div
       onClick={() => {
-        if (name.toLowerCase() == "mrcrypt") history.push("/");
+        if (name.toLowerCase() === "mrcrypt") history.push("/");
         else history.push("/" + name.toLowerCase());
       }}
     >

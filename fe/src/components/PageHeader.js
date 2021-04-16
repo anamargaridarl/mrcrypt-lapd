@@ -1,15 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  font_family,
-  header_font_size,
-  header_font_weight,
-} from "../styles/fonts";
+import { header_font_size, header_font_weight } from "../styles/fonts";
 import { black } from "../styles/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    fontFamily: font_family,
     fontSize: header_font_size,
     fontWeight: header_font_weight,
     color: black,

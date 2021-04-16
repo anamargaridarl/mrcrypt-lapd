@@ -4,7 +4,7 @@ import TagsCard from "../components/news/TagsCard";
 import PageHeader from "../components/PageHeader";
 import TopBar from "../components/TopBar";
 import Grid from "@material-ui/core/Grid";
-import Container from "@material-ui/core/Container";
+import Footer from "../components/Footer";
 
 const NewsPage = () => {
   const [filter, setFilter] = useState([]);
@@ -28,6 +28,7 @@ const NewsPage = () => {
           <TagsCard filter={filter} onChange={changeFilter}></TagsCard>
         </Grid>
       </Grid>
+      <Footer />
     </div>
   );
 };
