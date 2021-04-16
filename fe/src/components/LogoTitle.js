@@ -1,7 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 
-//@stylying
+//@styling
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
