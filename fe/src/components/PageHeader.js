@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: header_font_size,
     fontWeight: header_font_weight,
     color: black,
+    marginLeft: "4em",
     marginTop: "3em",
     marginBottom: "3em",
     textAlign: "left",

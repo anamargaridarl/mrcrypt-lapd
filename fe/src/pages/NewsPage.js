@@ -19,17 +19,15 @@ const NewsPage = () => {
   return (
     <div>
       <TopBar></TopBar>
-      <Container maxWidth="lg">
-        <PageHeader name="News"></PageHeader>
-        <Grid container spacing={3}>
-          <Grid item lg={8} md={6} xs={12}>
-            <NewsList filter={filter} />
-          </Grid>
-          <Grid item lg={4} md={6} xs={12}>
-            <TagsCard filter={filter} onChange={changeFilter}></TagsCard>
-          </Grid>
+      <PageHeader name="News"></PageHeader>
+      <Grid container spacing={3}>
+        <Grid item lg={8} md={6} xs={12}>
+          <NewsList filter={filter} />
         </Grid>
-      </Container>
+        <Grid item lg={4} md={6} xs={12}>
+          <TagsCard filter={filter} onChange={changeFilter}></TagsCard>
+        </Grid>
+      </Grid>
     </div>
   );
 };
