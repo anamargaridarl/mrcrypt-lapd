@@ -3,12 +3,10 @@ import {Grid, makeStyles} from '@material-ui/core';
 
 //@styling
 import { green, red } from '../styles/colors'
-import { font_family } from '../styles/fonts'
 
 const useStyles = makeStyles((_) =>({
   ratioField: {
     textAlign: 'left',
-    fontFamily: font_family,
     paddingRight: '2em',
   },
   gain: {

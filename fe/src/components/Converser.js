@@ -4,8 +4,8 @@ import { Grid, MenuItem, makeStyles, TextField, Button, Container } from '@mater
 //@components
 import ConversationRatio from './ConversionRatio'
 //@styling
-import {gray, dark_gray, white, purple} from '../styles/colors'
-import {font_family, header_font_size} from '../styles/fonts'
+import {gray, darkGray, white, purple} from '../styles/colors'
+import { header_font_size} from '../styles/fonts'
 
 const useStyles = makeStyles((_) =>({
   container: {
@@ -22,9 +22,8 @@ const useStyles = makeStyles((_) =>({
     paddingTop: '1em', 
   },
   title: {
-    fontFamily: font_family,
     fontWeight: 1000,
-    color: dark_gray,
+    color: darkGray,
     fontSize: header_font_size,
   },
   input: {
