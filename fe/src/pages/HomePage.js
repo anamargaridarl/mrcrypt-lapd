@@ -36,4 +36,5 @@ export default function HomePage() {
       </Container>
       <Footer />
     </div>
+  )
 }
