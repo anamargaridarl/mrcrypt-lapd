@@ -5,8 +5,7 @@ import HomeCarousel from "../components/HomeCarousel";
 import TopBar from "../components/TopBar";
 import CoinTable from "../components/CoinTable";
 import Container from "@material-ui/core/Container";
-import PageHeader from '../components/PageHeader'
-import Footer from '../components/Footer'
+import Footer from "../components/Footer";
 
 //@stylying
 import { makeStyles } from "@material-ui/core/styles";
@@ -36,4 +35,5 @@ export default function HomePage() {
       </Container>
       <Footer />
     </div>
+  );
 }
