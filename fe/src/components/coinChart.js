@@ -18,6 +18,7 @@ import {
   import { Animation } from '@devexpress/dx-react-chart';
   import { withStyles } from '@material-ui/core/styles';
 import { Paper } from '@material-ui/core';
+import { purple } from '@material-ui/core/colors';
 
 
   const format = () => tick => tick;
@@ -86,7 +87,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          <Typography>{children}</Typography>
+          <Box>{children}</Box>
         </Box>
       )}
     </div>
@@ -157,7 +158,7 @@ export default function CoinChart() {
   ];
 
   return (
-    <Box m = {1}  className={classes.root}>
+    <Box mx = {5}  className={classes.root}>
         <h2>{data.name} charts</h2>
       <Box>
         <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">

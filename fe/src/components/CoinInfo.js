@@ -5,8 +5,8 @@ import {makeStyles, Box, Container } from '@material-ui/core';
 
 
 const useStyles = makeStyles((_) =>({
-  container: {
-
+  maxwidth: {
+    maxWidth: '600px'
   }
 }));
 
@@ -31,7 +31,7 @@ export default function CoinInfo() {
             <h2 >{coinData.name}</h2>
             </Box>
         </Box>
-        <Box fontSize={13}>
+        <Box m = {1} fontSize={13} className={classes.maxwidth}>
             {coinData.description}
         </Box>
     </Box>

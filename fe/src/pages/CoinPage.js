@@ -10,7 +10,7 @@ import CoinStats from "../components/CoinStats";
 import CardCoinInfo from "../components/cardCoinInfo";
 import CoinChart from "../components/coinChart";
 //@core-material-ui
-import { makeStyles, Box } from "@material-ui/core";
+import { makeStyles, Container, Box } from "@material-ui/core";
 
 const useStyles = makeStyles({});
 
@@ -19,23 +19,29 @@ export default function CoinPage() {
   const classes = useStyles();
 
   return (
-    <div>
+    <Container>
       <PageHeader name={`Coins/${coinName}`}></PageHeader>
-      <Grid container>
-        <Grid item xs={12} sm={12} md={8} lg={8}>
+      <Grid container spacing={1}>
+
+        <Grid container alignItems="center" item xs={12} sm={12} md={8} lg={8} style={{gap: 15}}>
           <CoinInfo></CoinInfo>
-          <Grid container>
-            <CardCoinInfo></CardCoinInfo>
-            <CardCoinInfo></CardCoinInfo>
-            <CardCoinInfo></CardCoinInfo>
+          <Grid container  alignItems="center" justify="center" style={{gap: 15}}>
+              <CardCoinInfo></CardCoinInfo>
+              <CardCoinInfo></CardCoinInfo>
+              <CardCoinInfo></CardCoinInfo>
           </Grid>
-          <CoinChart></CoinChart>
+          <Box mt= {4} width="90%" height="auto">
+                <CoinChart></CoinChart>
+          </Box>
         </Grid>
-        <Grid item xs={12} sm={12} md={4} lg={4}>
+        
+        <Grid container item xs={12} sm={12} md={4} lg={4} direction="column">
           <CoinValue></CoinValue>
           <CoinStats></CoinStats>
         </Grid>
+
+
       </Grid>
-    </div>
+    </Container>
   );
 }

@@ -31,7 +31,7 @@ export default function CoinInfo() {
   const classes = useStyles();
 
   return (
-      <Box m ={1}  >
+      <Box m ={1} >
         <Box  mx ={3} my = {1} display="flex" justifyContent="flex-end" fontSize={13} color="text.secondary">{coinData.name} ({coinData.abreviation})</Box>
         <Box alignItems="center" display="flex">
             <Box  mx= {2}>
