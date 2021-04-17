@@ -22,25 +22,30 @@ export default function CoinPage() {
     <Container>
       <PageHeader name={`Coins/${coinName}`}></PageHeader>
       <Grid container spacing={1}>
-
-        <Grid container alignItems="center" item xs={12} sm={12} md={8} lg={8} style={{gap: 15}}>
+        <Grid
+          container
+          alignItems="center"
+          item
+          xs={12}
+          sm={12}
+          md={8}
+          lg={8}
+          style={{ gap: 15 }}
+        >
           <CoinInfo></CoinInfo>
-          <Grid container  alignItems="center" justify="center" style={{gap: 15}}>
-              <CardCoinInfo></CardCoinInfo>
-              <CardCoinInfo></CardCoinInfo>
-              <CardCoinInfo></CardCoinInfo>
+          <Grid container justify="space-evenly">
+            <CardCoinInfo></CardCoinInfo>
+            <CardCoinInfo></CardCoinInfo>
+            <CardCoinInfo></CardCoinInfo>
           </Grid>
-          <Box mt= {4} width="90%" height="auto">
-                <CoinChart></CoinChart>
+          <Box mt={4} width="90%" height="auto">
+            <CoinChart></CoinChart>
           </Box>
         </Grid>
-        
         <Grid container item xs={12} sm={12} md={4} lg={4} direction="column">
           <CoinValue></CoinValue>
           <CoinStats></CoinStats>
         </Grid>
-
-
       </Grid>
     </Container>
   );

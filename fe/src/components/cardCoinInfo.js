@@ -38,7 +38,7 @@ const useStyles = makeStyles({
 export default function CardCoinInfo() {
   const classes = useStyles();
   return (
-      <Box fontWeight={400} p = {2} boxShadow={3} className={classes.root}>
+      <Box fontWeight={400} p = {2} boxShadow={1} className={classes.root}>
         <Box className={classes.title} color="textSecondary" >
             {data.title}
         </Box>
