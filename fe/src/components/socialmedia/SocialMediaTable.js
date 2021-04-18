@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+//@materialui-core
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -7,10 +7,12 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+//@stylying
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   table: {
-    maxWidth: "22em",
+    maxWidth: "25em",
   },
   title: {
       margin: "1em",
@@ -46,7 +48,7 @@ export default function SocialTable() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.id}>
               <TableCell component="th" scope="row">
                 {row.rank}
               </TableCell>

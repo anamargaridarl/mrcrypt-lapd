@@ -22,7 +22,7 @@ export default function Footer() {
   const classes = useStyles();
 
   return (
-    <Container className={classes.footer}>
+    <Container className={classes.footer}  maxWidth={false}>
       <p>@mrcrypt</p>
     </Container>
   );

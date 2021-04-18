@@ -1,5 +1,4 @@
 import React from "react";
-
 //@components
 import HomeCarousel from "../components/home/HomeCarousel";
 import TopBar from "../components/TopBar";
@@ -7,8 +6,6 @@ import CoinTable from "../components/home/CoinTable";
 import Container from "@material-ui/core/Container";
 import Footer from "../components/Footer";
 import PageHeader from "../components/PageHeader";
-
-
 //@stylying
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -26,7 +23,7 @@ export default function HomePage() {
       <TopBar></TopBar>
       <HomeCarousel></HomeCarousel>
       <PageHeader name="Market"></PageHeader>
-      <Container className={table} maxWidth="false">
+      <Container className={table}  maxWidth={false}>
         <CoinTable></CoinTable>
       </Container>
       <Footer />
