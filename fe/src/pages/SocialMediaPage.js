@@ -1,23 +1,32 @@
-import React from 'react'
-import Converser from '../components/converser/Converser';
-import InfluencerCard from '../components/socialmedia/InfluencerCard';
-import PageHeader from '../components/PageHeader';
-import TopBar from '../components/TopBar'
+import React from "react";
+import InfluencerCard from "../components/socialmedia/SocialCarrouselItem";
+import PageHeader from "../components/PageHeader";
+import TopBar from "../components/TopBar";
+import Container from "@material-ui/core/Container";
+import SocialMediaCarousel from "../components/socialmedia/SocialCarousel";
+import SocialCarouselItem from "../components/socialmedia/SocialCarrouselItem";
+
+
+//@stylying
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  table: {
+    padding: "0.5em 3.5em",
+  },
+});
 
 export default function SocialMediaPage() {
+  const { table } = useStyles();
+
   return (
-        <>
-            <PageHeader name="Social Media Page"></PageHeader>
-            <InfluencerCard influencer={{
-                title: "Documenting Bitcoin",
-                avgRank: 59,
-                engRank:3,
-                followerRank: 109,
-                postRank:63,
-                rank:1
-            }}>
-                
-            </InfluencerCard>
-        </>
-    )
+    <div>
+      <TopBar></TopBar>
+      <PageHeader name="Social Media Trends"></PageHeader>
+      <Container className={table} maxWidth="false">
+        <p> Influencers</p>
+        <SocialMediaCarousel></SocialMediaCarousel>
+      </Container>
+    </div>
+  );
 }

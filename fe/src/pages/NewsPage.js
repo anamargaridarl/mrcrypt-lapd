@@ -6,7 +6,9 @@ import TopBar from "../components/TopBar";
 import Grid from "@material-ui/core/Grid";
 import Footer from "../components/Footer";
 
+
 const NewsPage = () => {
+
   const [filter, setFilter] = useState([]);
 
   const changeFilter = (tag) => {
