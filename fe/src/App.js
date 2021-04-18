@@ -22,7 +22,7 @@ function App() {
         <Route path="/socialmedia" exact>
           <SocialMediaPage></SocialMediaPage>
         </Route>
-        <Route path="/coinPage/:coinName" exact>
+        <Route path="/coinpage/:coinName" exact>
           <CoinPage></CoinPage>
         </Route>
         <Route path="/news" exact>

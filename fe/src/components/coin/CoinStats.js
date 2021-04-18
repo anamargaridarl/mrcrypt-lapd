@@ -8,7 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
-import {gray} from  "../styles/colors";
+import {gray} from  "../../styles/colors";
 
 
 const useStyles = makeStyles((_) =>({
