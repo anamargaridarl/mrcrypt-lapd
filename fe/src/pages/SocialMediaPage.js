@@ -3,7 +3,6 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 //@components
-import PageHeader from "../components/PageHeader";
 import TopBar from "../components/TopBar";
 import SocialMediaCarousel from "../components/socialmedia/SocialCarousel";
 import GoogleCharts from "../components/socialmedia/GoogleCharts";
@@ -18,6 +17,9 @@ const useStyles = makeStyles({
   },
   header: {
     marginBottom: "0",
+    marginTop: "2em",
+    marginLeft:"4em",
+    fontWeight:"bold"
   },
   subTitle: {
     marginTop: "0",
@@ -29,6 +31,7 @@ const useStyles = makeStyles({
   },
   page: {
     backgroundColor: gray,
+    height: "100vh"
   },
 });
 
@@ -38,7 +41,7 @@ export default function SocialMediaPage() {
   return (
     <div className={page}>
       <TopBar></TopBar>
-      <PageHeader className={header} name="Social Media Trends"></PageHeader>
+      <p className={header}> Social Media Trends</p>
       <Container className={table} maxWidth={false}>
         <p className={subTitle}> Influencers</p>
         <SocialMediaCarousel></SocialMediaCarousel>

@@ -33,29 +33,29 @@ export default function SocialCarouselItem({ data }) {
           <Grid container justify="space-between">
             <Avatar className={classes.iconRank}>#1</Avatar>
 
-            <p> Documenting Bitcoin</p>
+            <p> {data.title}</p>
 
-            <img alt="Coin" width={"50px"} src={"./assets/bitcoin.png"} />
+            <img alt="Coin" width={"50px"} src={data.imageSrc} />
           </Grid>
         </Grid>
         <Grid container direction="row" justify="space-between">
           <Grid item xs={12} sm={12} md={6} lg={6}>
             <p> WEIGHTED AVG RANK</p>
-            <b> 59 </b>
+            <b> {data.weightedRank} </b>
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6}>
             <p className={classes.rightRankSide}>
               {" "}
-              <b> 59 </b> WEIGHTED AVG RANK
+              <b> {data.engagementRank} </b> ENGAGEMENT RANK
             </p>
 
             <p className={classes.rightRankSide}>
               {" "}
-              <b> 59 </b> WEIGHTED AVG RANK
+              <b> {data.followerRank} </b> FOLLOWER RANK
             </p>
             <p className={classes.rightRankSide}>
               {" "}
-              <b> 59 </b> WEIGHTED AVG RANK
+              <b> {data.postRank}</b> POST RANK
             </p>
           </Grid>
         </Grid>

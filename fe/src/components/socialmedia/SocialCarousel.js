@@ -1,8 +1,5 @@
-import Carousel from "react-multi-carousel";
-//@core-material-ui
-import { makeStyles } from "@material-ui/core/styles";
-//@stylying
 import "react-multi-carousel/lib/styles.css";
+import Carousel from "react-multi-carousel";
 //@components
 import SocialCarouselItem from "./SocialCarrouselItem";
 
@@ -30,8 +27,6 @@ const responsive = {
   },
 };
 
-const useStyles = makeStyles({});
-
 //TODO: fetch data from backend for the items
 const data = [
   {
@@ -50,28 +45,58 @@ const data = [
     followerRank: 109,
     postRank: 63,
   },
+  {
+    title: "Documenting Bitcoin",
+    imageSrc: "assets/bitcoin.png",
+    weightedRank: 59,
+    engagementRank: 3,
+    followerRank: 109,
+    postRank: 63,
+  },
+  {
+    title: "Documenting Bitcoin",
+    imageSrc: "assets/bitcoin.png",
+    weightedRank: 59,
+    engagementRank: 3,
+    followerRank: 109,
+    postRank: 63,
+  },
+  {
+    title: "Documenting Bitcoin",
+    imageSrc: "assets/bitcoin.png",
+    weightedRank: 59,
+    engagementRank: 3,
+    followerRank: 109,
+    postRank: 63,
+  },
+  {
+    title: "Documenting Bitcoin",
+    imageSrc: "assets/bitcoin.png",
+    weightedRank: 59,
+    engagementRank: 3,
+    followerRank: 109,
+    postRank: 63,
+  },
+  {
+    title: "Documenting Bitcoin",
+    imageSrc: "assets/bitcoin.png",
+    weightedRank: 59,
+    engagementRank: 3,
+    followerRank: 109,
+    postRank: 63,
+  }
 ];
 
 function SocialCarrousel() {
-  const {} = useStyles();
-
   return (
     <Carousel responsive={responsive}>
-      <SocialCarouselItem />
-      <SocialCarouselItem />
-      <SocialCarouselItem />
-      <SocialCarouselItem />
-      <SocialCarouselItem />
-      <SocialCarouselItem />
-      <SocialCarouselItem />
-
-      {/* {data.map((element) => {
+      {data.map((element) => {
         return (
           <SocialCarouselItem
             data = {element}
           />
         );
-      })} */}
+      })}
     </Carousel>
   );
 }

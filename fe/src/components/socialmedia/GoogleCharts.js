@@ -116,7 +116,7 @@ export default function GoogleCharts() {
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <LineCharts
             widthContainer={"90%"}
-            heightContainer={200}
+            heightContainer={180}
             strokeColor={purple}
             dataAux={data}
           ></LineCharts>
