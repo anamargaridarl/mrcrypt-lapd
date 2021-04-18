@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import CoinPage from "./pages/CoinPage";
 import ConverserPage from "./pages/ConverserPage";
 import HomePage from "./pages/HomePage";
+import NewsPage from "./pages/NewsPage";
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
         </Route>
         <Route path="/coinPage/:coinName" exact>
           <CoinPage></CoinPage>
+        </Route>
+        <Route path="/news" exact>
+          <NewsPage></NewsPage>
         </Route>
       </Switch>
     </main>
