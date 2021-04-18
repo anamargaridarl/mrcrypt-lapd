@@ -3,11 +3,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 
-const useStyles = makeStyles({
-  coinTitle: {
-    marginLeft: "2em",
-  },
-});
 
 // this data will need to be fetched from an api
 const coinData = {
@@ -18,13 +13,12 @@ const coinData = {
 };
 
 export default function CoinInfo() {
-  const classes = useStyles();
 
   return (
     <Grid container>
       <img width={"60px"} alt={coinData.name} src={coinData.imagePath} />
-      <h2 classeName={classes.coinTitle}>{coinData.name}</h2>
-      {coinData.description}
+      <h2 style={{marginLeft:"2em"}}>{coinData.name}</h2>
+      <p> {coinData.description}</p>
     </Grid>
   );
 }

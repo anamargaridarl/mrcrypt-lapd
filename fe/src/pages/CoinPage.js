@@ -33,7 +33,7 @@ export default function CoinPage() {
       <TopBar></TopBar>
       <PageHeader name={`Coins/${coinName}`}></PageHeader>
       <Container className={table} maxWidth={false}>
-        <Grid container spacing={1} >
+        <Grid container spacing={10} >
           <Grid className={container} item xs={12} sm={12} md={8} lg={8}>
             <CoinInfo></CoinInfo>
             <Grid container className={intro} justify="space-between">
