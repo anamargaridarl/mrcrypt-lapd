@@ -1,21 +1,20 @@
-import React from 'react';
+import React from "react";
 //@core-material-ui
-import { makeStyles, Container } from '@material-ui/core';
+import { makeStyles, Container } from "@material-ui/core";
 // @styling
 import { gray, purple } from '../styles/colors'
 
-
-const useStyles = makeStyles((_) =>({
+const useStyles = makeStyles((_) => ({
   footer: {
     backgroundColor: gray,
     fontWeight: 'bold',
     color: purple,
     fontSize: 12,
-    maxWidth: 'inherit',
-    position: 'fixed',
+    maxWidth: "inherit",
+    position: "fixed",
     bottom: 0,
     left: 0,
-    zIndex: 999
+    zIndex: 999,
   },
 }));
 
@@ -27,4 +26,4 @@ export default function Footer() {
       <p>@mrcrypt</p>
     </Container>
   );
-};
+}

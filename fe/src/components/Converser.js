@@ -1,25 +1,32 @@
-import React from 'react';
+import React from "react";
 //@core-material-ui
-import { Grid, MenuItem, makeStyles, TextField, Button, Container } from '@material-ui/core';
+import {
+  Grid,
+  MenuItem,
+  makeStyles,
+  TextField,
+  Button,
+  Container,
+} from "@material-ui/core";
 //@components
-import ConversationRatio from './ConversionRatio'
+import ConversationRatio from "./ConversionRatio";
 //@styling
-import {gray, darkGray, white, purple} from '../styles/colors'
-import { header_font_size} from '../styles/fonts'
+import { gray, darkGray, white, purple } from "../styles/colors";
+import { header_font_size } from "../styles/fonts";
 
-const useStyles = makeStyles((_) =>({
+const useStyles = makeStyles((_) => ({
   container: {
     backgroundColor: gray,
   },
   leftItems: {
-    paddingLeft: '3em',
-    paddingRight: '6em',
-    paddingTop: '1em',
+    paddingLeft: "3em",
+    paddingRight: "6em",
+    paddingTop: "1em",
   },
   rightItems: {
-    paddingLeft: '6em',
-    paddingRight: '3em',
-    paddingTop: '1em', 
+    paddingLeft: "6em",
+    paddingRight: "3em",
+    paddingTop: "1em",
   },
   title: {
     fontWeight: 1000,
@@ -27,54 +34,54 @@ const useStyles = makeStyles((_) =>({
     fontSize: header_font_size,
   },
   input: {
-    alignItems: 'stretch',
-    flexDirection: 'column',
+    alignItems: "stretch",
+    flexDirection: "column",
   },
   textFields: {
     "& .MuiInputBase-input": {
       backgroundColor: white,
-    }
+    },
   },
   button: {
     backgroundColor: purple,
     color: white,
-    margin: '3em',
-    padding: '2em',
-    fontWeight: 'bold',
+    margin: "3em",
+    padding: "2em",
+    fontWeight: "bold",
     fontSize: header_font_size,
-    borderRadius: '0px',
-    '&:hover': {
+    borderRadius: "0px",
+    "&:hover": {
       backgroundColor: purple,
-      boxShadow: 'none',
+      boxShadow: "none",
     },
-  }
+  },
 }));
 
 //TODO: call backend for available coins
 const currencies = [
   {
-    value: 'BTC',
-    label: 'Bitcoin',
+    value: "BTC",
+    label: "Bitcoin",
   },
   {
-    value: 'ETC',
-    label: 'Ethereum',
+    value: "ETC",
+    label: "Ethereum",
   },
   {
-    value: 'DOGE',
-    label: 'Dogecoin',
+    value: "DOGE",
+    label: "Dogecoin",
   },
   {
-    value: 'ADA',
-    label: 'Cardano',
+    value: "ADA",
+    label: "Cardano",
   },
 ];
 
 export default function Converser() {
   const classes = useStyles();
 
-  let [nameFrom, setCurrencyFrom] = React.useState('BTC');
-  let [nameTo, setCurrencyTo] = React.useState('ETC');
+  let [nameFrom, setCurrencyFrom] = React.useState("BTC");
+  let [nameTo, setCurrencyTo] = React.useState("ETC");
   let [valueFrom, setValueFrom] = React.useState(0);
   let [valueTo, setValueTo] = React.useState(0);
 
@@ -89,16 +96,16 @@ export default function Converser() {
   };
 
   const handleValueFrom = (event) => {
-    if(parseInt(event.target.value) < 0) 
-      event.target.value = parseInt(event.target.value) + 1
-    setValueFrom(event.target.value)
+    if (parseInt(event.target.value) < 0)
+      event.target.value = parseInt(event.target.value) + 1;
+    setValueFrom(event.target.value);
     valueFrom = event.target.value;
   };
 
   const handleValueTo = (event) => {
-    if(parseInt(event.target.value) < 0) 
-      event.target.value = parseInt(event.target.value) + 1
-    setValueTo(event.target.value)
+    if (parseInt(event.target.value) < 0)
+      event.target.value = parseInt(event.target.value) + 1;
+    setValueTo(event.target.value);
     valueTo = event.target.value;
   };
 
@@ -106,8 +113,8 @@ export default function Converser() {
     <Container maxWidth="lg" className={classes.container}>
       <Grid container justify="space-around">
         <Grid className={classes.leftItems} item xs={12} sm={6} md={6} lg={6}>
-          <Grid className={classes.title}container justify="flex-start">
-            <p>From</p> 
+          <Grid className={classes.title} container justify="flex-start">
+            <p>From</p>
           </Grid>
         </Grid>
         <Grid className={classes.rightItems} item xs={12} sm={6} md={6} lg={6}>
@@ -120,13 +127,12 @@ export default function Converser() {
             <TextField
               className={classes.textFields}
               id="convert-from"
-              type="number" 
+              type="number"
               InputLabelProps={{ shrink: true }}
               defaultValue="0"
               onChange={handleValueFrom}
               variant="outlined"
-              >
-            </TextField>
+            ></TextField>
           </Grid>
         </Grid>
         <Grid className={classes.rightItems} item xs={12} sm={6} md={6} lg={6}>
@@ -134,13 +140,12 @@ export default function Converser() {
             <TextField
               className={classes.textFields}
               id="convert-to"
-              type="number" 
+              type="number"
               InputLabelProps={{ shrink: true }}
               defaultValue="0"
               onChange={handleValueTo}
               variant="outlined"
-              >
-            </TextField>
+            ></TextField>
           </Grid>
         </Grid>
         <Grid className={classes.leftItems} item xs={12} sm={6} md={6} lg={6}>
@@ -154,7 +159,7 @@ export default function Converser() {
               onChange={handleDropFrom}
               helperText="Please select your currency"
               variant="outlined"
-              >
+            >
               {currencies.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
@@ -174,7 +179,7 @@ export default function Converser() {
               onChange={handleDropTo}
               helperText="Please select your currency"
               variant="outlined"
-              >
+            >
               {currencies.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
@@ -184,14 +189,19 @@ export default function Converser() {
           </Grid>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <ConversationRatio valueFrom={valueFrom} valueTo={valueTo} nameFrom={nameFrom} nameTo={nameTo}/>
+          <ConversationRatio
+            valueFrom={valueFrom}
+            valueTo={valueTo}
+            nameFrom={nameFrom}
+            nameTo={nameTo}
+          />
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Grid className={classes.input} container justify="center">
             <Button className={classes.button} variant="contained">
               Convert
             </Button>
-          </Grid> 
+          </Grid>
         </Grid>
       </Grid>
     </Container>

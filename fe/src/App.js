@@ -3,6 +3,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import ConverserPage from "./pages/ConverserPage";
 import HomePage from "./pages/HomePage";
 import SocialMediaPage from "./pages/SocialMediaPage";
+import NewsPage from "./pages/NewsPage";
 
 function App() {
   return (
@@ -17,8 +18,11 @@ function App() {
         <Route path="/converser" exact>
           <ConverserPage></ConverserPage>
         </Route>
-        <Route path="/socialMedia" exact>
+        <Route path="/socialmedia" exact>
           <SocialMediaPage></SocialMediaPage>
+        </Route>
+        <Route path="/news" exact>
+          <NewsPage></NewsPage>
         </Route>
       </Switch>
     </main>
