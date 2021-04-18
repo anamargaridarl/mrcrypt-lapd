@@ -8,7 +8,7 @@ import "react-multi-carousel/lib/styles.css";
 import { gray } from "../styles/colors";
 
 //@components
-import CarouselItem from "./CarouselItem";
+import CarouselItem from "./home/HomeCarouselItem";
 
 const responsive = {
   superLargeDesktop: {
@@ -40,61 +40,8 @@ const useStyles = makeStyles({
   }
 });
 
-//fetch data from backend for the items
 
-const data = [
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: 163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: -163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  }
-]
-function Carousel2() {
+function Carousel2({data}) {
   const { background } = useStyles();
 
   return (

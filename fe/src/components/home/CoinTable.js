@@ -16,10 +16,10 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 
 //@components
-import TinyChart from "./TinyChart";
+import TinyChart from "../TinyChart";
 
 //@stylying
-import { lightGreen, darkGray, red, green } from "../styles/colors";
+import { lightGreen, darkGray, red, green } from "../../styles/colors";
 
 const useStyles = makeStyles({
   table: {

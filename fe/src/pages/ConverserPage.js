@@ -1,5 +1,5 @@
 import React from 'react'
-import Converser from '../components/Converser';
+import Converser from '../components/converser/Converser';
 import PageHeader from '../components/PageHeader';
 import TopBar from '../components/TopBar';
 import Footer from '../components/Footer';

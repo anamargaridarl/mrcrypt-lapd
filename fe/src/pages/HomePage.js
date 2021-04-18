@@ -1,9 +1,9 @@
 import React from "react";
 
 //@components
-import HomeCarousel from "../components/HomeCarousel";
+import HomeCarousel from "../components/Carousel";
 import TopBar from "../components/TopBar";
-import CoinTable from "../components/CoinTable";
+import CoinTable from "../components/home/CoinTable";
 import Container from "@material-ui/core/Container";
 import Footer from "../components/Footer";
 
@@ -19,13 +19,67 @@ const useStyles = makeStyles({
   },
 });
 
+//TODO: fetch data from backend for the items
+const data = [
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: 163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: -163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  },
+  {
+    name: "ACTIVE CONTRIBUTERS",
+    value: 377.780,
+    growth: +163.50
+  }
+]
+
 export default function HomePage() {
   const { title, table } = useStyles();
 
   return (
     <div>
       <TopBar></TopBar>
-      <HomeCarousel></HomeCarousel>
+      <HomeCarousel data={data}></HomeCarousel>
       <p className={title}>
         {" "}
         <b>Market</b>{" "}

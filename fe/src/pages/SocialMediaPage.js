@@ -1,6 +1,6 @@
 import React from 'react'
-import Converser from '../components/Converser';
-import InfluencerCard from '../components/InfluencerCard';
+import Converser from '../components/converser/Converser';
+import InfluencerCard from '../components/socialmedia/InfluencerCard';
 import PageHeader from '../components/PageHeader';
 import TopBar from '../components/TopBar'
 

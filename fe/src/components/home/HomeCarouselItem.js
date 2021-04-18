@@ -4,14 +4,14 @@ import { Paper } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 
 //@components
-import TinyChart from "./TinyChart";
+import TinyChart from "../TinyChart";
 
 //@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
 
 //@stylying
 import "react-multi-carousel/lib/styles.css";
-import {  green, purple, red } from "../styles/colors";
+import {  green, purple, red } from "../../styles/colors";
 
 const useStyles = makeStyles({
     paper: {
