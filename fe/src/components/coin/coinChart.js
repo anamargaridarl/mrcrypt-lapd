@@ -6,7 +6,7 @@ import Tab from "@material-ui/core/Tab";
 import Box from "@material-ui/core/Box";
 import { Paper } from "@material-ui/core";
 import LineCharts from "../LineCharts";
-//@stylying
+//@styling
 import { purple } from "../../styles/colors";
 
 function TabPanel(props) {
@@ -74,8 +74,7 @@ const data = [
   },
 ];
 
-
-export default function CoinChart({name}) {
+export default function CoinChart({ name }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 

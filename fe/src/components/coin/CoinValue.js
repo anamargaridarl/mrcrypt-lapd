@@ -1,56 +1,86 @@
-import React from 'react';
+import React from "react";
 //@core-material-ui
-import {makeStyles, Box} from '@material-ui/core';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
+import { lightGreen, darkGray, white } from "../../styles/colors";
 
-
-
-const useStyles = makeStyles((_) =>({
-  buttonPercentage: {
-    background: '#3AD083',
-    color: '#fff',
-    border: "50%"
+const useStyles = makeStyles((_) => ({
+  box: {
+    color: white,
+    backgroundColor: lightGreen,
+    padding:"0 0.5em"
   },
-  colorGreen: {
-      color:'#3AD083'
-  }
+  boxcontainer:{
+    marginTop:"0.65em",
+  },
+  coin: {
+    color: darkGray,
+  },
+  value: {
+    margin: 0,
+    marginRight:"1em"
+  },
+  growth: {
+    color: lightGreen,
+  },
+  arrow: {
+    paddingTop: "0.5em",
+  },
 }));
 
 // this data will need to be fetched from an api
 const coinData = {
-    name: 'Bitcoin',
-    abreviation: 'BTC',
-    price: 53418.76,
-    percentage: 2.90,
-    up: true,
-    eth: 32.53,
-    ethPercentage: 2.9
-}
+  name: "Bitcoin",
+  abreviation: "BTC",
+  price: 53418.76,
+  percentage: 2.9,
+  up: true,
+  eth: 32.53,
+  ethPercentage: 2.9,
+};
 
-export default function CoinInfo() {
-  const classes = useStyles();
+export default function CoinValue() {
+  const { coin, value, growth, arrow, box, boxcontainer, valuecontainer } = useStyles();
 
   return (
-      <Box m ={1} >
-        <Box  mx ={3} my = {1} display="flex" justifyContent="flex-end" fontSize={13} color="text.secondary">{coinData.name} ({coinData.abreviation})</Box>
-        <Box alignItems="center" display="flex">
-            <Box  mx= {2}>
-                <h1>{coinData.price.toLocaleString('en-US', { style: 'currency', currency: 'USD'})}</h1>
-            </Box>
-            <Box display="flex" alignItems="center" px={1} py={0} fontSize={7} borderRadius={10} className= {classes.buttonPercentage}>
-                <ArrowDropUpIcon></ArrowDropUpIcon>
-                <h2 >{coinData.percentage}%</h2>
-            </Box>
-        </Box>
-        <Box mx ={3} mt={1} justifyContent="flex-end" alignItems="center" display="flex">
-            <Box fontSize={7} color="text.secondary" mx= {2}>
-                <h2 >{coinData.eth} ETH</h2>
-            </Box>
-            <Box  alignItems="center" display="flex" px={2} py={0} fontSize={7} borderRadius={10} className= {classes.colorGreen}>
-                <ArrowDropUpIcon></ArrowDropUpIcon>
-                <h2 >{coinData.ethPercentage} %</h2>
-            </Box>
-        </Box>
-    </Box>
+    <Grid container justify="flex-end">
+      <Grid container item justify="flex-end" xs={12} sm={12} md={12} lg={12}>
+        <p className={coin}>
+          {coinData.name} ({coinData.abreviation})
+        </p>
+      </Grid>
+      <Grid container item justify="flex-end" xs={12} sm={12} md={12} lg={12}>
+        <h1 className={value}>
+          {coinData.price.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          })}
+        </h1>
+        <Card className={box}>
+          <Grid container className={boxcontainer} >
+            <ArrowDropUpIcon></ArrowDropUpIcon>
+            <b>{coinData.ethPercentage} %</b>
+          </Grid>
+        </Card>
+      </Grid>
+      <Grid container item justify="flex-end" xs={6} sm={6} md={10} lg={10}>
+        <p>{coinData.eth} ETH</p>
+      </Grid>
+      <Grid
+        className={growth}
+        container
+        item
+        justify="flex-end"
+        xs={6}
+        sm={6}
+        md={2}
+        lg={2}
+      >
+        <ArrowDropUpIcon className={arrow}></ArrowDropUpIcon>
+        <p>{coinData.ethPercentage} %</p>
+      </Grid>
+    </Grid>
   );
 }

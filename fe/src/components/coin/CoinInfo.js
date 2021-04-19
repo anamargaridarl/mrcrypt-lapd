@@ -2,7 +2,8 @@ import React from "react";
 //@core-material-ui
 import { makeStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-
+//@styling
+import { lighterGray } from "../../styles/colors";
 
 // this data will need to be fetched from an api
 const coinData = {
@@ -12,12 +13,20 @@ const coinData = {
   imagePath: "/assets/bitcoin.png",
 };
 
+const useStyles = makeStyles({
+  container: {
+    paddingBottom: "0.5em",
+    borderBottom: "1px solid " + lighterGray,
+  },
+});
+
 export default function CoinInfo() {
+  const { container } = useStyles();
 
   return (
-    <Grid container>
+    <Grid container className={container}>
       <img width={"60px"} alt={coinData.name} src={coinData.imagePath} />
-      <h2 style={{marginLeft:"2em"}}>{coinData.name}</h2>
+      <h2 style={{ marginLeft: "2em" }}>{coinData.name}</h2>
       <p> {coinData.description}</p>
     </Grid>
   );
