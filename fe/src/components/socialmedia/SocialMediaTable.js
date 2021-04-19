@@ -17,6 +17,9 @@ const useStyles = makeStyles({
   title: {
       margin: "1em",
       fontWeight: "bold"
+  },
+  head:{
+    fontWeight: "bold"
   }
 });
 
@@ -39,11 +42,11 @@ export default function SocialTable() {
     <TableContainer className={classes.table} component={Paper}>
       <p  className={classes.title}>SubReddits Weekly Growth</p>
       <Table aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>#</TableCell>
-            <TableCell align="right">SubReddit</TableCell>
-            <TableCell align="right">Increase %</TableCell>
+        <TableHead >
+          <TableRow >
+            <TableCell className={classes.head}>#</TableCell>
+            <TableCell className={classes.head} align="right">SubReddit</TableCell>
+            <TableCell className={classes.head}  align="right">Increase %</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

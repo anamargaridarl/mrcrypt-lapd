@@ -6,7 +6,7 @@ import CoinTable from "../components/home/CoinTable";
 import Container from "@material-ui/core/Container";
 import Footer from "../components/Footer";
 import PageHeader from "../components/PageHeader";
-//@stylying
+//@styling
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({

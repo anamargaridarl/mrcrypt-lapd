@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
-
 //@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
 

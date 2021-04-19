@@ -2,11 +2,9 @@ import React from "react";
 //@core-material-ui
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-
 //@components
 import Link from "./Link";
 import LogoTitle from "./LogoTitle";
-
 //@styling
 import { makeStyles } from "@material-ui/core/styles";
 import { purple, white, black } from "../styles/colors";

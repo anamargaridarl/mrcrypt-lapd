@@ -1,3 +1,4 @@
+import React from "react";
 import Carousel from "react-multi-carousel";
 //@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";

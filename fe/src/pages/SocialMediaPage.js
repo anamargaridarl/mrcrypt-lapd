@@ -7,7 +7,8 @@ import TopBar from "../components/TopBar";
 import SocialMediaCarousel from "../components/socialmedia/SocialCarousel";
 import GoogleCharts from "../components/socialmedia/GoogleCharts";
 import SocialTable from "../components/socialmedia/SocialMediaTable";
-//@stylying
+import Footer from "../components/Footer";
+//@styling
 import { makeStyles } from "@material-ui/core/styles";
 import { gray } from "../styles/colors";
 
@@ -63,6 +64,7 @@ export default function SocialMediaPage() {
           </Grid>
         </Grid>
       </Container>
+      <Footer />
     </div>
   );
 }
