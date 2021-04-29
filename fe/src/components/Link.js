@@ -48,6 +48,7 @@ export default function Link({ url, name, tColor }) {
     <div
       onClick={() => {
         if (name.toLowerCase() === "mrcrypt") history.push("/");
+        else if (name.toLowerCase() === "social media trends") history.push("/socialmedia");
         else history.push("/" + name.toLowerCase());
       }}
     >

@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, makeStyles } from "@material-ui/core";
 
 //@styling
-import { green, red } from "../styles/colors";
+import { green, red } from "../../styles/colors";
 
 const useStyles = makeStyles((_) => ({
   ratioField: {

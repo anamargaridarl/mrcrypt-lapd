@@ -11,8 +11,8 @@ import {
 //@components
 import ConversationRatio from "./ConversionRatio";
 //@styling
-import { gray, darkGray, white, purple } from "../styles/colors";
-import { header_font_size } from "../styles/fonts";
+import { gray, darkGray, white, purple } from "../../styles/colors";
+import { header_font_size } from "../../styles/fonts";
 
 const useStyles = makeStyles((_) => ({
   container: {

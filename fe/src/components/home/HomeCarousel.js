@@ -1,14 +1,11 @@
 import Carousel from "react-multi-carousel";
-
 //@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
-
 //@stylying
 import "react-multi-carousel/lib/styles.css";
-import { gray } from "../styles/colors";
-
+import { gray } from "../../styles/colors";
 //@components
-import CarouselItem from "./CarouselItem";
+import HomeCarouselItem from "./HomeCarouselItem";
 
 const responsive = {
   superLargeDesktop: {
@@ -37,11 +34,10 @@ const responsive = {
 const useStyles = makeStyles({
   background: {
     backgroundColor: gray,
-  }
+  },
 });
 
-//fetch data from backend for the items
-
+//TODO: fetch data from backend for the items
 const data = [
   {
     name: "ACTIVE CONTRIBUTERS",
@@ -94,19 +90,23 @@ const data = [
     growth: +163.50
   }
 ]
-function Carousel2() {
+
+function HomeCarrousel() {
   const { background } = useStyles();
 
   return (
-    <div>
-      <Carousel className={background} responsive={responsive}>
-        {data.map((element) => {
-            return (<CarouselItem name={element.name} value={element.value} growth={element.growth}/>)
-          })       
-        }
-      </Carousel>
-    </div>
+    <Carousel className={background} responsive={responsive}>
+      {data.map((element) => {
+        return (
+          <HomeCarouselItem
+            name={element.name}
+            value={element.value}
+            growth={element.growth}
+          />
+        );
+      })}
+    </Carousel>
   );
 }
 
-export default Carousel2;
+export default HomeCarrousel;

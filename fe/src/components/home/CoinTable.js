@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-
 //@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -10,16 +9,13 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-
 //@core-material-ui:icons
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
-
 //@components
-import TinyChart from "./TinyChart";
-
-//@stylying
-import { lightGreen, darkGray, red, green } from "../styles/colors";
+import TinyChart from "../TinyChart";
+//@styling
+import { lightGreen, darkGray, red, green } from "../../styles/colors";
 
 const useStyles = makeStyles({
   table: {
