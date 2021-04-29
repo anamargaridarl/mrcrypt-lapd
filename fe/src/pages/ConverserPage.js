@@ -4,8 +4,7 @@ import PageHeader from "../components/PageHeader";
 import TopBar from "../components/TopBar";
 import Footer from "../components/Footer";
 import Container from "@material-ui/core/Container";
-
-//@stylying
+//@styling
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({

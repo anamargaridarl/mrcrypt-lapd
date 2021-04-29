@@ -1,7 +1,8 @@
+import React from "react";
 import Carousel from "react-multi-carousel";
 //@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
-//@stylying
+//@styling
 import "react-multi-carousel/lib/styles.css";
 import { gray } from "../../styles/colors";
 //@components

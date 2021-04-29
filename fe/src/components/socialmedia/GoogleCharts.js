@@ -5,7 +5,7 @@ import LineCharts from "../LineCharts";
 //@materialui-core
 import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid";
-//@stylying
+//@styling
 import { purple } from "../../styles/colors";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -23,48 +23,67 @@ const useStyles = makeStyles({
   },
 });
 
+const data = [
+  {
+    name: "2008",
+    pv: 2400,
+  },
+  {
+    name: "2010",
+    pv: 1398,
+  },
+  {
+    name: "2012",
+    pv: 9800,
+  },
+  {
+    name: "2014",
+    pv: 3908,
+  },
+  {
+    name: "2016",
+    pv: 4800,
+  },
+  {
+    name: "2018",
+    pv: 3800,
+  },
+  {
+    name: "2020",
+    pv: 4300,
+  },
+];
+
+//TODO: add listValues correspondent to the selects
+//for now using the same list for all (mock structure)
+const list = [
+  { id: 1, name: "Bitcoin" },
+  { id: 2, name: "Titcoin" },
+  { id: 3, name: "Xitcoin" },
+  { id: 4, name: "Mitcoin" },
+];
+
 export default function GoogleCharts() {
-  const data = [
-    {
-      name: "Page A",
-      pv: 2400,
-    },
-    {
-      name: "Page B",
-      pv: 1398,
-    },
-    {
-      name: "Page C",
-      pv: 9800,
-    },
-    {
-      name: "Page D",
-      pv: 3908,
-    },
-    {
-      name: "Page E",
-      pv: 4800,
-    },
-    {
-      name: "Page F",
-      pv: 3800,
-    },
-    {
-      name: "Page G",
-      pv: 4300,
-    },
-  ];
-  const list = [
-    { id: 1, name: "bitcoin" },
-    { id: 2, name: "titcoin" },
-    { id: 3, name: "xitcoin" },
-    { id: 4, name: "mitcoin" },
-  ];
-  const [coin, setCoin] = useState("bitcoin");
+  const [coin, setCoin] = useState("Bitcoin");
+  const [location, setLocation] = useState("Bitcoin");
+  const [time, setTime] = useState("Bitcoin");
+  const [searchType, setSearchType] = useState("Bitcoin");
   const { container, title, blocks } = useStyles();
 
   const handleCoin = (e) => {
     setCoin(e);
+  };
+
+  const handleLocation = (e) => {
+    setLocation(e);
+  };
+
+  const handleTime = (e) => {
+    setTime(e);
+  };
+
+  const handleSearchType = (e) => {
+    setSearchType(e);
   };
 
   return (
@@ -90,25 +109,26 @@ export default function GoogleCharts() {
           >
             <Grid item xs={12} sm={12} md={4} lg={4}>
               <Select
-                handleChangeParent={handleCoin}
+                handleChangeParent={handleLocation}
                 listValues={list}
-                actualElement={coin}
-                title={"Coin"}
+                actualElement={location}
+                title={"Location"}
               ></Select>
             </Grid>
             <Grid item xs={12} sm={12} md={4} lg={4}>
               <Select
-                handleChangeParent={handleCoin}
+                handleChangeParent={handleTime}
                 listValues={list}
-                actualElement={coin}
-                title={"Coin"}
+                actualElement={time}
+                title={"Time"}
               ></Select>
             </Grid>
             <Grid item xs={12} sm={12} md={4} lg={4}>
               <Select
+                handleChangeParent={handleSearchType}
                 listValues={list}
-                actualElement={coin}
-                title={"Coin"}
+                actualElement={searchType}
+                title={"Type of Search"}
               ></Select>
             </Grid>
           </Grid>

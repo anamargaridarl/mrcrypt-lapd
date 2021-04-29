@@ -2,7 +2,7 @@ import React from "react";
 //@materialui-core
 import Avatar from "@material-ui/core/Avatar";
 import { Grid, makeStyles, Paper } from "@material-ui/core";
-//@stylying
+//@styling
 import { purple, white } from "../../styles/colors";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,6 +20,9 @@ const useStyles = makeStyles((theme) => ({
     padding: "0.5em",
     justifyContent: "center",
   },
+  columns: {
+    borderRight: "2px solid gray",
+  },
 }));
 
 export default function SocialCarouselItem({ data }) {
@@ -32,14 +35,12 @@ export default function SocialCarouselItem({ data }) {
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Grid container justify="space-between">
             <Avatar className={classes.iconRank}>#1</Avatar>
-
             <p> {data.title}</p>
-
             <img alt="Coin" width={"50px"} src={data.imageSrc} />
           </Grid>
         </Grid>
         <Grid container direction="row" justify="space-between">
-          <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Grid item className={classes.columns} xs={12} sm={12} md={6} lg={6}>
             <p> WEIGHTED AVG RANK</p>
             <b> {data.weightedRank} </b>
           </Grid>
@@ -48,7 +49,6 @@ export default function SocialCarouselItem({ data }) {
               {" "}
               <b> {data.engagementRank} </b> ENGAGEMENT RANK
             </p>
-
             <p className={classes.rightRankSide}>
               {" "}
               <b> {data.followerRank} </b> FOLLOWER RANK

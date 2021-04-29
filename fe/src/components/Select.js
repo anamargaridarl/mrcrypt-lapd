@@ -4,14 +4,6 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Select from "@material-ui/core/Select";
 import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
-//@stylying
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles({
-  table: {
-    padding: "0.5em 3.5em",
-  }
-});
 
 export default function SelectElement({
   listValues,
@@ -19,14 +11,12 @@ export default function SelectElement({
   title,
   handleChangeParent,
 }) {
-  const classes = useStyles();
-
   const [values] = useState(listValues);
   const [currentValue, setCurrentValue] = useState(actualElement);
 
   const handleChange = (e) => {
-    setCurrentValue(e.value);
-    handleChangeParent(e.value);
+    setCurrentValue(e.target.value);
+    handleChangeParent(e.target.value);
   };
 
   return (
@@ -40,7 +30,7 @@ export default function SelectElement({
           onChange={handleChange}
         >
           {values.map((element) => {
-            return <MenuItem value={element.id}> {element.name}</MenuItem>;
+            return <MenuItem key={element.id} value={element.name}> {element.name}</MenuItem>;
           })}
         </Select>
       </FormControl>

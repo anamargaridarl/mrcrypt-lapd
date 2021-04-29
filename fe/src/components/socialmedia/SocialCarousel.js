@@ -1,3 +1,4 @@
+import React from "react";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 //@components
@@ -87,12 +88,14 @@ const data = [
   }
 ];
 
+let i = 0;
 function SocialCarrousel() {
   return (
     <Carousel responsive={responsive}>
       {data.map((element) => {
         return (
           <SocialCarouselItem
+            key= {i++}
             data = {element}
           />
         );
