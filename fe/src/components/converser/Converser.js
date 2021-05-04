@@ -18,16 +18,21 @@ const axios = require('axios');
 const useStyles = makeStyles((_) => ({
   container: {
     backgroundColor: gray,
+    flex: 1,
+    flexDirection: 'column',
   },
-  leftItems: {
-    paddingLeft: "3em",
-    paddingRight: "6em",
-    paddingTop: "1em",
+  inputs: {
+    flex: 5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  rightItems: {
-    paddingLeft: "6em",
-    paddingRight: "3em",
+  inputColumn: {
+    flex: 1,
+    flexDirection: 'column',
+    marginLeft: "3em",
+    marginRight: "3em",
     paddingTop: "1em",
+    // justifyContent: "space-between"
   },
   title: {
     fontWeight: 1000,
@@ -42,8 +47,10 @@ const useStyles = makeStyles((_) => ({
     "& .MuiInputBase-input": {
       backgroundColor: white,
     },
+    marginBottom: "2em",
   },
   button: {
+    flex: 1,
     backgroundColor: purple,
     color: white,
     margin: "3em",
@@ -65,7 +72,7 @@ export default function Converser() {
   const [nameTo, setCurrencyTo] = React.useState("ETH");
   const [valueFrom, setValueFrom] = React.useState(0);
   const [valueTo, setValueTo] = React.useState(0);
-  const [currencies, setCurrencies] = React.useState([{}]);
+  const [currencies, setCurrencies] = React.useState([{ name: 'Bitcoin', code: 'BTC'}, { name: 'Ethereum', code: 'ETH'}]);
 
   useEffect(() => {
     getCoins();
@@ -85,6 +92,22 @@ export default function Converser() {
     }
   };
 
+  const conversion = () => {
+    console.log(nameFrom,nameTo,valueFrom)
+    axios({
+      method: 'get',
+      url: 'http://localhost:8080/api/converser/convert',
+      params: {
+        from: nameFrom,
+        to: nameTo,
+        value: valueFrom,
+      }
+    })
+    .then((response) => {
+      setValueTo(response.data.value);
+    });
+  };
+
   const handleDropFrom = (event) => {
     setCurrencyFrom(event.target.value);
   };
@@ -99,52 +122,13 @@ export default function Converser() {
     setValueFrom(event.target.value);
   };
 
-  const handleValueTo = (event) => {
-    if (parseInt(event.target.value) < 0)
-      event.target.value = parseInt(event.target.value) + 1;
-    setValueTo(event.target.value);
-  };
-
   return (
-    <Container maxWidth="lg" className={classes.container}>
-      <Grid container justify="space-around">
-        <Grid className={classes.leftItems} item xs={12} sm={6} md={6} lg={6}>
-          <Grid className={classes.title} container justify="flex-start">
+    <Container maxWidth="lg" className={classes.container} spacing={2}> {/* whole component */}
+      <Grid container className={classes.inputs} xs={12}> {/* inputs */}
+        <Grid container className={classes.inputColumn} xs={12} sm={12} md={5} lg={5}> {/* 'from' column */}
+          <Grid className={classes.title} container justify="flex-start" >
             <p>From</p>
           </Grid>
-        </Grid>
-        <Grid className={classes.rightItems} item xs={12} sm={6} md={6} lg={6}>
-          <Grid className={classes.title} container justify="flex-start">
-            <p>To</p>
-          </Grid>
-        </Grid>
-        <Grid className={classes.leftItems} item xs={12} sm={6} md={6} lg={6}>
-          <Grid className={classes.input} container>
-            <TextField
-              className={classes.textFields}
-              id="convert-from"
-              type="number"
-              InputLabelProps={{ shrink: true }}
-              defaultValue="0"
-              onChange={handleValueFrom}
-              variant="outlined"
-            ></TextField>
-          </Grid>
-        </Grid>
-        <Grid className={classes.rightItems} item xs={12} sm={6} md={6} lg={6}>
-          <Grid className={classes.input} container>
-            <TextField
-              className={classes.textFields}
-              id="convert-to"
-              type="number"
-              InputLabelProps={{ shrink: true }}
-              defaultValue="0"
-              onChange={handleValueTo}
-              variant="outlined"
-            ></TextField>
-          </Grid>
-        </Grid>
-        <Grid className={classes.leftItems} item xs={12} sm={6} md={6} lg={6}>
           <Grid className={classes.input} container>
             <TextField
               className={classes.textFields}
@@ -163,8 +147,22 @@ export default function Converser() {
               ))}
             </TextField>
           </Grid>
+          <Grid className={classes.input} container>
+            <TextField
+              className={classes.textFields}
+              id="convert-from"
+              type="number"
+              InputLabelProps={{ shrink: true }}
+              defaultValue="0"
+              onChange={handleValueFrom}
+              variant="outlined"
+            ></TextField>
+          </Grid>
         </Grid>
-        <Grid className={classes.rightItems} item xs={12} sm={6} md={6} lg={6}>
+        <Grid container className={classes.inputColumn} xs={12} sm={12} md={5} lg={5}> {/* 'to' column */}
+          <Grid className={classes.title} container justify="flex-start">
+            <p>To</p>
+          </Grid>
           <Grid className={classes.input} container>
             <TextField
               className={classes.textFields}
@@ -183,21 +181,21 @@ export default function Converser() {
               ))}
             </TextField>
           </Grid>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12}>
-          <ConversationRatio
-            valueFrom={valueFrom}
-            valueTo={valueTo}
-            nameFrom={nameFrom}
-            nameTo={nameTo}
-          />
-        </Grid>
-        <Grid item xs={12} sm={12} md={12} lg={12}>
-          <Grid className={classes.input} container justify="center">
-            <Button className={classes.button} variant="contained" >
-              Convert
-            </Button>
+          <Grid className={classes.input} container>
+            <ConversationRatio
+              valueFrom={valueFrom}
+              valueTo={valueTo}
+              nameFrom={nameFrom}
+              nameTo={nameTo}
+            />
           </Grid>
+        </Grid>
+      </Grid>
+      <Grid item xs={12}> {/* button */}
+        <Grid className={classes.input} container justify="center">
+          <Button className={classes.button} variant="contained" onClick={conversion}>
+            Convert
+          </Button>
         </Grid>
       </Grid>
     </Container>
