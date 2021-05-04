@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 //@core-material-ui
 import {
   Grid,
@@ -13,6 +13,7 @@ import ConversationRatio from "./ConversionRatio";
 //@styling
 import { gray, darkGray, white, purple } from "../../styles/colors";
 import { header_font_size } from "../../styles/fonts";
+const axios = require('axios');
 
 const useStyles = makeStyles((_) => ({
   container: {
@@ -57,56 +58,51 @@ const useStyles = makeStyles((_) => ({
   },
 }));
 
-//TODO: call backend for available coins
-const currencies = [
-  {
-    value: "BTC",
-    label: "Bitcoin",
-  },
-  {
-    value: "ETC",
-    label: "Ethereum",
-  },
-  {
-    value: "DOGE",
-    label: "Dogecoin",
-  },
-  {
-    value: "ADA",
-    label: "Cardano",
-  },
-];
-
 export default function Converser() {
   const classes = useStyles();
 
-  let [nameFrom, setCurrencyFrom] = React.useState("BTC");
-  let [nameTo, setCurrencyTo] = React.useState("ETC");
-  let [valueFrom, setValueFrom] = React.useState(0);
-  let [valueTo, setValueTo] = React.useState(0);
+  const [nameFrom, setCurrencyFrom] = React.useState("BTC");
+  const [nameTo, setCurrencyTo] = React.useState("ETH");
+  const [valueFrom, setValueFrom] = React.useState(0);
+  const [valueTo, setValueTo] = React.useState(0);
+  const [currencies, setCurrencies] = React.useState([{}]);
+
+  useEffect(() => {
+    getCoins();
+  },[]);
+
+  const getCoins = async () => {
+    try {
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/converser/coins'
+      })
+      .then((response) => {
+        setCurrencies(response.data.coins);
+      });  
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleDropFrom = (event) => {
     setCurrencyFrom(event.target.value);
-    nameFrom = event.target.value;
   };
 
   const handleDropTo = (event) => {
     setCurrencyTo(event.target.value);
-    nameTo = event.target.value;
   };
 
   const handleValueFrom = (event) => {
     if (parseInt(event.target.value) < 0)
       event.target.value = parseInt(event.target.value) + 1;
     setValueFrom(event.target.value);
-    valueFrom = event.target.value;
   };
 
   const handleValueTo = (event) => {
     if (parseInt(event.target.value) < 0)
       event.target.value = parseInt(event.target.value) + 1;
     setValueTo(event.target.value);
-    valueTo = event.target.value;
   };
 
   return (
@@ -161,8 +157,8 @@ export default function Converser() {
               variant="outlined"
             >
               {currencies.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+                <MenuItem key={option.name} value={option.code}>
+                  {`${option.code} - ${option.name}`}
                 </MenuItem>
               ))}
             </TextField>
@@ -181,8 +177,8 @@ export default function Converser() {
               variant="outlined"
             >
               {currencies.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+                <MenuItem key={option.name} value={option.code}>
+                  {`${option.code} - ${option.name}`}
                 </MenuItem>
               ))}
             </TextField>
@@ -198,7 +194,7 @@ export default function Converser() {
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Grid className={classes.input} container justify="center">
-            <Button className={classes.button} variant="contained">
+            <Button className={classes.button} variant="contained" >
               Convert
             </Button>
           </Grid>
