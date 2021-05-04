@@ -42,7 +42,7 @@ module.exports = (app) => {
     */
     router.get('/convert', validators.convert, async (req, res, next) => {
         try {
-            const { from, to, value } = req.params;
+            const { from, to, value } = req.query;
             const convertUrl = `${requestConfig.url}/tools/price-conversion`;
             const convertConfig = { ...requestConfig, url: convertUrl };
             convertConfig.params = {
@@ -51,7 +51,7 @@ module.exports = (app) => {
                 convert: to,
             };
             const response = await axios(convertConfig);
-            const converted = response.data.data.quote[to].price;
+            const converted = response.data.data.quote[to].price.toFixed(5);
             return res.status(HTTPStatus.StatusCodes.OK).json({ value: converted });
         } catch (err) {
             return next(err);
