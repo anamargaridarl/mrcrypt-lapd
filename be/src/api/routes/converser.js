@@ -1,18 +1,36 @@
 const HTTPStatus = require('http-status-codes');
+const axios = require('axios');
+const config = require('../../config/env');
+const validators = require('../middleware/validators/converser');
 const { Router } = require('express');
 const router = Router();
 
 module.exports = (app) => {
     app.use('/converser', router);
 
+    const requestConfig = {
+        method: 'get',
+        url: 'https://pro-api.coinmarketcap.com/v1',
+        headers: {
+            'X-CMC_PRO_API_KEY': config.cmc_api_key,
+        },
+    };
+
     /**
     * Retrieves cryptocurrencies
     */
-    router.get('/coins', (_, res, next) => {
+    router.get('/coins', async (_, res, next) => {
         try {
-            // calls to CMC API
-            console.info('quiero monedas!');
-            return res.status(HTTPStatus.StatusCodes.OK).send();
+            const coinsUrl = `${requestConfig.url}/cryptocurrency/listings/latest`;
+            const coinsConfig = { ...requestConfig, url: coinsUrl };
+            coinsConfig.params = {
+                sort: 'symbol',
+                sort_dir: 'asc',
+                cryptocurrency_type: 'coins',
+            };
+            const response = await axios(coinsConfig);
+            const coins = response.data.data.map((coin) => ({ name: coin.name, code: coin.symbol }));
+            return res.status(HTTPStatus.StatusCodes.OK).json({ coins: coins });
         } catch (err) {
             return next(err);
         }
@@ -21,11 +39,19 @@ module.exports = (app) => {
     /**
     * Convert currencies
     */
-    router.get('/convert', (req, res, next) => {
+    router.get('/convert', validators.convert, async (req, res, next) => {
         try {
             const { from, to, value } = req.body;
-            console.info(from, to, value);
-            return res.status(HTTPStatus.StatusCodes.OK).send();
+            const convertUrl = `${requestConfig.url}/tools/price-conversion`;
+            const convertConfig = { ...requestConfig, url: convertUrl };
+            convertConfig.params = {
+                amount: value,
+                symbol: from,
+                convert: to,
+            };
+            const response = await axios(convertConfig);
+            const converted = response.data.data.quote[to].price;
+            return res.status(HTTPStatus.StatusCodes.OK).json({ value: converted });
         } catch (err) {
             return next(err);
         }
