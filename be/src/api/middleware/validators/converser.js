@@ -1,22 +1,22 @@
-const { body } = require('express-validator');
+const { query } = require('express-validator');
 const { useExpressValidators } = require('../errorHandler');
 const ValidationMotives = require('./validationMotives');
 
 
 const convert = useExpressValidators([
-    body('from', ValidationMotives.DEFAULT)
+    query('from', ValidationMotives.DEFAULT)
         .exists().withMessage(ValidationMotives.REQUIRED).bail()
         .isString().withMessage(ValidationMotives.STRING).bail()
         .trim()
         .toUpperCase(),
 
-    body('to', ValidationMotives.DEFAULT)
+    query('to', ValidationMotives.DEFAULT)
         .exists().withMessage(ValidationMotives.REQUIRED).bail()
         .isString().withMessage(ValidationMotives.STRING).bail()
         .trim()
         .toUpperCase(),
 
-    body('value', ValidationMotives.DEFAULT)
+    query('value', ValidationMotives.DEFAULT)
         .exists().withMessage(ValidationMotives.REQUIRED).bail()
         .custom((num) => !isNaN(num)).withMessage(ValidationMotives.NUMBER),
 ]);

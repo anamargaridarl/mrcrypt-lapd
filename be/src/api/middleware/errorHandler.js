@@ -10,8 +10,8 @@ const useExpressValidators = (validators) => async (req, res, next) => {
     if (errors.isEmpty()) {
         return next();
     }
-
-    return next(createError(HTTPStatus.StatusCodes.BAD_REQUEST));
+    console.error(errors.array());
+    return next(createError(HTTPStatus.StatusCodes.BAD_REQUEST), errors.array());
 };
 
 module.exports = {

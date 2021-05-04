@@ -27,7 +27,7 @@ module.exports = (app) => {
                 sort: 'symbol',
                 sort_dir: 'asc',
                 cryptocurrency_type: 'coins',
-                limit: 5000,
+                limit: 5,
             };
             const response = await axios(coinsConfig);
             const coins = response.data.data.map((coin) => ({ name: coin.name, code: coin.symbol }));
@@ -42,7 +42,7 @@ module.exports = (app) => {
     */
     router.get('/convert', validators.convert, async (req, res, next) => {
         try {
-            const { from, to, value } = req.body;
+            const { from, to, value } = req.params;
             const convertUrl = `${requestConfig.url}/tools/price-conversion`;
             const convertConfig = { ...requestConfig, url: convertUrl };
             convertConfig.params = {
