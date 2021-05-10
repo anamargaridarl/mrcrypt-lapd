@@ -32,7 +32,6 @@ const useStyles = makeStyles((_) => ({
     marginLeft: "3em",
     marginRight: "3em",
     paddingTop: "1em",
-    // justifyContent: "space-between"
   },
   title: {
     fontWeight: 1000,
@@ -68,8 +67,8 @@ const useStyles = makeStyles((_) => ({
 export default function Converser() {
   const classes = useStyles();
 
-  const [nameFrom, setCurrencyFrom] = React.useState("BTC");
-  const [nameTo, setCurrencyTo] = React.useState("ETH");
+  const [nameFrom, setCurrencyFrom] = React.useState("");
+  const [nameTo, setCurrencyTo] = React.useState("");
   const [valueFrom, setValueFrom] = React.useState(0);
   const [valueTo, setValueTo] = React.useState(0);
   const [currencies, setCurrencies] = React.useState([{ name: 'Bitcoin', code: 'BTC'}, { name: 'Ethereum', code: 'ETH'}]);
@@ -93,7 +92,6 @@ export default function Converser() {
   };
 
   const conversion = () => {
-    console.log(nameFrom,nameTo,valueFrom)
     axios({
       method: 'get',
       url: 'http://localhost:8080/api/converser/convert',
@@ -117,15 +115,15 @@ export default function Converser() {
   };
 
   const handleValueFrom = (event) => {
-    if (parseInt(event.target.value) < 0)
-      event.target.value = parseInt(event.target.value) + 1;
+    if (parseFloat(event.target.value) < 0)
+      event.target.value = parseFloat(event.target.value) + 1;
     setValueFrom(event.target.value);
   };
 
   return (
-    <Container maxWidth="lg" className={classes.container} spacing={2}> {/* whole component */}
-      <Grid container className={classes.inputs} xs={12}> {/* inputs */}
-        <Grid container className={classes.inputColumn} xs={12} sm={12} md={5} lg={5}> {/* 'from' column */}
+    <Container maxWidth="lg" className={classes.container} > {/* whole component */}
+      <Grid container className={classes.inputs} item xs={12}> {/* inputs */}
+        <Grid container className={classes.inputColumn} item xs={12} sm={12} md={5} lg={5}> {/* 'from' column */}
           <Grid className={classes.title} container justify="flex-start" >
             <p>From</p>
           </Grid>
@@ -159,7 +157,7 @@ export default function Converser() {
             ></TextField>
           </Grid>
         </Grid>
-        <Grid container className={classes.inputColumn} xs={12} sm={12} md={5} lg={5}> {/* 'to' column */}
+        <Grid container className={classes.inputColumn} item xs={12} sm={12} md={5} lg={5}> {/* 'to' column */}
           <Grid className={classes.title} container justify="flex-start">
             <p>To</p>
           </Grid>

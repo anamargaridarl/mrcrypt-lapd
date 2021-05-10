@@ -51,7 +51,7 @@ module.exports = (app) => {
                 convert: to,
             };
             const response = await axios(convertConfig);
-            const converted = response.data.data.quote[to].price.toFixed(5);
+            const converted = parseFloat(response.data.data.quote[to].price.toFixed(5));
             return res.status(HTTPStatus.StatusCodes.OK).json({ value: converted });
         } catch (err) {
             return next(err);

@@ -21,7 +21,7 @@ export default function ConverserPage() {
       <TopBar />
       <PageHeader name="Converser"></PageHeader>
       <Container className={table} >
-        <Converser></Converser>
+        <Converser />
       </Container>
       <Footer />
     </>
