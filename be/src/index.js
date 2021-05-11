@@ -1,10 +1,23 @@
+const config = require('./config/env');
+const setupLoaders = require('./loaders');
 const express = require('express');
-require('dotenv').config();
-const app = express();
 const port = process.env.PORT;
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+const app = express();
 
-app.get('/test', (req, res) => {
-  res.send({arg: 'Backend is running'});
-});
+const startServer = async () => {
+    await setupLoaders({ expressApp: app });
+
+    app.listen(config.port, (err) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+
+        console.info(`Listening on port ${port}`);
+    });
+};
+
+startServer();
+
+module.exports = app;
