@@ -1,6 +1,7 @@
 const HTTPStatus = require('http-status-codes');
 const axios = require('axios');
 const config = require('../../config/env');
+const googleTrends = require('google-trends-api');
 const { Router } = require('express');
 const router = Router();
 
@@ -41,5 +42,24 @@ module.exports = (app) => {
         } catch (err) {
             return next(err);
         }
+    });
+
+    /**
+     * Get the top 10 Cryptocurrency related searches
+     */
+    router.get('/topCryptoSearches', (_, res, next) => {
+        googleTrends.relatedQueries({ keyword: 'cryptocurrency', category: 814 })
+            .then((data) => {
+                const results = JSON.parse(data).default.rankedList;
+                const merged = results[0].rankedKeyword.map((item, i) => ({
+                    ...item, rank: item.value, ...results[1].rankedKeyword[i]
+                }));
+                const parsed = merged.map((item) => ({ rank: item.rank, name: item.query, increase: item.value })).slice(0, 10);
+                res.status(HTTPStatus.StatusCodes.OK).json({ results: parsed });
+            })
+            .catch((err) => {
+                console.error(err);
+                return next(err);
+            });
     });
 };
