@@ -1,8 +1,10 @@
 const HTTPStatus = require('http-status-codes');
 const axios = require('axios');
 const config = require('../../config/env');
+const validators = require('../middleware/validators/socialMediaTrends');
 const googleTrends = require('google-trends-api');
 const { Router } = require('express');
+const dateConvert = require('../middleware/dateConverter');
 const router = Router();
 
 module.exports = (app) => {
@@ -56,6 +58,33 @@ module.exports = (app) => {
                 }));
                 const parsed = merged.map((item) => ({ rank: item.rank, name: item.query, increase: item.value })).slice(0, 10);
                 res.status(HTTPStatus.StatusCodes.OK).json({ results: parsed });
+            })
+            .catch((err) => {
+                console.error(err);
+                return next(err);
+            });
+    });
+
+    /**
+     * Get Coin's Interest Over Time in Google Searches
+     * @param {*} coin - Name of the crypto coin to search for
+     * @param {*} location - Country code of the region to search in. If absent, default to worldwide. Maximum length is 3. Ex: US, PT.
+     * @param {*} timePeriod - Time interval to search for. Valid values: "last week", "last month", "last year", and "last decade".
+     */
+    router.get('/googleInterest', validators.googleInterest, (req, res, next) => {
+        const { coin, location, timePeriod } = req.query;
+
+        const params = {
+            keyword: coin,
+            category: 814,
+            geo: location ? location : undefined,
+            startTime: dateConvert(timePeriod),
+        };
+        googleTrends.interestOverTime(params)
+            .then((data) => {
+                const results = JSON.parse(data).default.timelineData;
+                const parsedResults = results.map((item) => ({ name: item.formattedTime, pv: item.value[0] }));
+                res.status(HTTPStatus.StatusCodes.OK).json({ evolution: parsedResults });
             })
             .catch((err) => {
                 console.error(err);
