@@ -20,14 +20,25 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CoinInfo() {
+export default function CoinInfo(props) {
   const { container } = useStyles();
+  console.log(props);
 
-  return (
-    <Grid container className={container}>
-      <img width={"60px"} alt={coinData.name} src={coinData.imagePath} />
-      <h2 style={{ marginLeft: "2em" }}>{coinData.name}</h2>
-      <p> {coinData.description}</p>
-    </Grid>
-  );
+  const data = props.data;
+
+  if (props === null || !props.data) {
+    return (
+      <div>Loading...</div>
+
+    );
+  }
+  else {
+    return ( <Grid container className={container}>
+      <img width={"60px"} alt={data.name} src={data.logo} />
+      <h2 style={{ marginLeft: "2em" }}>{data.name}</h2>
+      <p> {data.description}</p>
+  </Grid>);
+  }
+
+
 }
