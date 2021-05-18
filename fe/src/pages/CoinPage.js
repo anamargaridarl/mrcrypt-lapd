@@ -31,6 +31,7 @@ export default function CoinPage() {
   const { container, table, intro } = useStyles();
 
   const [coinInfo, setCoinInfo] = React.useState(null);
+  const [coinStats, setCoinStats] = React.useState(null);
 
   useEffect(() => {
     const getCoinInfo = async () => {
@@ -40,6 +41,7 @@ export default function CoinPage() {
           url: `http://localhost:8080/api/coins/${coinName}/data`
         })
         .then((response) => {
+          console.log("calling");
           setCoinInfo(response.data.value);
           if (response.status !== 200) {
             throw new Error();
@@ -49,10 +51,33 @@ export default function CoinPage() {
         console.error(err);
       }
     };
-
     //getCoinInfo();
 
 }, [coinName]);
+
+  useEffect(() => {
+    const getCoinStats = async() => {
+      try {
+        if (coinInfo === null) {
+          return;
+        } 
+        axios({
+          method: 'get',
+          url: `http://localhost:8080/api/coins/${coinInfo.symbol}/stats`
+        })
+        .then((response) => {
+          setCoinStats(response.data.value);
+          if (response.status !== 200) {
+            throw new Error();
+          }
+        });  
+      } catch(err) {
+        console.log(err);
+      }
+    }
+
+    //getCoinStats();
+  }, [coinInfo])
   
 
 
@@ -76,7 +101,7 @@ export default function CoinPage() {
           </Grid>
           <Grid container item xs={12} sm={12} md={4} lg={4} direction="column">
             <CoinValue></CoinValue>
-            <CoinStats></CoinStats>
+            <CoinStats data={coinStats}></CoinStats>
           </Grid>
         </Grid>
       </Container>

@@ -16,6 +16,43 @@ module.exports = (app) => {
         },
     };
 
+    router.get('/:coinSymbol/stats', async (req, res, next) => {
+        const PARAMS = ['average_transaction_value', 'block_height', 'hashrate', 'difficulty', 'block_time', 'block_size', 'current_suply'];
+
+        try {
+            const { coinSymbol } = req.params;
+            const url = `https://min-api.cryptocompare.com/data/blockchain/latest?fsym=${coinSymbol}`;
+
+            const config = {
+                method: 'get',
+                url: url,
+                headers: {
+                    Authorization: 'Apikey fe8a657f41319b69760fee377170fa16fa7d07da1a2583b209b1baf059b0e631'
+
+                }
+            };
+
+            const { status, data } = await axios(config);
+
+            if (status !== 200) {
+                return res.sendStatus(status);
+            }
+
+            const responseProcessed = {};
+
+            PARAMS.forEach((param) => {
+                responseProcessed[param] = data.Data[param];
+            });
+
+
+            return res.status(200).json ({ value: responseProcessed });
+        } catch (error) {
+            return next(error);
+        }
+
+
+    });
+
     router.get('/:coinName/data', async (req, res, next) => {
 
         const PARAMS = ['slug', 'description', 'tags', 'name', 'symbol', 'logo'];
