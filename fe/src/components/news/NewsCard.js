@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
-import { white, purple } from "../../styles/colors";
+import { white, purple, black } from "../../styles/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto 0",
     justifyContent: "center",
     fontSize: "11px",
+  },
+  url: {
+    color: black,
+    textDecoration: "none",
   },
   title: {
     fontSize: "14px",
@@ -62,23 +66,30 @@ const useStyles = makeStyles((theme) => ({
 const NewsCard = (props) => {
   const [readMore, setReadMore] = useState(false);
   const classes = useStyles();
-  const { title, content, extraContent, image, tags } = props;
+  const { url, title, content, extraContent, image, tags } = props;
 
   return (
     <Card className={classes.root}>
       <img className={classes.media} src={image} alt="News Source" />
       <CardContent className={classes.content}>
-        <p className={classes.title}>{title}</p>
+        <a href={url} className={classes.url}>
+          <p className={classes.title}>{title}</p>
+        </a>
         <p>
-          {content} {readMore ? extraContent : " ..."}{" "}
-          <a
-            className={classes.readMore}
-            onClick={() => {
-              setReadMore(!readMore);
-            }}
-          >
-            {readMore ? "(read less)" : "(read more)"}
-          </a>
+          {content}{" "}
+          {extraContent.length > 0 ? (readMore ? extraContent : " ...") : ""}
+          {extraContent.length > 0 ? (
+            <a
+              className={classes.readMore}
+              onClick={() => {
+                setReadMore(!readMore);
+              }}
+            >
+              {readMore ? " (read less)" : " (read more)"}
+            </a>
+          ) : (
+            ""
+          )}
         </p>
         <Divider className={classes.line} />
         <ul className={classes.tags}>
