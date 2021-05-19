@@ -16,6 +16,39 @@ module.exports = (app) => {
         },
     };
 
+
+    router.get('/:coinSymbol/price', async (req, res, next) => {
+        try {
+
+            const { coinSymbol } = req.params;
+            const url = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,${coinSymbol}&tsyms=USD`;
+
+            const config = {
+                method: 'get',
+                url: url,
+                headers: {
+                    Authorization: 'Apikey fe8a657f41319b69760fee377170fa16fa7d07da1a2583b209b1baf059b0e631'
+
+                }
+            };
+
+            const { status, data } = await axios(config);
+
+            if (status !== 200) {
+                return res.sendStatus(status);
+            }
+
+            const price = data[coinSymbol.toUpperCase()].USD;
+            const bitcoinQuantity = data.BTC.USD / price;
+            const ethQuantity = data.ETH.USD / price;
+
+
+            return res.status(200).json ({ value: { price, bitcoinQuantity, ethQuantity } });
+        } catch (error) {
+            return next(error);
+        }
+    });
+
     router.get('/:coinSymbol/stats', async (req, res, next) => {
         const PARAMS = ['average_transaction_value', 'block_height', 'hashrate', 'difficulty', 'block_time', 'block_size', 'current_suply'];
 

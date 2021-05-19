@@ -32,6 +32,7 @@ export default function CoinPage() {
 
   const [coinInfo, setCoinInfo] = React.useState(null);
   const [coinStats, setCoinStats] = React.useState(null);
+  const [coinValue, setCoinValue] = React.useState(null);
 
   useEffect(() => {
     const getCoinInfo = async () => {
@@ -51,11 +52,12 @@ export default function CoinPage() {
         console.error(err);
       }
     };
-    //getCoinInfo();
+    getCoinInfo();
 
 }, [coinName]);
 
   useEffect(() => {
+    
     const getCoinStats = async() => {
       try {
         if (coinInfo === null) {
@@ -76,7 +78,29 @@ export default function CoinPage() {
       }
     }
 
-    //getCoinStats();
+    const getCoinValue = async () =>{
+      try {
+        if (coinInfo === null) {
+          return;
+        } 
+        axios({
+          method: 'get',
+          url: `http://localhost:8080/api/coins/${coinInfo.symbol}/price`
+        })
+        .then((response) => {
+          console.log("calling 2");
+          setCoinValue(response.data.value);
+          console.log(response.data.value);
+          if (response.status !== 200) {
+            throw new Error();
+          }
+        });  
+      } catch(err) {
+        console.log(err);
+      }
+    }
+
+    getCoinValue()
   }, [coinInfo])
   
 
@@ -100,7 +124,7 @@ export default function CoinPage() {
             <CoinChart name={coinName}></CoinChart>
           </Grid>
           <Grid container item xs={12} sm={12} md={4} lg={4} direction="column">
-            <CoinValue></CoinValue>
+            <CoinValue data = {coinValue}></CoinValue>
             <CoinStats data={coinStats}></CoinStats>
           </Grid>
         </Grid>
