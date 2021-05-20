@@ -59,6 +59,7 @@ const defaultData = [
 const locations = [
   {id: 1, name: "US"},
   {id: 2, name: "PT"},
+  {id: 3, name: "WW"},
 ];
 
 const timePeriods = [
@@ -68,20 +69,26 @@ const timePeriods = [
   {id: 4, name: "last decade"},
 ];
 
+const searchType = [
+  {id: 1, name: "web searc ['images', 'news', 'youtube' or 'froogle']"}
+];
+
 export default function GoogleCharts() {
   const [coin, setCoin] = useState("Bitcoin");
-  const [coins, setCoins] = useState([{id: 1, name: "Bitcoin"}]);
+  const [coins, setCoins] = useState([{id: 1, name: ""}]);
   const [location, setLocation] = useState("US");
   const [time, setTime] = useState("last week");
-  const [searchType, setSearchType] = useState("Bananas");
+  const [searchType, setSearchType] = useState("");
   const [data, setData] = useState([]);
   const { container, title, blocks } = useStyles();
 
-
   useEffect(() => {
     getCoins();
-    getData();
   },[]);
+
+  useEffect(() => {
+    getData();
+  },[coin, location, time]);
 
   const getCoins = async () => {
     try {
@@ -92,7 +99,6 @@ export default function GoogleCharts() {
       .then((response) => {
         const fetchedCoins = response.data.coins.map((item, i) => ({id: i+1, name: item.name}))
         setCoins(fetchedCoins);
-        console.info(fetchedCoins, "cona", coins);
       });  
     } catch (err) {
       console.error(err);

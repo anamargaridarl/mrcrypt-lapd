@@ -68,8 +68,9 @@ module.exports = (app) => {
     /**
      * Get Coin's Interest Over Time in Google Searches
      * @param {*} coin - Name of the crypto coin to search for
-     * @param {*} location - Country code of the region to search in. If absent, default to worldwide. Maximum length is 3. Ex: US, PT.
+     * @param {*} location - Country code of the region to search in. If absent, default to worldwide. Maximum length is 3. Ex: US, PT, WW.
      * @param {*} timePeriod - Time interval to search for. Valid values: "last week", "last month", "last year", and "last decade".
+     * @param {*} searchType - The kind of Google Search to make. Ex: "web search", "image", "news".
      */
     router.get('/googleInterest', validators.googleInterest, (req, res, next) => {
         const { coin, location, timePeriod } = req.query;
@@ -77,7 +78,7 @@ module.exports = (app) => {
         const params = {
             keyword: coin,
             category: 814,
-            geo: location ? location : undefined,
+            geo: (location || location !== 'WW') ? location : undefined,
             startTime: dateConvert(timePeriod),
         };
         googleTrends.interestOverTime(params)
