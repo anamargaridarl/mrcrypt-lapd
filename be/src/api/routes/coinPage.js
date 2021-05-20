@@ -16,6 +16,91 @@ module.exports = (app) => {
         },
     };
 
+    router.get('/:coinSymbol/priceDay', async (req, res, next) => {
+        try {
+
+            const { coinSymbol } = req.params;
+            const url = `https://min-api.cryptocompare.com/data/v2/histoday?fsym=${coinSymbol}&tsym=USD&limit=10`;
+
+            const config = {
+                method: 'get',
+                url: url,
+                headers: {
+                    Authorization: 'Apikey fe8a657f41319b69760fee377170fa16fa7d07da1a2583b209b1baf059b0e631'
+
+                },
+            };
+
+            const { status, data } = await axios(config);
+
+            if (status !== 200) {
+                return res.sendStatus(status);
+            }
+
+            const processed = { from: new Date(data.Data.TimeFrom * 1000), to: new Date(data.Data.TimeTo * 1000), values: [] };
+
+            data.Data.Data.forEach((hourValues) => {
+                processed.values.push({
+                    time: new Date(hourValues.time * 1000),
+                    high: hourValues.high,
+                    low: hourValues.low,
+                    volumeFrom: hourValues.volumefrom,
+                    volumeTo: hourValues.volumeto
+                });
+            });
+
+
+            return res.status(200).json ({ value: processed });
+
+
+        } catch (error) {
+            return next(error);
+        }
+    });
+
+    router.get('/:coinSymbol/priceHistoryHour', async (req, res, next) => {
+
+        try {
+
+            const { coinSymbol } = req.params;
+            const url = `https://min-api.cryptocompare.com/data/v2/histohour?fsym=${coinSymbol}&tsym=USD&limit=10`;
+
+            const config = {
+                method: 'get',
+                url: url,
+                headers: {
+                    Authorization: 'Apikey fe8a657f41319b69760fee377170fa16fa7d07da1a2583b209b1baf059b0e631'
+
+                },
+            };
+
+            const { status, data } = await axios(config);
+
+            if (status !== 200) {
+                return res.sendStatus(status);
+            }
+
+            const processed = { from: new Date(data.Data.TimeFrom * 1000), to: new Date(data.Data.TimeTo * 1000), values: [] };
+
+            data.Data.Data.forEach((hourValues) => {
+                processed.values.push({
+                    time: new Date(hourValues.time * 1000),
+                    high: hourValues.high,
+                    low: hourValues.low,
+                    volumeFrom: hourValues.volumefrom,
+                    volumeTo: hourValues.volumeto
+                });
+            });
+
+
+            return res.status(200).json ({ value: processed });
+
+
+        } catch (error) {
+            return next(error);
+        }
+    });
+
 
     router.get('/:coinSymbol/price', async (req, res, next) => {
         try {
