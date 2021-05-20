@@ -30,6 +30,7 @@ module.exports = (app) => {
                 limit: 5,
             };
             const response = await axios(coinsConfig);
+            console.log(response)
             const coins = response.data.data.map((coin) => ({ name: coin.name, code: coin.symbol }));
             return res.status(HTTPStatus.StatusCodes.OK).json({ coins: coins });
         } catch (err) {
