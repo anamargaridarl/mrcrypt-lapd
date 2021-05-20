@@ -69,8 +69,12 @@ const timePeriods = [
   {id: 4, name: "last decade"},
 ];
 
-const searchType = [
-  {id: 1, name: "web searc ['images', 'news', 'youtube' or 'froogle']"}
+const searchTypes = [
+  {id: 1, name: "web search"},
+  {id: 2, name: "images"},
+  {id: 3, name: "news"},
+  {id: 4, name: "youtube"},
+  {id: 5, name: "froogle"},
 ];
 
 export default function GoogleCharts() {
@@ -78,7 +82,7 @@ export default function GoogleCharts() {
   const [coins, setCoins] = useState([{id: 1, name: ""}]);
   const [location, setLocation] = useState("US");
   const [time, setTime] = useState("last week");
-  const [searchType, setSearchType] = useState("");
+  const [searchType, setSearchType] = useState("web search");
   const [data, setData] = useState([]);
   const { container, title, blocks } = useStyles();
 
@@ -88,7 +92,7 @@ export default function GoogleCharts() {
 
   useEffect(() => {
     getData();
-  },[coin, location, time]);
+  },[coin, location, time, searchType]);
 
   const getCoins = async () => {
     try {
@@ -114,6 +118,7 @@ export default function GoogleCharts() {
           coin: coin,
           location: location,
           timePeriod: time,
+          searchType: searchType,
         },
       }).then((response) => setData(response.data.evolution));
     } catch (e) {
@@ -124,21 +129,18 @@ export default function GoogleCharts() {
 
   const handleCoin = (e) => {
     setCoin(e);
-    getData();
   };
 
   const handleLocation = (e) => {
     setLocation(e);
-    getData();
   };
 
   const handleTime = (e) => {
     setTime(e);
-    getData();
   };
 
   const handleSearchType = (e) => {
-    //setSearchType(e);
+    setSearchType(e);
   };
 
   return (
@@ -181,7 +183,7 @@ export default function GoogleCharts() {
             <Grid item xs={12} sm={12} md={4} lg={4}>
               <Select
                 handleChangeParent={handleSearchType}
-                listValues={[]}
+                listValues={searchTypes}
                 actualElement={searchType}
                 title={"Type of Search"}
               ></Select>

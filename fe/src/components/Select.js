@@ -11,7 +11,6 @@ export default function SelectElement({
   title,
   handleChangeParent,
 }) {
-  const [values] = useState(listValues);
   const [currentValue, setCurrentValue] = useState(actualElement);
 
   const handleChange = (e) => {
@@ -29,7 +28,7 @@ export default function SelectElement({
           value={currentValue}
           onChange={handleChange}
         >
-          {values.map((element) => {
+          {listValues.map((element) => {
             return <MenuItem key={element.id} value={element.name}> {element.name}</MenuItem>;
           })}
         </Select>

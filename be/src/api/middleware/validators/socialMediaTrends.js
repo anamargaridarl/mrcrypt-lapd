@@ -28,7 +28,19 @@ const googleInterest = useExpressValidators([
             (string === 'last month') ||
             (string === 'last year') ||
             (string === 'last decade'))
-        )
+        ),
+
+    query('searchType', ValidationMotives.DEFAULT)
+        .isString().withMessage(ValidationMotives.STRING).bail()
+        .trim()
+        .toLowerCase()
+        .custom((string) => (
+            (string === 'web search') ||
+            (string === 'images') ||
+            (string === 'news') ||
+            (string === 'youtube') ||
+            (string === 'froogle'))
+        ),
 ]);
 
 module.exports = {
