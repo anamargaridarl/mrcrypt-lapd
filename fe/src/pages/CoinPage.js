@@ -25,6 +25,7 @@ const useStyles = makeStyles({
 });
 
 export default function CoinPage() {
+  document.title = "Coin";
   let { coinName } = useParams();
   const { container, table, intro } = useStyles();
 
