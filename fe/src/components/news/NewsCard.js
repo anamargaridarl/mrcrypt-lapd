@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row-reverse",
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     borderRadius: 0,
-    marginLeft: "4em",
     marginBottom: "2em",
     padding: "10px 30px",
   },

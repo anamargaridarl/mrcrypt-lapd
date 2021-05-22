@@ -9,6 +9,9 @@ const news = useExpressValidators([
         .isString().withMessage(ValidationMotives.STRING).bail()
         .trim()
         .toUpperCase(),
+    query('page', ValidationMotives.DEFAULT)
+        .exists().withMessage(ValidationMotives.REQUIRED).bail()
+        .isNumeric().withMessage(ValidationMotives.NUMBER).bail(),
 ]);
 
 module.exports = {

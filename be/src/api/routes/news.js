@@ -5,6 +5,8 @@ const validators = require('../middleware/validators/news');
 const { Router } = require('express');
 const router = Router();
 
+const NEWS_PER_PAGE = 10;
+
 module.exports = (app) => {
     app.use('/news', router);
 
@@ -17,7 +19,7 @@ module.exports = (app) => {
     };
 
     /**
-   * Retrieves cryptocurrencies
+   * Retrieves cryptocurrencies news
    */
     router.get('/', validators.news, async (req, res, next) => {
         try {
@@ -28,7 +30,8 @@ module.exports = (app) => {
                 categories: req.query.categories || 'ALL_NEWS_CATEGORIES'
             };
             const response = await axios(newsConfig);
-            const news = response.data.Data.map((n) => ({
+            const count = Math.ceil(response.data.Data.length / NEWS_PER_PAGE);
+            const news = response.data.Data.slice((req.query.page - 1) * NEWS_PER_PAGE, (req.query.page * NEWS_PER_PAGE) + 1).map((n) => ({
                 url: n.url,
                 title: n.title,
                 content: n.body.length > 300 ? n.body.substring(0, 100) : n.body,
@@ -36,14 +39,14 @@ module.exports = (app) => {
                 image: n.imageurl,
                 tags: n.categories.split('|')
             }));
-            return res.status(HTTPStatus.OK).json(news);
+            return res.status(HTTPStatus.OK).json({ count: count, data: news });
         } catch (err) {
             return next(err);
         }
     });
 
     /**
-   * Convert currencies
+   * Retrieves cryptocurrencies news categories
    */
     router.get('/categories', async (_, res, next) => {
         try {
