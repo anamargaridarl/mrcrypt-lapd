@@ -49,7 +49,11 @@ export default function SocialMediaPage() {
         <Grid container className={bottomPage}>
           <Grid item xs={12} sm={12} md={4} lg={4}>
             <p className={subTitle}>Reddit</p>
-            <SocialTable></SocialTable>
+            <SocialTable
+              title="SubReddits Weekly Growth"
+              header="Subreddit"
+              metric="Increase %"
+            />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={8}>
             <p className={subTitle}>Google</p>
@@ -58,7 +62,12 @@ export default function SocialMediaPage() {
                 <GoogleCharts></GoogleCharts>
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
-                <SocialTable></SocialTable>
+                <SocialTable 
+                  url="topCryptoSearches"
+                  title="Top 10 Cryptocurrency Related Google Searches"
+                  header="Name"
+                  metric="Increase in Search Frequency"
+                />
               </Grid>
             </Grid>
           </Grid>

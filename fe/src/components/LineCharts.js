@@ -28,11 +28,10 @@ export default function LineCharts({
     strokeColor: strokeColor,
   };
   const { chart } = useStyles(props);
-  const [data] = useState(dataAux);
 
   return (
     <ResponsiveContainer width={widthContainer} height={heightContainer}>
-      <LineChart width={300} height={100} data={data}>
+      <LineChart width={300} height={100} data={dataAux}>
         <Line
           className={chart}
           type="monotone"

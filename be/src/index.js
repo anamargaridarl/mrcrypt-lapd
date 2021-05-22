@@ -3,6 +3,7 @@ const config = require('./config/env');
 const setupLoaders = require('./loaders');
 const express = require('express');
 const port = process.env.PORT;
+const scraper = require('./scraper/');
 
 const app = express();
 
