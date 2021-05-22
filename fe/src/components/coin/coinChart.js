@@ -43,36 +43,7 @@ function a11yProps(index) {
 }
 
 const useStyles = makeStyles((theme) => ({}));
-const data = [
-  {
-    name: "2008",
-    pv: 2400,
-  },
-  {
-    name: "2010",
-    pv: 1398,
-  },
-  {
-    name: "2012",
-    pv: 9800,
-  },
-  {
-    name: "2014",
-    pv: 3908,
-  },
-  {
-    name: "2016",
-    pv: 4800,
-  },
-  {
-    name: "2018",
-    pv: 3800,
-  },
-  {
-    name: "2020",
-    pv: 4300,
-  },
-];
+
 
 export default function CoinChart({ name, data }) {
   const classes = useStyles();
@@ -96,7 +67,7 @@ export default function CoinChart({ name, data }) {
 
   return (
     <>
-      <h2>{name.charAt(0).toUpperCase() + name.slice(1)} Charts</h2>
+      <h2>{name.charAt(0).toUpperCase() + name.slice(1)} Charts (last year)</h2>
       <Box>
         <Tabs
           value={value}

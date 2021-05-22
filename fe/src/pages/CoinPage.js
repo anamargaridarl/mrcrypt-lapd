@@ -34,6 +34,7 @@ export default function CoinPage() {
   const [coinStats, setCoinStats] = React.useState(null);
   const [coinValue, setCoinValue] = React.useState(null);
   const [chartValue, setChartValue] = React.useState([]);
+  const [dillutedMarketUp, setDillutedMarketUp] = React.useState(null); 
 
   useEffect(() => {
     const getCoinInfo = async () => {
@@ -119,8 +120,29 @@ export default function CoinPage() {
         console.log(err);
       }
     }
+
+    const getDillutedMarketCap = async() => {
+      try {
+
+        if (coinInfo === null) {
+          return;
+        }
+
+        axios({
+          method: 'get',
+          url: `http://localhost:8080/api/coins/market/${coinInfo.symbol},btc,eth`
+        }).then(response => {
+          console.log('calling3')
+          setDillutedMarketUp(response.data.value);
+        });
+
+      } catch(error) {
+        console.log(error);
+      }
+    }
     //getCoinValue();
-    getChartValues();
+    //getChartValues();
+    getDillutedMarketCap();
   }, [coinInfo])
   
   console.log(chartValue);
@@ -138,9 +160,9 @@ export default function CoinPage() {
           <Grid className={container} item xs={12} sm={12} md={8} lg={8}>
             <CoinInfo data = {coinInfo}></CoinInfo>
             <Grid container className={intro} justify="space-between">
-              <CardCoinInfo></CardCoinInfo>
-              <CardCoinInfo></CardCoinInfo>
-              <CardCoinInfo></CardCoinInfo>
+              <CardCoinInfo data =  {{data: dillutedMarketUp, title: 'Market cap',  symbol : coinInfo?.symbol }}></CardCoinInfo>
+              <CardCoinInfo data = {{data: dillutedMarketUp, title: 'Fully dilluted market cap', symbol : coinInfo?.symbol}}></CardCoinInfo>
+              <CardCoinInfo data = {{data: dillutedMarketUp, title: 'Volume',  symbol : coinInfo?.symbol}}></CardCoinInfo>
             </Grid>
             <CoinChart data={chartValue} name={coinName}></CoinChart>
           </Grid>

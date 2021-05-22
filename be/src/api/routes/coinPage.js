@@ -16,6 +16,44 @@ module.exports = (app) => {
         },
     };
 
+    /**
+     * for the card of the fully dilluted marked cap
+     */
+    router.get('/market/:coinNames', async (req, res, next) => {
+
+        try {
+            const { coinNames } = req.params;
+            const names = coinNames.toUpperCase().split(',');
+
+            const url = `${requestConfig.url}/cryptocurrency/listings/latest`;
+            const convertConfig = { ...requestConfig, url: url };
+
+            const { data, status } = await axios(convertConfig);
+
+            if (status !== 200) {
+                return res.sendStatus(status);
+            }
+
+            const responseFilter = data.data.filter((coin) => names.includes(coin.symbol.toUpperCase()));
+
+            const responseProcessed = {};
+
+            responseFilter.forEach((coinFiltered) => {
+                const { max_supply, total_supply, quote } = coinFiltered;
+                const percentage = quote.USD.percent_change_24h;
+                const fullyDilutedMarket = quote.USD.price * (max_supply === null ? total_supply : max_supply);
+                responseProcessed [coinFiltered.symbol] = { percentage, value: fullyDilutedMarket };
+
+            });
+
+            return res.status(200).json({ value: responseProcessed });
+        } catch (error) {
+            return next(error);
+        }
+
+
+    });
+
 
     router.get('/:coinSymbol/statsEvolution', async (req, res, next) => {
 
