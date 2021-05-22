@@ -104,18 +104,21 @@ module.exports = (app) => {
 
     });
 
+    /**
+     * get market cap and volume, da update de hora a hora
+     */
+    router.get('/:coinSymbol/info', async (req, res, next) => {
 
-    router.get('/info', async (req, res, next) => {
-
-
-        // price * max_supply
-        const info = ['market_cap', 'timeSeries', 'volume', 'price', 'max_supply'];
 
         try {
+            const { coinSymbol } = req.params;
+
             const params = {
                 data: 'assets',
-                symbol: 'btc',
-                key: 'iods8h29itmw07nx6d6du'
+                symbol: coinSymbol,
+                key: 'iods8h29itmw07nx6d6du',
+                data_points: 24,
+                interval: 'hour'
             };
 
             const config = {
@@ -124,11 +127,25 @@ module.exports = (app) => {
                 params: params
             };
 
-            const data = await axios(config);
+            const data = (await axios(config)).data.data[0];
 
-            console.log(data);
 
-            return res.json({ data: data.data.data });
+            const [volumeYesterday, marketCapYesterday] = [data.timeSeries[0].volume, data.timeSeries[0].market_cap];
+            const [volumeNow, marketCapNow] = [data.timeSeries[24].volume, data.timeSeries[24].market_cap];
+
+            const volume = {
+                value: volumeNow,
+                percentage: volumeYesterday > volumeNow ? -(1 - (volumeNow / volumeYesterday)) : ((volumeNow / volumeYesterday) - 1) * 100
+            };
+
+            const marketCap = {
+                value: marketCapNow,
+                percentage: marketCapYesterday > marketCapNow ?
+                    -(1 - (marketCapNow / marketCapYesterday)) : ((marketCapNow / marketCapYesterday) - 1) * 100
+
+            };
+
+            return res.json({ volume, marketCap });
 
 
         } catch (error) {

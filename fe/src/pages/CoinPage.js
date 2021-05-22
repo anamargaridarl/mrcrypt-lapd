@@ -35,6 +35,8 @@ export default function CoinPage() {
   const [coinValue, setCoinValue] = React.useState(null);
   const [chartValue, setChartValue] = React.useState([]);
   const [dillutedMarketUp, setDillutedMarketUp] = React.useState(null); 
+  const [volume, setVolume] = React.useState(null);
+  const [marketCap, setMarketCap] = React.useState(null);
 
   useEffect(() => {
     const getCoinInfo = async () => {
@@ -140,14 +142,33 @@ export default function CoinPage() {
         console.log(error);
       }
     }
+
+    const getCardInfo = async() => {
+      try {
+        if (coinInfo === null) {
+          return;
+        }
+        axios({
+          method: 'get',
+          url: `http://localhost:8080/api/coins/${coinInfo.symbol}/info`
+        }).then(response => {
+          //setDillutedMarketUp(response.data.marketCap);
+          setVolume(response.data.volume);
+          setMarketCap(response.data.marketCap);
+        });
+
+      } catch(error) {
+        console.log(error);
+      }
+    }
     //getCoinValue();
     //getChartValues();
     getDillutedMarketCap();
+    getCardInfo();
   }, [coinInfo])
   
-  console.log(chartValue);
 
-
+  console.log(dillutedMarketUp)
   return (
     <>
       <TopBar></TopBar>
@@ -160,9 +181,9 @@ export default function CoinPage() {
           <Grid className={container} item xs={12} sm={12} md={8} lg={8}>
             <CoinInfo data = {coinInfo}></CoinInfo>
             <Grid container className={intro} justify="space-between">
-              <CardCoinInfo data =  {{data: dillutedMarketUp, title: 'Market cap',  symbol : coinInfo?.symbol }}></CardCoinInfo>
-              <CardCoinInfo data = {{data: dillutedMarketUp, title: 'Fully dilluted market cap', symbol : coinInfo?.symbol}}></CardCoinInfo>
-              <CardCoinInfo data = {{data: dillutedMarketUp, title: 'Volume',  symbol : coinInfo?.symbol}}></CardCoinInfo>
+              <CardCoinInfo data =  {{data: marketCap, title: 'Market cap'}}></CardCoinInfo>
+              <CardCoinInfo data = {{data: dillutedMarketUp?.[coinInfo?.symbol], title: 'Fully dilluted market cap'}}></CardCoinInfo>
+              <CardCoinInfo data = {{data: volume, title: 'Volume',  symbol : coinInfo?.symbol}}></CardCoinInfo>
             </Grid>
             <CoinChart data={chartValue} name={coinName}></CoinChart>
           </Grid>

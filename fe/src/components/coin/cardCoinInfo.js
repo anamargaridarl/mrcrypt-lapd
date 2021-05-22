@@ -39,11 +39,11 @@ export default function CardCoinInfo({data}) {
 
   console.log(data)
 
-  if (data.data === null) {
+  if (data.data === undefined || data.data === null) {
     return <div>Loading {data.title}...</div>
   }
 
-  const percentage = data.data[data.symbol].percentage;
+  const percentage = data.data.percentage.toFixed(3);
 
   let icon = percentage >= 0 ? <ArrowDropUpIcon></ArrowDropUpIcon> : <ArrowDropDownIcon></ArrowDropDownIcon>;
 
@@ -52,11 +52,11 @@ export default function CardCoinInfo({data}) {
       <Box className={classes.title} color="textSecondary">
         {data.title}
       </Box>
-      <Box variant="h5" component="h2">
-        {data.data[data.symbol].value.toLocaleString("en-US", {
+      <Box variant="h5" component="h3">
+        {data.data.value.toLocaleString("en-US", {
           style: "currency",
           currency: "USD",
-        })}
+        }) }
       </Box>
       <Box
         color="textSecondary"
