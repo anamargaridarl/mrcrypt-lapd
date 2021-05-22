@@ -33,6 +33,7 @@ export default function CoinPage() {
   const [coinInfo, setCoinInfo] = React.useState(null);
   const [coinStats, setCoinStats] = React.useState(null);
   const [coinValue, setCoinValue] = React.useState(null);
+  const [chartValue, setChartValue] = React.useState([]);
 
   useEffect(() => {
     const getCoinInfo = async () => {
@@ -100,9 +101,29 @@ export default function CoinPage() {
       }
     }
 
-    getCoinValue()
+    const getChartValues = async () => {
+      try {
+        if (coinInfo === null) {
+          return;
+        }
+
+        axios({
+          method: 'get',
+          url: `http://localhost:8080/api/coins/${coinInfo.symbol}/statsEvolution`
+        }).then(response => {
+          console.log('calling3')
+          setChartValue(response.data.values);
+        });
+
+      } catch(err) {
+        console.log(err);
+      }
+    }
+    //getCoinValue();
+    getChartValues();
   }, [coinInfo])
   
+  console.log(chartValue);
 
 
   return (
@@ -121,7 +142,7 @@ export default function CoinPage() {
               <CardCoinInfo></CardCoinInfo>
               <CardCoinInfo></CardCoinInfo>
             </Grid>
-            <CoinChart name={coinName}></CoinChart>
+            <CoinChart data={chartValue} name={coinName}></CoinChart>
           </Grid>
           <Grid container item xs={12} sm={12} md={4} lg={4} direction="column">
             <CoinValue data = {coinValue}></CoinValue>

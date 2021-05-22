@@ -16,6 +16,89 @@ module.exports = (app) => {
         },
     };
 
+
+    router.get('/:coinSymbol/statsEvolution', async (req, res, next) => {
+
+        const date = new Date().getTime() / 1000;
+        const oneYearAgo = new Date().setFullYear(new Date().getFullYear() - 1) / 1000;
+
+        try {
+            const { coinSymbol } = req.params;
+            const params = {
+                data: 'assets',
+                symbol: coinSymbol,
+                key: 'iods8h29itmw07nx6d6du',
+                interval: 'day',
+                start: oneYearAgo,
+                end: date,
+                data_points: 365,
+            };
+
+            const config = {
+                method: 'get',
+                url: 'https://api.lunarcrush.com/v2',
+                params: params
+            };
+
+            const data = await axios(config);
+
+            const values = [];
+
+            data.data.data[0].timeSeries.forEach((coin) => {
+
+                const data = new Date(coin.time * 1000);
+                const dataFormatada = `${data.getDate()}-${data.getMonth() + 1}-${data.getFullYear()}`;
+
+                values.push({
+                    open: coin.open,
+                    market_cap: coin.market_cap,
+                    time: dataFormatada
+                });
+            });
+
+
+            return res.json({ values: values });
+
+
+        } catch (error) {
+            return next(error);
+        }
+
+    });
+
+
+    router.get('/info', async (req, res, next) => {
+
+
+        // price * max_supply
+        const info = ['market_cap', 'timeSeries', 'volume', 'price', 'max_supply'];
+
+        try {
+            const params = {
+                data: 'assets',
+                symbol: 'btc',
+                key: 'iods8h29itmw07nx6d6du'
+            };
+
+            const config = {
+                method: 'get',
+                url: 'https://api.lunarcrush.com/v2',
+                params: params
+            };
+
+            const data = await axios(config);
+
+            console.log(data);
+
+            return res.json({ data: data.data.data });
+
+
+        } catch (error) {
+            return next(error);
+        }
+
+    });
+
     router.get('/:coinSymbol/priceDay', async (req, res, next) => {
         try {
 
