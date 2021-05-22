@@ -41,8 +41,16 @@ const coinData = {
   ethPercentage: 2.9,
 };
 
-export default function CoinValue() {
+export default function CoinValue(props) {
   const { coin, value, growth, arrow, box, boxcontainer, valuecontainer } = useStyles();
+
+  const data = props.data;
+
+  if (data === null) {
+    return <div>Loading...</div>
+  }
+
+
 
   return (
     <Grid container justify="flex-end">
@@ -53,7 +61,7 @@ export default function CoinValue() {
       </Grid>
       <Grid container item justify="flex-end" xs={12} sm={12} md={12} lg={12}>
         <h1 className={value}>
-          {coinData.price.toLocaleString("en-US", {
+          {data.price.toLocaleString("en-US", {
             style: "currency",
             currency: "USD",
           })}
@@ -66,7 +74,7 @@ export default function CoinValue() {
         </Card>
       </Grid>
       <Grid container item justify="flex-end" xs={6} sm={6} md={10} lg={10}>
-        <p>{coinData.eth} ETH</p>
+        <p>{data.ethQuantity.toFixed(3)} ETH</p>
       </Grid>
       <Grid
         className={growth}

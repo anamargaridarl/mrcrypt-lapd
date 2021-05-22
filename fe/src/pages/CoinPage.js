@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useParams } from "react-router";
 import Grid from "@material-ui/core/Grid";
 import Breadcrumbs from "@material-ui/core/Breadcrumbs";
@@ -11,6 +11,8 @@ import CardCoinInfo from "../components/coin/cardCoinInfo";
 import CoinChart from "../components/coin/coinChart";
 //@core-material-ui
 import { makeStyles, Container } from "@material-ui/core";
+const axios = require('axios');
+
 
 const useStyles = makeStyles({
   table: {
@@ -28,6 +30,102 @@ export default function CoinPage() {
   let { coinName } = useParams();
   const { container, table, intro } = useStyles();
 
+  const [coinInfo, setCoinInfo] = React.useState(null);
+  const [coinStats, setCoinStats] = React.useState(null);
+  const [coinValue, setCoinValue] = React.useState(null);
+  const [chartValue, setChartValue] = React.useState([]);
+
+  useEffect(() => {
+    const getCoinInfo = async () => {
+      try {
+        axios({
+          method: 'get',
+          url: `http://localhost:8080/api/coins/${coinName}/data`
+        })
+        .then((response) => {
+          console.log("calling");
+          setCoinInfo(response.data.value);
+          if (response.status !== 200) {
+            throw new Error();
+          }
+        });  
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getCoinInfo();
+
+}, [coinName]);
+
+  useEffect(() => {
+    
+    const getCoinStats = async() => {
+      try {
+        if (coinInfo === null) {
+          return;
+        } 
+        axios({
+          method: 'get',
+          url: `http://localhost:8080/api/coins/${coinInfo.symbol}/stats`
+        })
+        .then((response) => {
+          setCoinStats(response.data.value);
+          if (response.status !== 200) {
+            throw new Error();
+          }
+        });  
+      } catch(err) {
+        console.log(err);
+      }
+    }
+
+    const getCoinValue = async () =>{
+      try {
+        if (coinInfo === null) {
+          return;
+        } 
+        axios({
+          method: 'get',
+          url: `http://localhost:8080/api/coins/${coinInfo.symbol}/price`
+        })
+        .then((response) => {
+          console.log("calling 2");
+          setCoinValue(response.data.value);
+          console.log(response.data.value);
+          if (response.status !== 200) {
+            throw new Error();
+          }
+        });  
+      } catch(err) {
+        console.log(err);
+      }
+    }
+
+    const getChartValues = async () => {
+      try {
+        if (coinInfo === null) {
+          return;
+        }
+
+        axios({
+          method: 'get',
+          url: `http://localhost:8080/api/coins/${coinInfo.symbol}/statsEvolution`
+        }).then(response => {
+          console.log('calling3')
+          setChartValue(response.data.values);
+        });
+
+      } catch(err) {
+        console.log(err);
+      }
+    }
+    //getCoinValue();
+    getChartValues();
+  }, [coinInfo])
+  
+  console.log(chartValue);
+
+
   return (
     <>
       <TopBar></TopBar>
@@ -38,17 +136,17 @@ export default function CoinPage() {
         </Breadcrumbs>
         <Grid container spacing={10}>
           <Grid className={container} item xs={12} sm={12} md={8} lg={8}>
-            <CoinInfo></CoinInfo>
+            <CoinInfo data = {coinInfo}></CoinInfo>
             <Grid container className={intro} justify="space-between">
               <CardCoinInfo></CardCoinInfo>
               <CardCoinInfo></CardCoinInfo>
               <CardCoinInfo></CardCoinInfo>
             </Grid>
-            <CoinChart name={coinName}></CoinChart>
+            <CoinChart data={chartValue} name={coinName}></CoinChart>
           </Grid>
-          <Grid item xs={12} sm={12} md={4} lg={4} direction="column">
-            <CoinValue></CoinValue>
-            <CoinStats></CoinStats>
+          <Grid container item xs={12} sm={12} md={4} lg={4} direction="column">
+            <CoinValue data = {coinValue}></CoinValue>
+            <CoinStats data={coinStats}></CoinStats>
           </Grid>
         </Grid>
       </Container>

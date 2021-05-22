@@ -74,13 +74,25 @@ const data = [
   },
 ];
 
-export default function CoinChart({ name }) {
+export default function CoinChart({ name, data }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+
+  const price = [];
+  const marketPrice = [];
+
+  data.forEach(element => {
+    price.push({name: element.time, pv: element.open});
+    marketPrice.push({name: element.time, pv: element.market_cap})
+  });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  if (price.length === 0 && marketPrice.length === 0) {
+    return <div>Loading charts....</div>
+  }
 
   return (
     <>
@@ -98,20 +110,20 @@ export default function CoinChart({ name }) {
       <TabPanel value={value} index={0}>
         <Paper>
           <LineCharts
-            widthContainer={"90%"}
+            widthContainer={"100%"}
             heightContainer={180}
             strokeColor={purple}
-            dataAux={data}
+            dataAux={price}
           ></LineCharts>
         </Paper>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Paper>
           <LineCharts
-            widthContainer={"90%"}
+            widthContainer={"100%"}
             heightContainer={180}
             strokeColor={purple}
-            dataAux={data}
+            dataAux={marketPrice}
           ></LineCharts>
         </Paper>
       </TabPanel>
