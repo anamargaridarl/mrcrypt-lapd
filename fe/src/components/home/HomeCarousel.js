@@ -41,54 +41,45 @@ const useStyles = makeStyles({
 //TODO: fetch data from backend for the items
 const data = [
   {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: 163.50
+    name: "BTC Dominance",
+    parameter: "btc_dominance_24h",
+    parameterTime: "btc_dominance",
+    value: "%"
   },
   {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: -163.50
+    name: "Market Cap",
+    parameter: "market_cap_24h",
+    parameterTime: "market_cap",
+    value: "USD"
   },
   {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
+    name: "Social Volume",
+    parameter: "social_volume_24h",
+    parameterTime: "social_volume_sum",
+    value: ""
   },
   {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
+    name: "Active Contributors",
+    parameter: "social_contributors_24h",
+    parameterTime: "social_contributors"
   },
   {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
+    name: "Average Sentiment",
+    parameter: "average_sentiment_24h",
+    parameterTime: "average_sentiment",
+    value: ""
   },
   {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
+    name: "News",
+    parameter: "news_24h",
+    parameterTime: "news",
+    value: ""
   },
   {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
+    name: "Links Shared",
+    parameter: "url_shares_24h",
+    parameterTime: "url_shares",
+    value: ""
   }
 ]
 
@@ -100,9 +91,10 @@ function HomeCarrousel() {
       {data.map((element) => {
         return (
           <HomeCarouselItem
-            name={element.name}
             value={element.value}
-            growth={element.growth}
+            name={element.name}
+            parameter={element.parameter}
+            parameterTime={element.parameterTime}
           />
         );
       })}

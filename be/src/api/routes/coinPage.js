@@ -88,8 +88,6 @@ module.exports = (app) => {
 
             const data = await axios(config);
 
-            console.log(data);
-
             return res.json({ data: data.data.data });
 
 
@@ -133,7 +131,7 @@ module.exports = (app) => {
             });
 
 
-            return res.status(200).json ({ value: processed });
+            return res.status(200).json({ value: processed });
 
 
         } catch (error) {
@@ -176,7 +174,7 @@ module.exports = (app) => {
             });
 
 
-            return res.status(200).json ({ value: processed });
+            return res.status(200).json({ value: processed });
 
 
         } catch (error) {
@@ -211,7 +209,7 @@ module.exports = (app) => {
             const ethQuantity = data.ETH.USD / price;
 
 
-            return res.status(200).json ({ value: { price, bitcoinQuantity, ethQuantity } });
+            return res.status(200).json({ value: { price, bitcoinQuantity, ethQuantity } });
         } catch (error) {
             return next(error);
         }
@@ -246,7 +244,7 @@ module.exports = (app) => {
             });
 
 
-            return res.status(200).json ({ value: responseProcessed });
+            return res.status(200).json({ value: responseProcessed });
         } catch (error) {
             return next(error);
         }
