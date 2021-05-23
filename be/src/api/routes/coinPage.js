@@ -54,7 +54,9 @@ module.exports = (app) => {
 
     });
 
-
+    /**
+     * for the charts
+     */
     router.get('/:coinSymbol/statsEvolution', async (req, res, next) => {
 
         const date = new Date().getTime() / 1000;
@@ -129,6 +131,8 @@ module.exports = (app) => {
 
             const data = (await axios(config)).data.data[0];
 
+            console.log(data);
+
 
             const [volumeYesterday, marketCapYesterday] = [data.timeSeries[0].volume, data.timeSeries[0].market_cap];
             const [volumeNow, marketCapNow] = [data.timeSeries[24].volume, data.timeSeries[24].market_cap];
@@ -137,6 +141,8 @@ module.exports = (app) => {
                 value: volumeNow,
                 percentage: volumeYesterday > volumeNow ? -(1 - (volumeNow / volumeYesterday)) : ((volumeNow / volumeYesterday) - 1) * 100
             };
+
+            console.log(data.timeSeries[24]);
 
             const marketCap = {
                 value: marketCapNow,
@@ -154,92 +160,9 @@ module.exports = (app) => {
 
     });
 
-    router.get('/:coinSymbol/priceDay', async (req, res, next) => {
-        try {
-
-            const { coinSymbol } = req.params;
-            const url = `https://min-api.cryptocompare.com/data/v2/histoday?fsym=${coinSymbol}&tsym=USD&limit=10`;
-
-            const config = {
-                method: 'get',
-                url: url,
-                headers: {
-                    Authorization: 'Apikey fe8a657f41319b69760fee377170fa16fa7d07da1a2583b209b1baf059b0e631'
-
-                },
-            };
-
-            const { status, data } = await axios(config);
-
-            if (status !== 200) {
-                return res.sendStatus(status);
-            }
-
-            const processed = { from: new Date(data.Data.TimeFrom * 1000), to: new Date(data.Data.TimeTo * 1000), values: [] };
-
-            data.Data.Data.forEach((hourValues) => {
-                processed.values.push({
-                    time: new Date(hourValues.time * 1000),
-                    high: hourValues.high,
-                    low: hourValues.low,
-                    volumeFrom: hourValues.volumefrom,
-                    volumeTo: hourValues.volumeto
-                });
-            });
-
-
-            return res.status(200).json ({ value: processed });
-
-
-        } catch (error) {
-            return next(error);
-        }
-    });
-
-    router.get('/:coinSymbol/priceHistoryHour', async (req, res, next) => {
-
-        try {
-
-            const { coinSymbol } = req.params;
-            const url = `https://min-api.cryptocompare.com/data/v2/histohour?fsym=${coinSymbol}&tsym=USD&limit=10`;
-
-            const config = {
-                method: 'get',
-                url: url,
-                headers: {
-                    Authorization: 'Apikey fe8a657f41319b69760fee377170fa16fa7d07da1a2583b209b1baf059b0e631'
-
-                },
-            };
-
-            const { status, data } = await axios(config);
-
-            if (status !== 200) {
-                return res.sendStatus(status);
-            }
-
-            const processed = { from: new Date(data.Data.TimeFrom * 1000), to: new Date(data.Data.TimeTo * 1000), values: [] };
-
-            data.Data.Data.forEach((hourValues) => {
-                processed.values.push({
-                    time: new Date(hourValues.time * 1000),
-                    high: hourValues.high,
-                    low: hourValues.low,
-                    volumeFrom: hourValues.volumefrom,
-                    volumeTo: hourValues.volumeto
-                });
-            });
-
-
-            return res.status(200).json ({ value: processed });
-
-
-        } catch (error) {
-            return next(error);
-        }
-    });
-
-
+    /**
+     * coin price and comparison the btc and eth
+     */
     router.get('/:coinSymbol/price', async (req, res, next) => {
         try {
 
@@ -272,6 +195,9 @@ module.exports = (app) => {
         }
     });
 
+    /**
+     * some stats regarding the coin, info in the right table
+     */
     router.get('/:coinSymbol/stats', async (req, res, next) => {
         const PARAMS = ['average_transaction_value', 'block_height', 'hashrate', 'difficulty', 'block_time', 'block_size', 'current_suply'];
         const PARAMS2 = ['num_market_pairs', 'max_supply', 'circulating_supply', 'cmc_rank'];
@@ -329,6 +255,9 @@ module.exports = (app) => {
 
     });
 
+    /**
+     * some basic information regarding a coin (information in the top left)
+     */
     router.get('/:coinName/data', async (req, res, next) => {
 
         const PARAMS = ['slug', 'description', 'tags', 'name', 'symbol', 'logo'];

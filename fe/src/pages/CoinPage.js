@@ -152,8 +152,8 @@ export default function CoinPage() {
           method: 'get',
           url: `http://localhost:8080/api/coins/${coinInfo.symbol}/info`
         }).then(response => {
-          setVolume(response.data.volume);
-          setMarketCap(response.data.marketCap);
+         // setVolume(response.data.volume);
+          //setMarketCap(response.data.marketCap);
         });
 
       } catch(error) {
