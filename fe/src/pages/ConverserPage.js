@@ -14,6 +14,7 @@ const useStyles = makeStyles({
 });
 
 export default function ConverserPage() {
+  document.title = "Converser";
   const { table } = useStyles();
 
   return (

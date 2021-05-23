@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
 
 
 const NewsPage = () => {
-
+  document.title = "News";
   const [filter, setFilter] = useState([]);
 
   const changeFilter = (tag) => {
