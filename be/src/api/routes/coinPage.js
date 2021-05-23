@@ -348,7 +348,9 @@ module.exports = (app) => {
             const responseProcessed = {};
 
             PARAMS.forEach((param) => {
-                responseProcessed[param] = data.data['1'][param];
+                for (const x in data.data) {
+                    responseProcessed[param] = data.data[x][param];
+                }
             });
 
             return res.status(200).json({ value: responseProcessed });

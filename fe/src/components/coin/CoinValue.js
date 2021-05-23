@@ -46,19 +46,9 @@ const useStyles = makeStyles((_) => ({
   }
 }));
 
-// this data will need to be fetched from an api
-const coinData = {
-  name: "Bitcoin",
-  abreviation: "BTC",
-  price: 53418.76,
-  percentage: 2.9,
-  up: true,
-  eth: 32.53,
-  ethPercentage: 2.9,
-};
 
 export default function CoinValue(props) {
-  const { coin, value, growth, arrow, boxcontainer, valuecontainer,colorGreen, colorRed, marginCoin, marginBottom } = useStyles();
+  const { coin, value, boxcontainer,colorGreen, colorRed, marginCoin, marginBottom } = useStyles();
 
   const data = props.data;
   console.log(props);

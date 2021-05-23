@@ -152,7 +152,6 @@ export default function CoinPage() {
           method: 'get',
           url: `http://localhost:8080/api/coins/${coinInfo.symbol}/info`
         }).then(response => {
-          //setDillutedMarketUp(response.data.marketCap);
           setVolume(response.data.volume);
           setMarketCap(response.data.marketCap);
         });
@@ -161,11 +160,11 @@ export default function CoinPage() {
         console.log(error);
       }
     }
-    //getCoinStats()
+    getCoinStats()
     getCoinValue();
-    //getChartValues();
+    getChartValues();
     getDillutedMarketCap();
-    //getCardInfo();
+    getCardInfo();
   }, [coinInfo])
   
 
