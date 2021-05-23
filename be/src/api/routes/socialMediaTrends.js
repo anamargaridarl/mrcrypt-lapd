@@ -6,6 +6,8 @@ const googleTrends = require('google-trends-api');
 const { Router } = require('express');
 const dateConvert = require('../middleware/dateConverter');
 const router = Router();
+const scraper = require('../../scraper');
+
 
 module.exports = (app) => {
     app.use('/social-media-trends', router);
@@ -94,5 +96,17 @@ module.exports = (app) => {
                 console.error(err);
                 return next(err);
             });
+    });
+
+    /**
+     * Get the top 10 Cryptocurrency related subreddits growth
+     */
+    router.get('/topSubreddits', (_, res, next) => {
+        scraper().then((data) => {
+            res.status(HTTPStatus.StatusCodes.OK).json(data);
+        }).catch((err) => {
+            console.error(err);
+            return next(err);
+        });
     });
 };

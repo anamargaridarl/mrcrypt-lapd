@@ -8,19 +8,22 @@ const readTopRedditsFile = () => {
         return JSON.parse(topReddits);
     } catch (error) {
         console.log(error);
+        throw error;
     }
-
-    return undefined;
 };
 
-const getTopSubreddits = () => {
-    const topReddits = readTopRedditsFile();
-    if (!topReddits) return;
-
-    // Start the browser and create a browser instance
-    const browserInstance = browserObject.startBrowser();
-    // Pass the browser instance to the scraper controller
-    scraperController(browserInstance);
+const getTopSubreddits = async () => {
+    try {
+        const topReddits = readTopRedditsFile();
+        // Start the browser and create a browser instance
+        const browserInstance = browserObject.startBrowser();
+        // Pass the browser instance to the scraper controller
+        const subreddits = await scraperController(browserInstance, topReddits);
+        return subreddits;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
 };
 
-getTopSubreddits();
+module.exports = () => getTopSubreddits();
