@@ -16,25 +16,6 @@ const useStyles = makeStyles((_) => ({
   },
 }));
 
-// this data will need to be fetched from an api
-const rows = [
-  {
-    name: "Bitcoin price",
-    price: 53242.45,
-  },
-  {
-    name: "Bitcoin price",
-    price: 53242.45,
-  },
-  {
-    name: "Bitcoin price",
-    price: 53242.45,
-  },
-];
-
-const coin = {
-  name: "Bitcoin",
-};
 
 export default function CoinStats(props) {
   const classes = useStyles();

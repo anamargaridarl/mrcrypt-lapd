@@ -57,7 +57,7 @@ module.exports = (app) => {
     /**
      * for the charts
      */
-    router.get('/:coinSymbol/statsEvolution', async (req, res, next) => {
+    router.get('/:coinSymbol/coinEvolution', async (req, res, next) => {
 
         const date = new Date().getTime() / 1000;
         const oneYearAgo = new Date().setFullYear(new Date().getFullYear() - 1) / 1000;
@@ -107,7 +107,7 @@ module.exports = (app) => {
     });
 
     /**
-     * get market cap and volume, da update de hora a hora
+     * get market cap and volume, comparison made between last hour and 24h before that
      */
     router.get('/:coinSymbol/info', async (req, res, next) => {
 
@@ -130,7 +130,6 @@ module.exports = (app) => {
             };
 
             const data = (await axios(config)).data.data[0];
-
 
 
             const [volumeYesterday, marketCapYesterday] = [data.timeSeries[0].volume, data.timeSeries[0].market_cap];
@@ -263,7 +262,7 @@ module.exports = (app) => {
     /**
      * some basic information regarding a coin (information in the top left)
      */
-    router.get('/:coinName/data', async (req, res, next) => {
+    router.get('/:coinName/coinInfo', async (req, res, next) => {
 
         const PARAMS = ['slug', 'description', 'tags', 'name', 'symbol', 'logo'];
 
