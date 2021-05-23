@@ -22,7 +22,6 @@ const useStyles = makeStyles({
 
 export default function CoinInfo(props) {
   const { container } = useStyles();
-  console.log(props);
 
   const data = props.data;
 

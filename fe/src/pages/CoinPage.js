@@ -94,7 +94,6 @@ export default function CoinPage() {
         .then((response) => {
           console.log("calling 2");
           setCoinValue(response.data.value);
-          console.log(response.data.value);
           if (response.status !== 200) {
             throw new Error();
           }
@@ -152,8 +151,8 @@ export default function CoinPage() {
           method: 'get',
           url: `http://localhost:8080/api/coins/${coinInfo.symbol}/info`
         }).then(response => {
-         // setVolume(response.data.volume);
-          //setMarketCap(response.data.marketCap);
+          setVolume(response.data.volume);
+          setMarketCap(response.data.marketCap);
         });
 
       } catch(error) {
@@ -168,7 +167,6 @@ export default function CoinPage() {
   }, [coinInfo])
   
 
-  console.log(dillutedMarketUp)
   return (
     <>
       <TopBar></TopBar>

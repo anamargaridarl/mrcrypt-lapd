@@ -37,11 +37,11 @@ const useStyles = makeStyles({
 export default function CardCoinInfo({data}) {
   const classes = useStyles();
 
-  console.log(data)
 
   if (data.data === undefined || data.data === null) {
     return <div>Loading {data.title}...</div>
   }
+
 
   const percentage = data.data.percentage.toFixed(3);
 
@@ -52,24 +52,30 @@ export default function CardCoinInfo({data}) {
       <Box className={classes.title} color="textSecondary">
         {data.title}
       </Box>
-      <Box variant="h5" component="h3">
-        {data.data.value.toLocaleString("en-US", {
-          style: "currency",
-          currency: "USD",
-        }) }
-      </Box>
-      <Box
-        color="textSecondary"
-        alignItems="center"
-        display="flex"
-        py={0}
-        fontSize={16}
-        borderRadius={10}
-        className={ percentage >=0 ? classes.colorGreen : classes.colorRed}
-      >
-        {icon}
-        {Math.abs(percentage)} %
-      </Box>
+    { data.data.value !== null  ? 
+
+      ( <> <Box variant="h5" component="h3">
+          {data.data.value.toLocaleString("en-US", {
+            style: "currency",
+            currency: "USD",
+          }) }
+        </Box>
+        <Box
+          color="textSecondary"
+          alignItems="center"
+          display="flex"
+          py={0}
+          fontSize={16}
+          borderRadius={10}
+          className={ percentage >=0 ? classes.colorGreen : classes.colorRed}>
+          {icon}
+          {Math.abs(percentage)} %
+        </Box>
+        </>
+      ) : (      
+      <Box variant="h5" component="h4">
+        Information currently unavailable
+      </Box>)}
     </Box>
   );
 }

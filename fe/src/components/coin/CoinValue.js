@@ -51,9 +51,9 @@ export default function CoinValue(props) {
   const { coin, value, boxcontainer,colorGreen, colorRed, marginCoin, marginBottom } = useStyles();
 
   const data = props.data;
-  console.log(props);
 
-  if (data === null || props.symbol === null) {
+
+  if (data === null || props.symbol === null || !props.percentage) {
     return <div>Loading...</div>
   }
   const percentage = props.percentage;

@@ -165,9 +165,17 @@ module.exports = (app) => {
      */
     router.get('/:coinSymbol/price', async (req, res, next) => {
         try {
-
             const { coinSymbol } = req.params;
-            const url = `https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,${coinSymbol}&tsyms=USD`;
+            const url2 = `${requestConfig.url}/cryptocurrency/quotes/latest?&symbol=${coinSymbol}`;
+            const convertConfig = { ...requestConfig, url: url2 };
+
+            const response = await axios(convertConfig);
+
+            if (response.status !== 200) {
+                return res.sendStatus(status);
+            }
+
+            const url = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH&tsyms=USD';
 
             const config = {
                 method: 'get',
@@ -183,8 +191,7 @@ module.exports = (app) => {
             if (status !== 200) {
                 return res.sendStatus(status);
             }
-
-            const price = data[coinSymbol.toUpperCase()].USD;
+            const price =   response.data.data[coinSymbol.toUpperCase()].quote.USD.price;
             const bitcoinQuantity = price / data.BTC.USD;
             const ethQuantity = price / data.ETH.USD;
 
