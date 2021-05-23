@@ -7,7 +7,7 @@ const scrapeAll = async (browserInstance, topReddits) => {
         return pageScraper.scraper(browser, topReddits);
     } catch (err) {
         console.log('Could not resolve the browser instance => ', err);
-        throw err;
+        return [];
     }
 };
 

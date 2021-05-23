@@ -1,11 +1,19 @@
-
 version: "3"
 services:
+  redis:
+    image: redis
+    container_name: cache
+    expose:
+      - 6379
   backend:
     build:
       context: ./be
     ports:
       - "8080:8080"
+    links:
+      - redis
+    environment:
+      - REDIS_URL=redis://cache
     volumes:
       - ./be:/usr/src/app
   frontend:

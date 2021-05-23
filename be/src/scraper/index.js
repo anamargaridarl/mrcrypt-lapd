@@ -1,29 +1,41 @@
 const browserObject = require('./browser');
 const scraperController = require('./pageController');
 const fs = require('fs');
+const schedule = require('node-schedule');
+const redisClient = require('../redis/redisClient');
 
 const readTopRedditsFile = () => {
+    let topReddits;
     try {
-        const topReddits = fs.readFileSync('src/assets/topReddits.json', 'utf8');
-        return JSON.parse(topReddits);
+        topReddits = fs.readFileSync('src/assets/topReddits.json', 'utf8');
     } catch (error) {
         console.log(error);
-        throw error;
     }
+
+    return JSON.parse(topReddits);
 };
 
-const getTopSubreddits = async () => {
+const scrapeTopSubreddits = async () => {
+    let subreddits;
     try {
         const topReddits = readTopRedditsFile();
         // Start the browser and create a browser instance
         const browserInstance = browserObject.startBrowser();
         // Pass the browser instance to the scraper controller
-        const subreddits = await scraperController(browserInstance, topReddits);
-        return subreddits;
+        subreddits = await scraperController(browserInstance, topReddits);
     } catch (error) {
         console.log(error);
-        throw error;
     }
+
+    return subreddits;
 };
 
-module.exports = () => getTopSubreddits();
+const getTopSubreddits = async () => {
+    const subreddits = await scrapeTopSubreddits();
+    await redisClient.setAsync('topSubreddits', JSON.stringify(subreddits));
+};
+
+module.exports = () => {
+    getTopSubreddits();
+    schedule.scheduleJob('* * * * *', getTopSubreddits);
+};
