@@ -68,7 +68,7 @@ export default function CardCoinInfo({data}) {
         className={ percentage >=0 ? classes.colorGreen : classes.colorRed}
       >
         {icon}
-        {percentage} %
+        {Math.abs(percentage)} %
       </Box>
     </Box>
   );

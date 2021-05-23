@@ -262,8 +262,8 @@ module.exports = (app) => {
             }
 
             const price = data[coinSymbol.toUpperCase()].USD;
-            const bitcoinQuantity = data.BTC.USD / price;
-            const ethQuantity = data.ETH.USD / price;
+            const bitcoinQuantity = price / data.BTC.USD;
+            const ethQuantity = price / data.ETH.USD;
 
 
             return res.status(200).json ({ value: { price, bitcoinQuantity, ethQuantity } });
@@ -274,6 +274,9 @@ module.exports = (app) => {
 
     router.get('/:coinSymbol/stats', async (req, res, next) => {
         const PARAMS = ['average_transaction_value', 'block_height', 'hashrate', 'difficulty', 'block_time', 'block_size', 'current_suply'];
+        const PARAMS2 = ['num_market_pairs', 'max_supply', 'circulating_supply', 'cmc_rank'];
+        // num_market_pairs, max_supply, circulating_supply, cmc_rank
+        // percentage_change_7d, percentage_change_30d
 
         try {
             const { coinSymbol } = req.params;
@@ -298,6 +301,23 @@ module.exports = (app) => {
 
             PARAMS.forEach((param) => {
                 responseProcessed[param] = data.Data[param];
+            });
+
+
+            const url2 = `${requestConfig.url}/cryptocurrency/listings/latest`;
+            const convertConfig = { ...requestConfig, url: url2 };
+
+            const data2 = await axios(convertConfig);
+
+            if (status !== 200) {
+                return res.sendStatus(status);
+            }
+
+            const dataFiltered = data2.data.data.filter((coin) => coinSymbol.toUpperCase() === coin.symbol.toUpperCase())[0];
+
+
+            PARAMS2.forEach((param) => {
+                responseProcessed[param] = dataFiltered[param];
             });
 
 

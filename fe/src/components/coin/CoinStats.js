@@ -90,7 +90,7 @@ export default function CoinStats(props) {
                     component="th"
                     scope="row"
                   >
-                    {row.name.replace(/ /g,"_")}
+                    {row.name.replace(/_/g," ")}
                   </TableCell>
                   <TableCell style={{ borderColor: "#aaa" }} align="right">
                     {row.value.toFixed(3)}

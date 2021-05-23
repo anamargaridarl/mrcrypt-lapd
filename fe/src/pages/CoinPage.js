@@ -161,10 +161,11 @@ export default function CoinPage() {
         console.log(error);
       }
     }
-    //getCoinValue();
+    //getCoinStats()
+    getCoinValue();
     //getChartValues();
     getDillutedMarketCap();
-    getCardInfo();
+    //getCardInfo();
   }, [coinInfo])
   
 
@@ -188,7 +189,8 @@ export default function CoinPage() {
             <CoinChart data={chartValue} name={coinName}></CoinChart>
           </Grid>
           <Grid container item xs={12} sm={12} md={4} lg={4} direction="column">
-            <CoinValue data = {coinValue}></CoinValue>
+            <CoinValue data = {coinValue} percentage = {dillutedMarketUp?.[coinInfo?.symbol]?.percentage} coinName={coinName} 
+            symbol = {coinInfo?.symbol}></CoinValue>
             <CoinStats data={coinStats}></CoinStats>
           </Grid>
         </Grid>
