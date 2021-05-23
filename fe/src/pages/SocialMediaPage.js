@@ -19,8 +19,8 @@ const useStyles = makeStyles({
   header: {
     marginBottom: "0",
     marginTop: "2em",
-    marginLeft:"4em",
-    fontWeight:"bold"
+    marginLeft: "4em",
+    fontWeight: "bold",
   },
   subTitle: {
     marginTop: "0",
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
   page: {
     backgroundColor: gray,
-    height: "100vh"
+    height: "100vh",
   },
 });
 
@@ -50,6 +50,7 @@ export default function SocialMediaPage() {
           <Grid item xs={12} sm={12} md={4} lg={4}>
             <p className={subTitle}>Reddit</p>
             <SocialTable
+              url="topSubreddits"
               title="SubReddits Weekly Growth"
               header="Subreddit"
               metric="Increase %"
@@ -62,7 +63,7 @@ export default function SocialMediaPage() {
                 <GoogleCharts></GoogleCharts>
               </Grid>
               <Grid item xs={12} sm={12} md={6} lg={6}>
-                <SocialTable 
+                <SocialTable
                   url="topCryptoSearches"
                   title="Top 10 Cryptocurrency Related Google Searches"
                   header="Name"

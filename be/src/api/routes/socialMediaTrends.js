@@ -103,7 +103,7 @@ module.exports = (app) => {
      */
     router.get('/topSubreddits', (_, res, next) => {
         scraper().then((data) => {
-            res.status(HTTPStatus.StatusCodes.OK).json(data);
+            res.status(HTTPStatus.StatusCodes.OK).json({ results: data });
         }).catch((err) => {
             console.error(err);
             return next(err);
