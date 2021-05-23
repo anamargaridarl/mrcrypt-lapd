@@ -36,7 +36,6 @@ const normalize = (data) => {
 
   const order = Math.floor(Math.log(max) / Math.LN10+ 0.000000001);
   const magnitude =  Math.pow(10,order) / thresh;
-  console.log(magnitude)
 
   for(let i = 0; i < data.length; i++) {
     if (data[i] != null) {
@@ -59,8 +58,6 @@ export default function LineCharts({
   };
   const { chart } = useStyles(props);
   const [data] = useState(dataAux);
-
-  console.log("ok")
 
   const units = normalize(data)
 

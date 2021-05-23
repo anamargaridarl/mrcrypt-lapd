@@ -131,7 +131,6 @@ module.exports = (app) => {
 
             const data = (await axios(config)).data.data[0];
 
-            console.log(data);
 
 
             const [volumeYesterday, marketCapYesterday] = [data.timeSeries[0].volume, data.timeSeries[0].market_cap];
@@ -142,7 +141,6 @@ module.exports = (app) => {
                 percentage: volumeYesterday > volumeNow ? -(1 - (volumeNow / volumeYesterday)) : ((volumeNow / volumeYesterday) - 1) * 100
             };
 
-            console.log(data.timeSeries[24]);
 
             const marketCap = {
                 value: marketCapNow,

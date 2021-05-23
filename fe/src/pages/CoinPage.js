@@ -46,7 +46,6 @@ export default function CoinPage() {
           url: `http://localhost:8080/api/coins/${coinName}/data`
         })
         .then((response) => {
-          console.log("calling");
           setCoinInfo(response.data.value);
           if (response.status !== 200) {
             throw new Error();
@@ -92,7 +91,6 @@ export default function CoinPage() {
           url: `http://localhost:8080/api/coins/${coinInfo.symbol}/price`
         })
         .then((response) => {
-          console.log("calling 2");
           setCoinValue(response.data.value);
           if (response.status !== 200) {
             throw new Error();
@@ -113,7 +111,6 @@ export default function CoinPage() {
           method: 'get',
           url: `http://localhost:8080/api/coins/${coinInfo.symbol}/statsEvolution`
         }).then(response => {
-          console.log('calling3')
           setChartValue(response.data.values);
         });
 
@@ -133,7 +130,6 @@ export default function CoinPage() {
           method: 'get',
           url: `http://localhost:8080/api/coins/market/${coinInfo.symbol},btc,eth`
         }).then(response => {
-          console.log('calling3')
           setDillutedMarketUp(response.data.value);
         });
 
