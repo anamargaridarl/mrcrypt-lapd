@@ -23,16 +23,24 @@ const NewsList = () => {
   const classes = useStyles();
 
   useEffect(() => {
+    setPage(1);
     const params = new URLSearchParams(location.search);
     const categories = params.get("categories") || "";
-    getNews(categories);
-  }, [location.search, page]);
+    getNews(categories, page);
+  }, [location.search]);
 
   const handleChange = (_, value) => {
     setPage(value);
+    const params = new URLSearchParams(location.search);
+    const categories = params.get("categories") || "";
+    getNews(categories, value);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
-  const getNews = async (categories) => {
+  const getNews = async (categories, page) => {
     try {
       const config = {
         method: "get",
