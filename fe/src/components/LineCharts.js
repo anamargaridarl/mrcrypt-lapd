@@ -66,7 +66,7 @@ export default function LineCharts({
 
   return (
     <ResponsiveContainer width={widthContainer} height={heightContainer}>
-      <LineChart width={350} height={100} data={data}>
+      <LineChart data={data}>
         <Line
           className={chart}
           type="monotone"
