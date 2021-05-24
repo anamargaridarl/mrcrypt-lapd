@@ -26,7 +26,7 @@ export default function HomePage() {
       <Container className={table} maxWidth={false}>
         <CoinTable></CoinTable>
       </Container>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

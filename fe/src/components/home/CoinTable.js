@@ -9,6 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import TablePagination from '@material-ui/core/TablePagination';
 //@core-material-ui:icons
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
@@ -23,6 +24,7 @@ const useStyles = makeStyles({
     minWidth: 650,
   },
   tableHead: {
+    padding: 0,
     "& .MuiTableCell-head": {
       fontWeight: "bold",
       color: darkGray
@@ -39,7 +41,6 @@ function createData(
   seven,
   cap,
   volume,
-  // volatility,
   lastdays
 ) {
   return {
@@ -51,7 +52,6 @@ function createData(
     seven,
     cap,
     volume,
-    // volatility,
     lastdays
   };
 }
@@ -63,7 +63,10 @@ const imageCoin = (url) => {
 
 export default function BasicTable() {
 
+  const classes = useStyles();
   const [rows, setRows] = useState([])
+  const [page, setPage] = useState(0)
+  const [rowsPerPage, setRowsPerPage] = useState(6);
 
   const createRows = () => {
 
@@ -71,9 +74,10 @@ export default function BasicTable() {
       method: 'get',
       url: `http://localhost:8080/api/homepage/coinRanking`
     }).then(response => {
+      let i = 0;
       const rows = response.data.map((element) => {
         return createData(
-          element.id,
+          i++,
           element.coin,
           imageCoin(element.imageUrl),
           element.price,
@@ -81,7 +85,6 @@ export default function BasicTable() {
           element.seven,
           element.cap,
           element.volume,
-          // element.volatility,
           <TinyChart
             widthContainer={"50%"}
             heightContainer={60}
@@ -97,47 +100,69 @@ export default function BasicTable() {
   useEffect(() => {
     createRows();
   }, [])
-  const classes = useStyles();
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead  >
-          <TableRow className={classes.tableHead}>
-            <TableCell align="left" >#</TableCell>
-            <TableCell align="left">Coin</TableCell>
-            <TableCell align="left">Price</TableCell>
-            <TableCell align="left">24H %</TableCell>
-            <TableCell align="left">7Ds %</TableCell>
-            <TableCell align="left">Market Cap</TableCell>
-            <TableCell align="left">Market Volume</TableCell>
-            {/* <TableCell align="left">Volatility</TableCell> */}
-            <TableCell align="left">Last 7 Days</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            < TableRow key={row.nb} >
-              <TableCell component="th" scope="row">
-                {row.nb}
-              </TableCell>
-              <TableCell align="left">
-                <Grid container>
-                  {/* {row.coinimage !== undefined ? row.coinimage : ""} */}
-                  &nbsp;{row.coin}
-                </Grid>
-              </TableCell>
-              <TableCell align="left">{row.price}</TableCell>
-              <TableCell style={{ color: row.twentyfour < 0 ? red : green }} align="left">{row.twentyfour < 0 ? <Grid container><ArrowDropDownIcon /> {Math.abs(row.twentyfour)} </Grid> : <Grid container><ArrowDropUpIcon /> {Math.abs(row.twentyfour)} </Grid>}</TableCell>
-              <TableCell style={{ color: row.seven < 0 ? red : green }} align="left">{row.seven < 0 ? <Grid container><ArrowDropDownIcon /> {Math.abs(row.seven)} </Grid> : <Grid container><ArrowDropUpIcon /> {Math.abs(row.seven)} </Grid>}</TableCell>
-              <TableCell align="left"> $ {row.cap}</TableCell>
-              <TableCell align="left">$ {row.volume}</TableCell>
-              {/* <TableCell align="left">{row.volatility}</TableCell> */}
-              <TableCell align="left">{row.lastdays}</TableCell>
+    <>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead  >
+            <TableRow className={classes.tableHead}>
+              <TableCell align="left" >#</TableCell>
+              <TableCell align="left">Coin</TableCell>
+              <TableCell align="left">Price</TableCell>
+              <TableCell align="left">24H %</TableCell>
+              <TableCell align="left">7Ds %</TableCell>
+              <TableCell align="left">Market Cap</TableCell>
+              <TableCell align="left">Market Volume</TableCell>
+              {/* <TableCell align="left">Volatility</TableCell> */}
+              <TableCell align="left">Last 7 Days</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer >
+          </TableHead>
+          <TableBody>
+            {rows
+              .slice(
+                page * rowsPerPage,
+                page * rowsPerPage + rowsPerPage
+              ).map((row) => (
+                < TableRow key={row.nb} >
+                  <TableCell style={{ padding: "0", paddingLeft: "1em" }} component="th" scope="row">
+                    {row.nb}
+                  </TableCell>
+                  <TableCell style={{ padding: "0" }} align="left">
+                    <Grid container>
+                      {/* {row.coinimage !== undefined ? row.coinimage : ""} */}
+                  &nbsp;{row.coin}
+                    </Grid>
+                  </TableCell >
+                  <TableCell style={{ padding: "0" }} align="left">{row.price}</TableCell>
+                  <TableCell style={{ color: row.twentyfour < 0 ? red : green, padding: "0" }} align="left">{row.twentyfour < 0 ? <Grid container><ArrowDropDownIcon /> {Math.abs(row.twentyfour)} </Grid> : <Grid container><ArrowDropUpIcon /> {Math.abs(row.twentyfour)} </Grid>}</TableCell>
+                  <TableCell style={{ color: row.seven < 0 ? red : green, padding: "0" }} align="left">{row.seven < 0 ? <Grid container><ArrowDropDownIcon /> {Math.abs(row.seven)} </Grid> : <Grid container><ArrowDropUpIcon /> {Math.abs(row.seven)} </Grid>}</TableCell>
+                  <TableCell style={{ padding: "0" }} align="left"> $ {row.cap}</TableCell>
+                  <TableCell style={{ padding: "0" }} align="left">$ {row.volume}</TableCell>
+                  <TableCell style={{ padding: "0" }} align="left">{row.lastdays}</TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer >
+      <TablePagination
+        rowsPerPageOptions={[6]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+      />
+    </>
   );
 }

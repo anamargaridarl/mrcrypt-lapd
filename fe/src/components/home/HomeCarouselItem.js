@@ -14,7 +14,7 @@ const axios = require('axios');
 const useStyles = makeStyles({
   paper: {
     width: "13em",
-    margin: "2em 1em",
+    margin: "1em 1em",
     padding: "0.5em",
     justifyContent: "center",
   },
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
 export default function CarouselItem({ name, parameter, parameterTime, value }) {
 
-  const { paper, innerElement, growthElement, body } = useStyles();
+  const { paper, innerElement, body } = useStyles();
   const [data, setData] = useState([])
 
 
@@ -60,9 +60,6 @@ export default function CarouselItem({ name, parameter, parameterTime, value }) 
         <p>{name.toUpperCase()}</p>
         <Grid container className={innerElement} justify="center">
           <b>{Math.round(data.value)} {value} </b>
-          {/* <Grid item className={growthElement} style={{ color: growth < 0 ? red : green }}>
-            {growth + "%"}
-          </Grid> */}
         </Grid>
         <TinyChart widthContainer={"80%"} heightContainer={70} strokeColor={purple} dataAux={data.timestamp}></TinyChart>
       </Grid>

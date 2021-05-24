@@ -96,7 +96,6 @@ module.exports = (app) => {
                 return axios("http://localhost:8080/api/homepage/coinChart/" + element.symbol)
                     .then(data => {
                         return {
-                            id: i++,
                             coin: element.name,
                             imageUrl: element.name,
                             price: element.quote.USD['price'],
