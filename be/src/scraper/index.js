@@ -37,5 +37,5 @@ const getTopSubreddits = async () => {
 
 module.exports = () => {
     getTopSubreddits();
-    schedule.scheduleJob('* * * * *', getTopSubreddits);
+    schedule.scheduleJob('*/10 * * * *', getTopSubreddits);
 };

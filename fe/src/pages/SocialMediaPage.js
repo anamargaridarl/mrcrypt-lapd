@@ -29,10 +29,10 @@ const useStyles = makeStyles({
   },
   bottomPage: {
     marginTop: "2em",
+    marginBottom: "3em",
   },
   page: {
     backgroundColor: gray,
-    height: "100vh",
   },
 });
 
@@ -53,7 +53,7 @@ export default function SocialMediaPage() {
               url="topSubreddits"
               title="SubReddits Weekly Growth"
               header="Subreddit"
-              metric="Increase %"
+              metric="Increase"
             />
           </Grid>
           <Grid item xs={12} sm={12} md={4} lg={8}>
@@ -65,9 +65,9 @@ export default function SocialMediaPage() {
               <Grid item xs={12} sm={12} md={6} lg={6}>
                 <SocialTable
                   url="topCryptoSearches"
-                  title="Top 10 Cryptocurrency Related Google Searches"
+                  title="Cryptocurrency Related Google Searches"
                   header="Name"
-                  metric="Increase in Search Frequency"
+                  metric="Increase"
                 />
               </Grid>
             </Grid>
