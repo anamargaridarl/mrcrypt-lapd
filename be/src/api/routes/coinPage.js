@@ -1,7 +1,7 @@
 const HTTPStatus = require('http-status-codes');
 const axios = require('axios');
 const config = require('../../config/env');
-const validators = require('../middleware/validators/converser');
+const validators = require('../middleware/validators/coinPage');
 const { Router } = require('express');
 const router = Router();
 
@@ -19,7 +19,7 @@ module.exports = (app) => {
     /**
      * for the card of the fully dilluted marked cap
      */
-    router.get('/market/:coinNames', async (req, res, next) => {
+    router.get('/market/:coinNames', validators.severalSymbols, async (req, res, next) => {
 
         try {
             const { coinNames } = req.params;
@@ -57,7 +57,7 @@ module.exports = (app) => {
     /**
      * for the charts
      */
-    router.get('/:coinSymbol/coinEvolution', async (req, res, next) => {
+    router.get('/:coinSymbol/coinEvolution', validators.coinSymbol, async (req, res, next) => {
 
         const date = new Date().getTime() / 1000;
         const oneYearAgo = new Date().setFullYear(new Date().getFullYear() - 1) / 1000;
@@ -109,7 +109,7 @@ module.exports = (app) => {
     /**
      * get market cap and volume, comparison made between last hour and 24h before that
      */
-    router.get('/:coinSymbol/info', async (req, res, next) => {
+    router.get('/:coinSymbol/info', validators.coinSymbol, async (req, res, next) => {
 
 
         try {
@@ -160,11 +160,11 @@ module.exports = (app) => {
     /**
      * coin price and comparison the btc and eth
      */
-    router.get('/:coinSymbol/price', async (req, res, next) => {
+    router.get('/:coinSymbol/price', validators.coinSymbol, async (req, res, next) => {
         try {
             const { coinSymbol } = req.params;
-            const url2 = `${requestConfig.url}/cryptocurrency/quotes/latest?&symbol=${coinSymbol}`;
-            const convertConfig = { ...requestConfig, url: url2 };
+            const urlPriceCoin = `${requestConfig.url}/cryptocurrency/quotes/latest?&symbol=${coinSymbol}`;
+            const convertConfig = { ...requestConfig, url: urlPriceCoin };
 
             const response = await axios(convertConfig);
 
@@ -172,11 +172,11 @@ module.exports = (app) => {
                 return res.sendStatus(status);
             }
 
-            const url = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH&tsyms=USD';
+            const urlPriceEthNBtc = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH&tsyms=USD';
 
             const config = {
                 method: 'get',
-                url: url,
+                url: urlPriceEthNBtc,
                 headers: {
                     Authorization: 'Apikey fe8a657f41319b69760fee377170fa16fa7d07da1a2583b209b1baf059b0e631'
 
@@ -202,11 +202,10 @@ module.exports = (app) => {
     /**
      * some stats regarding the coin, info in the right table
      */
-    router.get('/:coinSymbol/stats', async (req, res, next) => {
-        const PARAMS = ['average_transaction_value', 'block_height', 'hashrate', 'difficulty', 'block_time', 'block_size', 'current_suply'];
-        const PARAMS2 = ['num_market_pairs', 'max_supply', 'circulating_supply', 'cmc_rank'];
-        // num_market_pairs, max_supply, circulating_supply, cmc_rank
-        // percentage_change_7d, percentage_change_30d
+    router.get('/:coinSymbol/stats', validators.coinSymbol, async (req, res, next) => {
+        const PARAMSCryptoCompareAPI = ['average_transaction_value', 'block_height',
+            'hashrate', 'difficulty', 'block_time', 'block_size', 'current_suply'];
+        const PARAMSCoinMarketCapAPI = ['num_market_pairs', 'max_supply', 'circulating_supply', 'cmc_rank'];
 
         try {
             const { coinSymbol } = req.params;
@@ -229,24 +228,24 @@ module.exports = (app) => {
 
             const responseProcessed = {};
 
-            PARAMS.forEach((param) => {
+            PARAMSCryptoCompareAPI.forEach((param) => {
                 responseProcessed[param] = data.Data[param];
             });
 
 
-            const url2 = `${requestConfig.url}/cryptocurrency/listings/latest`;
-            const convertConfig = { ...requestConfig, url: url2 };
+            const urlListingCoins = `${requestConfig.url}/cryptocurrency/listings/latest`;
+            const convertConfig = { ...requestConfig, url: urlListingCoins };
 
-            const data2 = await axios(convertConfig);
+            const coinsData = await axios(convertConfig);
 
             if (status !== 200) {
                 return res.sendStatus(status);
             }
 
-            const dataFiltered = data2.data.data.filter((coin) => coinSymbol.toUpperCase() === coin.symbol.toUpperCase())[0];
+            const dataFiltered = coinsData.data.data.filter((coin) => coinSymbol.toUpperCase() === coin.symbol.toUpperCase())[0];
 
 
-            PARAMS2.forEach((param) => {
+            PARAMSCoinMarketCapAPI.forEach((param) => {
                 responseProcessed[param] = dataFiltered[param];
             });
 
@@ -262,7 +261,7 @@ module.exports = (app) => {
     /**
      * some basic information regarding a coin (information in the top left)
      */
-    router.get('/:coinName/coinInfo', async (req, res, next) => {
+    router.get('/:coinName/coinInfo', validators.coinName, async (req, res, next) => {
 
         const PARAMS = ['slug', 'description', 'tags', 'name', 'symbol', 'logo'];
 
