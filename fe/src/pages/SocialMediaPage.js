@@ -37,6 +37,7 @@ const useStyles = makeStyles({
 });
 
 export default function SocialMediaPage() {
+  document.title = "Social Media Trends";
   const { page, table, header, bottomPage, subTitle } = useStyles();
 
   return (

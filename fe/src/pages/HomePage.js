@@ -16,6 +16,7 @@ const useStyles = makeStyles({
 });
 
 export default function HomePage() {
+  document.title = "MrCrypt";
   const { table } = useStyles();
 
   return (
