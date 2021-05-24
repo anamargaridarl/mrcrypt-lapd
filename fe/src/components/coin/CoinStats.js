@@ -35,8 +35,8 @@ export default function CoinStats(props) {
 
   const rows = [];
 
-  for(const key in data) {
-    rows.push({name: key, value: data[key]})
+  for (const key in data) {
+    rows.push({ name: key, value: data[key] })
   }
 
   const handleChangeRowsPerPage = (event) => {
@@ -71,10 +71,10 @@ export default function CoinStats(props) {
                     component="th"
                     scope="row"
                   >
-                    {row.name.replace(/_/g," ")}
+                    {row.name.replace(/_/g, " ")}
                   </TableCell>
                   <TableCell style={{ borderColor: "#aaa" }} align="right">
-                    {row.value.toFixed(3)}
+                    {row.value !== null ? row.value.toFixed(3) : ""}
                   </TableCell>
                 </TableRow>
               ))}

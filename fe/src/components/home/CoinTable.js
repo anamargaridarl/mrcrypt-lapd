@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 //@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -35,6 +36,7 @@ const useStyles = makeStyles({
 function createData(
   nb,
   coin,
+  slug,
   coinimage,
   price,
   twentyfour,
@@ -46,6 +48,7 @@ function createData(
   return {
     nb,
     coin,
+    slug,
     coinimage,
     price,
     twentyfour,
@@ -58,7 +61,7 @@ function createData(
 
 
 const imageCoin = (url) => {
-  return <img alt="Coin" width={"25px"} src={"./assets/bitcoin.png"} />
+  return <img alt="Coin" width={"25px"} src={url} />
 }
 
 export default function BasicTable() {
@@ -67,6 +70,8 @@ export default function BasicTable() {
   const [rows, setRows] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(6);
+  const history = useHistory();
+
 
   const createRows = () => {
 
@@ -76,9 +81,12 @@ export default function BasicTable() {
     }).then(response => {
       let i = 0;
       const rows = response.data.map((element) => {
+        if (element === null)
+          return null
         return createData(
           i++,
           element.coin,
+          element.slug,
           imageCoin(element.imageUrl),
           element.price,
           element.twentyfour,
@@ -123,7 +131,6 @@ export default function BasicTable() {
               <TableCell align="left">7Ds %</TableCell>
               <TableCell align="left">Market Cap</TableCell>
               <TableCell align="left">Market Volume</TableCell>
-              {/* <TableCell align="left">Volatility</TableCell> */}
               <TableCell align="left">Last 7 Days</TableCell>
             </TableRow>
           </TableHead>
@@ -138,8 +145,8 @@ export default function BasicTable() {
                     {row.nb}
                   </TableCell>
                   <TableCell style={{ padding: "0" }} align="left">
-                    <Grid container>
-                      {/* {row.coinimage !== undefined ? row.coinimage : ""} */}
+                    <Grid container onClick={() => { history.push("/coinpage/" + row.slug) }}>
+                      {row.coinimage !== undefined ? row.coinimage : ""}
                   &nbsp;{row.coin}
                     </Grid>
                   </TableCell >

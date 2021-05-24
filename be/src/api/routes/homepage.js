@@ -1,7 +1,6 @@
 const HTTPStatus = require('http-status-codes');
 const axios = require('axios');
 const config = require('../../config/env');
-const validators = require('../middleware/validators/converser');
 const { Router } = require('express');
 const router = Router();
 
@@ -51,9 +50,9 @@ module.exports = (app) => {
 
     });
 
-    router.get('/coinChart/:symbol', async (req, res, next) => {
+    router.get('/coinChart/:symbol/:name', async (req, res, next) => {
         try {
-            const { symbol } = req.params
+            const { symbol, name } = req.params
             let i = 0;
             const timeUrl = `${requestConfigCrypto.url}/histoday`;
             const timeConfig = { ...requestConfigCrypto, url: timeUrl };
@@ -64,12 +63,23 @@ module.exports = (app) => {
                 limit: 5
             }
 
+            const imageUrl = `${requestConfigCoin.url}/cryptocurrency/info`;
+            const imageConfig = { ...requestConfigCoin, url: imageUrl };
+            imageConfig.params = {
+                slug: name
+            }
+
+            const responseLogo = await axios(imageConfig);
             const response = await axios(timeConfig);
             let chartResponse = response.data.Data.Data.map((element) => {
                 return { name: i++, pv: element.high }
             })
 
-            return res.status(HTTPStatus.StatusCodes.OK).json(chartResponse);
+            let key = Object.keys(responseLogo.data.data)
+            let imageUrlData = responseLogo.data.data[key[0]].logo
+            let toSend = { data: chartResponse, imageUrl: imageUrlData }
+
+            return res.status(HTTPStatus.StatusCodes.OK).json(toSend);
         } catch (err) {
             return next(err);
         }
@@ -81,8 +91,7 @@ module.exports = (app) => {
      */
     router.get('/coinRanking', async (_, res, next) => {
 
-        let i = 0;
-        try {
+        const getValues = async () => {
             const coinsUrl = `${requestConfigCoin.url}/cryptocurrency/listings/latest`;
             const coinsConfig = { ...requestConfigCoin, url: coinsUrl };
             coinsConfig.params = {
@@ -93,24 +102,34 @@ module.exports = (app) => {
             const response = await axios(coinsConfig);
             let data = response.data.data
             let toSend = await data.map((element) => {
-                return axios("http://localhost:8080/api/homepage/coinChart/" + element.symbol)
+                return axios("http://localhost:8080/api/homepage/coinChart/" + element.symbol + "/" + element.slug)
                     .then(data => {
                         return {
+                            slug: element.slug,
                             coin: element.name,
-                            imageUrl: element.name,
+                            imageUrl: data.data.imageUrl,
                             price: element.quote.USD['price'],
                             twentyfour: element.quote.USD['percent_change_24h'],
                             seven: element.quote.USD['percent_change_7d'],
                             cap: element.quote.USD['market_cap'],
                             volume: element.quote.USD['volume_24h'],
-                            data: data.data
+                            data: data.data.data
                         }
+                    })
+                    .catch((err) => {
+                        return next(err);
                     })
 
             })
             Promise.all(toSend).then((values) => {
                 return res.status(HTTPStatus.StatusCodes.OK).json(values);
-            });
+            }).catch((err) => {
+                return next(err);
+            })
+        }
+
+        try {
+            getValues()
         } catch (err) {
             return next(err);
         }
