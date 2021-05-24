@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     borderRadius: 0,
     marginBottom: "2em",
-    padding: "10px 30px",
+    padding: "10px 15px 10px 15px",
   },
   content: {
     display: "flex",
@@ -22,14 +22,14 @@ const useStyles = makeStyles((theme) => ({
     flex: "2 0 0%",
     margin: "auto 0",
     justifyContent: "center",
-    fontSize: "11px",
+    fontSize: "14px",
   },
   url: {
     color: black,
     textDecoration: "none",
   },
   title: {
-    fontSize: "14px",
+    fontSize: "16px",
     fontWeight: "bold",
   },
   readMore: {
@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
     color: purple,
     border: "1px solid",
     borderColor: purple,
+    fontSize: 12,
   },
   media: {
     flex: "1 0 0%",
@@ -75,7 +76,8 @@ const NewsCard = (props) => {
           <p className={classes.title}>{title}</p>
         </a>
         <p>
-          {content}{" "}
+          {content}
+          {""}
           {extraContent.length > 0 ? (readMore ? extraContent : " ...") : ""}
           {extraContent.length > 0 ? (
             <a

@@ -5,7 +5,7 @@ const validators = require('../middleware/validators/news');
 const { Router } = require('express');
 const router = Router();
 
-const NEWS_PER_PAGE = 10;
+const NEWS_PER_PAGE = 5;
 
 module.exports = (app) => {
     app.use('/news', router);
@@ -31,11 +31,11 @@ module.exports = (app) => {
             };
             const response = await axios(newsConfig);
             const count = Math.ceil(response.data.Data.length / NEWS_PER_PAGE);
-            const news = response.data.Data.slice((req.query.page - 1) * NEWS_PER_PAGE, (req.query.page * NEWS_PER_PAGE) + 1).map((n) => ({
+            const news = response.data.Data.slice((req.query.page - 1) * NEWS_PER_PAGE, (req.query.page * NEWS_PER_PAGE)).map((n) => ({
                 url: n.url,
                 title: n.title,
-                content: n.body.length > 300 ? n.body.substring(0, 100) : n.body,
-                extraContent: n.body.length > 300 ? n.body.substring(100) : '',
+                content: n.body.length > 300 ? n.body.substring(0, 200) : n.body,
+                extraContent: n.body.length > 300 ? n.body.substring(200) : '',
                 image: n.imageurl,
                 tags: n.categories.split('|')
             }));

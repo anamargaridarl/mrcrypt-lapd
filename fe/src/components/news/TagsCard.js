@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     margin: "auto 0",
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: "bold",
   },
   line: {
