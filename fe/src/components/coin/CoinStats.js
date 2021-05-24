@@ -16,25 +16,6 @@ const useStyles = makeStyles((_) => ({
   },
 }));
 
-// this data will need to be fetched from an api
-const rows = [
-  {
-    name: "Bitcoin price",
-    price: 53242.45,
-  },
-  {
-    name: "Bitcoin price",
-    price: 53242.45,
-  },
-  {
-    name: "Bitcoin price",
-    price: 53242.45,
-  },
-];
-
-const coin = {
-  name: "Bitcoin",
-};
 
 export default function CoinStats(props) {
   const classes = useStyles();
@@ -90,7 +71,7 @@ export default function CoinStats(props) {
                     component="th"
                     scope="row"
                   >
-                    {row.name.replace(/ /g,"_")}
+                    {row.name.replace(/_/g," ")}
                   </TableCell>
                   <TableCell style={{ borderColor: "#aaa" }} align="right">
                     {row.value.toFixed(3)}

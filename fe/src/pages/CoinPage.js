@@ -34,16 +34,18 @@ export default function CoinPage() {
   const [coinStats, setCoinStats] = React.useState(null);
   const [coinValue, setCoinValue] = React.useState(null);
   const [chartValue, setChartValue] = React.useState([]);
+  const [dillutedMarketUp, setDillutedMarketUp] = React.useState(null); 
+  const [volume, setVolume] = React.useState(null);
+  const [marketCap, setMarketCap] = React.useState(null);
 
   useEffect(() => {
     const getCoinInfo = async () => {
       try {
         axios({
           method: 'get',
-          url: `http://localhost:8080/api/coins/${coinName}/data`
+          url: `http://localhost:8080/api/coins/${coinName}/coinInfo`
         })
         .then((response) => {
-          console.log("calling");
           setCoinInfo(response.data.value);
           if (response.status !== 200) {
             throw new Error();
@@ -89,9 +91,7 @@ export default function CoinPage() {
           url: `http://localhost:8080/api/coins/${coinInfo.symbol}/price`
         })
         .then((response) => {
-          console.log("calling 2");
           setCoinValue(response.data.value);
-          console.log(response.data.value);
           if (response.status !== 200) {
             throw new Error();
           }
@@ -109,9 +109,8 @@ export default function CoinPage() {
 
         axios({
           method: 'get',
-          url: `http://localhost:8080/api/coins/${coinInfo.symbol}/statsEvolution`
+          url: `http://localhost:8080/api/coins/${coinInfo.symbol}/coinEvolution`
         }).then(response => {
-          console.log('calling3')
           setChartValue(response.data.values);
         });
 
@@ -119,12 +118,50 @@ export default function CoinPage() {
         console.log(err);
       }
     }
-    //getCoinValue();
+
+    const getDillutedMarketCap = async() => {
+      try {
+
+        if (coinInfo === null) {
+          return;
+        }
+
+        axios({
+          method: 'get',
+          url: `http://localhost:8080/api/coins/market/${coinInfo.symbol},btc,eth`
+        }).then(response => {
+          setDillutedMarketUp(response.data.value);
+        });
+
+      } catch(error) {
+        console.log(error);
+      }
+    }
+
+    const getCardInfo = async() => {
+      try {
+        if (coinInfo === null) {
+          return;
+        }
+        axios({
+          method: 'get',
+          url: `http://localhost:8080/api/coins/${coinInfo.symbol}/info`
+        }).then(response => {
+          setVolume(response.data.volume);
+          setMarketCap(response.data.marketCap);
+        });
+
+      } catch(error) {
+        console.log(error);
+      }
+    }
+    getCoinStats()
+    getCoinValue();
     getChartValues();
+    getDillutedMarketCap();
+    getCardInfo();
   }, [coinInfo])
   
-  console.log(chartValue);
-
 
   return (
     <>
@@ -138,14 +175,15 @@ export default function CoinPage() {
           <Grid className={container} item xs={12} sm={12} md={8} lg={8}>
             <CoinInfo data = {coinInfo}></CoinInfo>
             <Grid container className={intro} justify="space-between">
-              <CardCoinInfo></CardCoinInfo>
-              <CardCoinInfo></CardCoinInfo>
-              <CardCoinInfo></CardCoinInfo>
+              <CardCoinInfo data =  {{data: marketCap, title: 'Market cap'}}></CardCoinInfo>
+              <CardCoinInfo data = {{data: dillutedMarketUp?.[coinInfo?.symbol], title: 'Fully dilluted market cap'}}></CardCoinInfo>
+              <CardCoinInfo data = {{data: volume, title: 'Volume',  symbol : coinInfo?.symbol}}></CardCoinInfo>
             </Grid>
             <CoinChart data={chartValue} name={coinName}></CoinChart>
           </Grid>
           <Grid container item xs={12} sm={12} md={4} lg={4} direction="column">
-            <CoinValue data = {coinValue}></CoinValue>
+            <CoinValue data = {coinValue} percentage = {dillutedMarketUp?.[coinInfo?.symbol]?.percentage} coinName={coinName} 
+            symbol = {coinInfo?.symbol}></CoinValue>
             <CoinStats data={coinStats}></CoinStats>
           </Grid>
         </Grid>
