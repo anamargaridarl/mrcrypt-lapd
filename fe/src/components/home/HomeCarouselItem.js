@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 //@core-material-ui
 import { Paper } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
+import Tooltip from '@material-ui/core/Tooltip';
 //@components
 import TinyChart from "../TinyChart";
 //@core-material-ui
@@ -29,40 +30,26 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CarouselItem({ name, parameter, parameterTime, value }) {
+export default function CarouselItem({ tootltip, name, type, value, dataTime }) {
 
   const { paper, innerElement, body } = useStyles();
-  const [data, setData] = useState([])
-
-
-  const getData = () => {
-    axios({
-      method: 'get',
-      url: `http://localhost:8080/api/homepage/global/` + parameter + "/" + parameterTime
-    }).then(response => {
-      setData(response.data)
-    }).catch((err) => console.log(err))
-  }
-
-
-  useEffect(() => {
-    getData()
-  }, [])
 
   return (
     <Paper className={paper}>
-      <Grid
-        className={body}
-        container
-        justify="flex-start"
-        alignItems="flex-start"
-      >
-        <p>{name.toUpperCase()}</p>
-        <Grid container className={innerElement} justify="center">
-          <b>{Math.round(data.value)} {value} </b>
+      <Tooltip title={tootltip}>
+        <Grid
+          className={body}
+          container
+          justify="flex-start"
+          alignItems="flex-start"
+        >
+          <p>{name.toUpperCase()}</p>
+          <Grid container className={innerElement} justify="center">
+            <b>{Math.round(value * 100) / 100} {type} </b>
+          </Grid>
+          <TinyChart widthContainer={"80%"} heightContainer={70} strokeColor={purple} dataAux={dataTime}></TinyChart>
         </Grid>
-        <TinyChart widthContainer={"80%"} heightContainer={70} strokeColor={purple} dataAux={data.timestamp}></TinyChart>
-      </Grid>
+      </Tooltip>
     </Paper>
   )
 }

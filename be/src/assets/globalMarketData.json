@@ -1,0 +1,51 @@
+[
+    {
+        "name": "BTC Dominance",
+        "parameter": "btc_dominance_1h",
+        "parameterTime": "btc_dominance",
+        "value": "%",
+        "tooltip": "% of overall market cap vs bitcoin market cap (1 hour)"
+    },
+    {
+        "name": "Market Cap",
+        "parameter": "market_cap_1h",
+        "parameterTime": "market_cap",
+        "value": "USD",
+        "tooltip": "Total available supply of BTC multiplied by the current price of BTC in USD (1 hour)"
+    },
+    {
+        "name": "Social Volume",
+        "parameter": "social_volume_1h",
+        "parameterTime": "social_volume_sum",
+        "value": "",
+        "tooltip": "Number of social posts (1 hour)"
+    },
+    {
+        "name": "Active Contributors",
+        "parameter": "social_contributors_1h",
+        "parameterTime": "social_contributors",
+        "value": "",
+        "tooltip": "The number of unique accounts posting on social (1 hour)"
+    },
+    {
+        "name": "Average Sentiment",
+        "parameter": "average_sentiment_1h",
+        "parameterTime": "average_sentiment",
+        "value": "",
+        "tooltip": "Average sentiment of collected social posts (1 hour)"
+    },
+    {
+        "name": "News",
+        "parameter": "news_1h",
+        "parameterTime": "news",
+        "value": "",
+        "tooltip": "Number of news articles published (1 hour)"
+    },
+    {
+        "name": "Links Shared",
+        "parameter": "url_shares_1h",
+        "parameterTime": "url_shares",
+        "value": "",
+        "tooltip": "Number of urls shared and collected on social (1 hour)"
+    }
+]

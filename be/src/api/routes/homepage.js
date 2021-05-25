@@ -3,6 +3,8 @@ const axios = require('axios');
 const config = require('../../config/env');
 const { Router } = require('express');
 const router = Router();
+const globalParams = require("../../assets/globalMarketData.json");
+
 
 module.exports = (app) => {
     app.use('/homepage', router);
@@ -31,18 +33,22 @@ module.exports = (app) => {
         },
     };
 
-    router.get('/global/:parameter/:parameterTime', async (req, res, next) => {
+    router.get('/global', async (req, res, next) => {
         try {
-            const { parameter, parameterTime } = req.params;
             const coinsUrl = `${requestConfigLunar.url}?data=global&key=APIKey&data_points=24`;
             const coinsConfig = { ...requestConfigLunar, url: coinsUrl };
             const response = await axios(coinsConfig);
-            let value = response.data.data[parameter]
-            let i = 0;
-            let timestamp = response.data.data.timeSeries.map((element) => {
-                return { name: i++, pv: element[parameterTime] }
+            let count = 0;
+            let values = globalParams.map((param) => {
+                let i = 0;
+                let value = response.data.data[param.parameter]
+                let timestamp = response.data.data.timeSeries.map((element) => {
+                    return { name: i++, pv: element[param.parameterTime] }
+                })
+                console.log(param)
+                return { id: count++, tooltip: param.tooltip, name: param.name, value: value, timestamp: timestamp, type: param.type }
             })
-            return res.status(HTTPStatus.StatusCodes.OK).json({ value: value, timestamp: timestamp });
+            return res.status(HTTPStatus.StatusCodes.OK).json(values);
         }
         catch (err) {
             return next(err);
@@ -74,7 +80,6 @@ module.exports = (app) => {
             let chartResponse = response.data.Data.Data.map((element) => {
                 return { name: i++, pv: element.high }
             })
-
             let key = Object.keys(responseLogo.data.data)
             let imageUrlData = responseLogo.data.data[key[0]].logo
             let toSend = { data: chartResponse, imageUrl: imageUrlData }
