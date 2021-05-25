@@ -42,13 +42,16 @@ const useStyles = makeStyles((_) => ({
     color: white,
     backgroundColor: red,
     padding:"0 0.5em"
-
+  },
+  textAlignRight: {
+    textAlign: 'right',
+    width: "100%"
   }
 }));
 
 
 export default function CoinValue(props) {
-  const { coin, value, boxcontainer,colorGreen, colorRed, marginCoin, marginBottom } = useStyles();
+  const { coin, value, boxcontainer,colorGreen, colorRed, marginCoin, marginBottom, textAlignRight } = useStyles();
 
   const data = props.data;
 
@@ -62,7 +65,7 @@ export default function CoinValue(props) {
   return (
     <Grid container justify="flex-end" className={marginBottom}>
       <Grid container item justify="flex-end" xs={12} sm={12} md={12} lg={12}>
-        <p className={coin}>
+        <p  className={coin}>
           {props.coinName} ({props.symbol})
         </p>
       </Grid>
@@ -80,10 +83,10 @@ export default function CoinValue(props) {
           </Grid>
         </Card>
       </Grid>
-      <Grid container item justify="flex-start" xs={6} sm={6} md={10} lg={10}>
+      <Grid container item justify="flex-start" xs={8} sm={8} md={8} lg={8}>
         <p className={marginCoin}>{data.bitcoinQuantity.toFixed(3)} BTC</p>
       </Grid>
-      <Grid container item justify="flex-start" xs={6} sm={6} md={10} lg={10}>
+      <Grid container item justify="flex-start" xs={8} sm={8} md={8} lg={8}>
         <p className={marginCoin}>{data.ethQuantity.toFixed(3)} ETH</p>
       </Grid>
     </Grid>
