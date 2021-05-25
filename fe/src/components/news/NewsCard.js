@@ -70,6 +70,15 @@ const NewsCard = (props) => {
   const classes = useStyles();
   const { url, title, content, extraContent, image, tags } = props;
 
+
+  const createDOMPurify = require('dompurify');
+  let jsdom = require('jsdom');
+  const { JSDOM } = jsdom;
+  const { window } = new JSDOM();
+
+  const DOMPurify = createDOMPurify(window);
+
+
   return (
     <Card className={classes.root}>
       <img className={classes.media} src={image} alt="News Source" />
@@ -78,9 +87,9 @@ const NewsCard = (props) => {
           <p className={classes.title}>{title}</p>
         </a>
         <p>
-          {content}
+         <span dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content)}}></span>
           {""}
-          {extraContent.length > 0 ? (readMore ? extraContent : " ...") : ""}
+          {extraContent.length > 0 ? (readMore ? <span dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(extraContent)}}></span> : " ...") : ""}
           {extraContent.length > 0 ? (
             <a
               className={classes.readMore}

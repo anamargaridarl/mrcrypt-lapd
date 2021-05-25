@@ -21,11 +21,11 @@ const NewsPage = () => {
     <div>
       <TopBar></TopBar>
       <PageHeader name="News"></PageHeader>
-      <Grid container spacing={3} xs={12}>
+      <Grid container item spacing={3} xs={12}>
         <Grid item lg={8} md={6} xs={12}>
           <NewsList />
         </Grid>
-        <Grid spacing={3} className = {sticky} item lg={4} md={6} xs={12}>
+        <Grid className = {sticky} item lg={4} md={6} xs={12}>
           <TagsCard></TagsCard>
         </Grid>
       </Grid>
