@@ -72,7 +72,7 @@ module.exports = (app) => {
 
 
             const params = {
-                key: config.lunar_crush_api_key,
+                key: config.lc_api_key,
                 data: 'assets',
                 symbol: coinSymbol,
                 interval: 'day',
@@ -125,7 +125,7 @@ module.exports = (app) => {
             const params = {
                 data: 'assets',
                 symbol: coinSymbol,
-                key: config.lunar_crush_api_key,
+                key: config.lc_api_key,
                 data_points: 24,
                 interval: 'hour'
             };
