@@ -36,7 +36,8 @@ export default function CoinStats(props) {
   const rows = [];
 
   for(const key in data) {
-    rows.push({name: key, value: data[key]})
+    if (data[key] )
+      rows.push({name: key, value: data[key]})
   }
 
   const handleChangeRowsPerPage = (event) => {
