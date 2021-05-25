@@ -30,10 +30,32 @@ const useStyles = makeStyles({
   },
 });
 
+
+let SI_SYMBOL = ["", "k", "M", "G", "T", "P", "E"];
+
+function abbreviateNumber(number) {
+
+  // what tier? (determines SI symbol)
+  var tier = Math.log10(Math.abs(number)) / 3 | 0;
+
+  // if zero, we don't need a suffix
+  if (tier === 0) return number;
+
+  // get suffix and determine scale
+  var suffix = SI_SYMBOL[tier];
+  var scale = Math.pow(10, tier * 3);
+
+  // scale the number
+  var scaled = number / scale;
+
+  // format number and add suffix
+  return scaled.toFixed(1) + suffix;
+}
+
 export default function CarouselItem({ tootltip, name, type, value, dataTime }) {
 
   const { paper, innerElement, body } = useStyles();
-
+  const growth = (dataTime[22].pv - dataTime[0].pv) / (dataTime[0].pv)
   return (
     <Paper className={paper}>
       <Tooltip title={tootltip}>
@@ -44,8 +66,14 @@ export default function CarouselItem({ tootltip, name, type, value, dataTime }) 
           alignItems="flex-start"
         >
           <p>{name.toUpperCase()}</p>
-          <Grid container className={innerElement} justify="center">
-            <b>{Math.round(value * 100) / 100} {type} </b>
+          <Grid container className={innerElement} justify="space-between">
+            <Grid item>
+              {" "}
+              <b>{abbreviateNumber(Math.round(value * 1000) / 1000)}{type} </b>
+            </Grid>
+            <Grid item style={{ color: growth < 0 ? red : green }}>
+              {Math.round(growth * 1000) / 1000 + "%"}
+            </Grid>
           </Grid>
           <TinyChart widthContainer={"80%"} heightContainer={70} strokeColor={purple} dataAux={dataTime}></TinyChart>
         </Grid>
