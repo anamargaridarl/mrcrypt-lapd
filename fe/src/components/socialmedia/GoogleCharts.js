@@ -14,6 +14,7 @@ const axios = require('axios');
 const useStyles = makeStyles({
   container: {
     marginRight: "6em",
+    maxWidth: "25em",
   },
   blocks: {
     padding: "1em",
