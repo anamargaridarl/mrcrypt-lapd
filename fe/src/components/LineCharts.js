@@ -72,7 +72,7 @@ export default function LineCharts({
           dot={false}
           dataKey="pv"
           strokeWidth={2}
-          unit={`* ${units}`}
+          unit={ units === 1 ? '' : `* 10^ ${Math.log10(units)}`}
         />
         <YAxis type="number" tick={{ fontSize: 14, width: 300 }} />
         <XAxis dataKey="name" />

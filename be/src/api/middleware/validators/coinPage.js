@@ -20,7 +20,6 @@ const coinName = useExpressValidators([
 const severalSymbols = useExpressValidators([
     param('coinNames', ValidationMotives.DEFAULT)
         .exists().withMessage(ValidationMotives.REQUIRED).bail()
-        .matches(/^(\w*,)*(\w+)$/gmi).withMessage('Invalid list of coins').bail()
         .trim()
 ]);
 

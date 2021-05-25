@@ -8,11 +8,11 @@ const router = Router();
 module.exports = (app) => {
     app.use('/coins', router);
 
-    const requestConfig = {
+    const requestConfigMarketCap = {
         method: 'get',
         url: 'https://pro-api.coinmarketcap.com/v1',
         headers: {
-            'X-CMC_PRO_API_KEY': '259bdcab-8c38-42f6-aca3-6ac1af4a3236',
+            'X-CMC_PRO_API_KEY': config.cmc_api_key,
         },
     };
 
@@ -23,10 +23,15 @@ module.exports = (app) => {
 
         try {
             const { coinNames } = req.params;
+            const regex = /^(\w*,)*(\w+)$/gmi;
+            const matchArray = coinNames.match(regex);
+            if (matchArray === null) {
+                throw new Error('Invalid coin list');
+            }
             const names = coinNames.toUpperCase().split(',');
 
-            const url = `${requestConfig.url}/cryptocurrency/listings/latest`;
-            const convertConfig = { ...requestConfig, url: url };
+            const url = `${requestConfigMarketCap.url}/cryptocurrency/listings/latest`;
+            const convertConfig = { ...requestConfigMarketCap, url: url };
 
             const { data, status } = await axios(convertConfig);
 
@@ -64,23 +69,25 @@ module.exports = (app) => {
 
         try {
             const { coinSymbol } = req.params;
+
+
             const params = {
+                key: config.lc_api_key,
                 data: 'assets',
                 symbol: coinSymbol,
-                key: 'iods8h29itmw07nx6d6du',
                 interval: 'day',
                 start: oneYearAgo,
                 end: date,
                 data_points: 365,
             };
 
-            const config = {
+            const configRequest = {
                 method: 'get',
                 url: 'https://api.lunarcrush.com/v2',
                 params: params
             };
 
-            const data = await axios(config);
+            const data = await axios(configRequest);
 
             const values = [];
 
@@ -118,18 +125,18 @@ module.exports = (app) => {
             const params = {
                 data: 'assets',
                 symbol: coinSymbol,
-                key: 'iods8h29itmw07nx6d6du',
+                key: config.lc_api_key,
                 data_points: 24,
                 interval: 'hour'
             };
 
-            const config = {
+            const configRequest = {
                 method: 'get',
                 url: 'https://api.lunarcrush.com/v2',
                 params: params
             };
 
-            const data = (await axios(config)).data.data[0];
+            const data = (await axios(configRequest)).data.data[0];
 
 
             const [volumeYesterday, marketCapYesterday] = [data.timeSeries[0].volume, data.timeSeries[0].market_cap];
@@ -163,8 +170,8 @@ module.exports = (app) => {
     router.get('/:coinSymbol/price', validators.coinSymbol, async (req, res, next) => {
         try {
             const { coinSymbol } = req.params;
-            const urlPriceCoin = `${requestConfig.url}/cryptocurrency/quotes/latest?&symbol=${coinSymbol}`;
-            const convertConfig = { ...requestConfig, url: urlPriceCoin };
+            const urlPriceCoin = `${requestConfigMarketCap.url}/cryptocurrency/quotes/latest?&symbol=${coinSymbol}`;
+            const convertConfig = { ...requestConfigMarketCap, url: urlPriceCoin };
 
             const response = await axios(convertConfig);
 
@@ -174,23 +181,23 @@ module.exports = (app) => {
 
             const urlPriceEthNBtc = 'https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH&tsyms=USD';
 
-            const config = {
+            const configRequest = {
                 method: 'get',
                 url: urlPriceEthNBtc,
                 headers: {
-                    Authorization: 'Apikey fe8a657f41319b69760fee377170fa16fa7d07da1a2583b209b1baf059b0e631'
+                    Authorization: `Apikey ${config.crypto_compare_api_key}`
 
                 }
             };
 
-            const { status, data } = await axios(config);
+            const { status, data } = await axios(configRequest);
 
             if (status !== 200) {
                 return res.sendStatus(status);
             }
-            const price =   response.data.data[coinSymbol.toUpperCase()].quote.USD.price;
-            const bitcoinQuantity = price / data.BTC.USD;
-            const ethQuantity = price / data.ETH.USD;
+            const price = response.data.data[coinSymbol.toUpperCase()].quote.USD.price;
+            const bitcoinQuantity = coinSymbol.toUpperCase() === 'BTC' ? 1 : price / data.BTC.USD;
+            const ethQuantity = coinSymbol.toUpperCase() === 'ETH' ? 1 : price / data.ETH.USD;
 
 
             return res.status(200).json ({ value: { price, bitcoinQuantity, ethQuantity } });
@@ -211,16 +218,16 @@ module.exports = (app) => {
             const { coinSymbol } = req.params;
             const url = `https://min-api.cryptocompare.com/data/blockchain/latest?fsym=${coinSymbol}`;
 
-            const config = {
+            const configRequest = {
                 method: 'get',
                 url: url,
                 headers: {
-                    Authorization: 'Apikey fe8a657f41319b69760fee377170fa16fa7d07da1a2583b209b1baf059b0e631'
+                    Authorization: `Apikey ${config.crypto_compare_api_key}`
 
                 }
             };
 
-            const { status, data } = await axios(config);
+            const { status, data } = await axios(configRequest);
 
             if (status !== 200) {
                 return res.sendStatus(status);
@@ -233,8 +240,8 @@ module.exports = (app) => {
             });
 
 
-            const urlListingCoins = `${requestConfig.url}/cryptocurrency/listings/latest`;
-            const convertConfig = { ...requestConfig, url: urlListingCoins };
+            const urlListingCoins = `${requestConfigMarketCap.url}/cryptocurrency/listings/latest`;
+            const convertConfig = { ...requestConfigMarketCap, url: urlListingCoins };
 
             const coinsData = await axios(convertConfig);
 
@@ -268,8 +275,8 @@ module.exports = (app) => {
         try {
             const { coinName } = req.params;
 
-            const url = `${requestConfig.url}/cryptocurrency/info?slug=${coinName}`;
-            const convertConfig = { ...requestConfig, url: url };
+            const url = `${requestConfigMarketCap.url}/cryptocurrency/info?slug=${coinName}`;
+            const convertConfig = { ...requestConfigMarketCap, url: url };
 
             const { data, status } = await axios(convertConfig);
 
