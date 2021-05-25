@@ -128,7 +128,7 @@ export default function CoinPage() {
 
         axios({
           method: 'get',
-          url: `http://localhost:8080/api/coins/market/${coinInfo.symbol},btc,eth`
+          url: `http://localhost:8080/api/coins/market/${coinInfo.symbol.toLowerCase()},btc,eth`
         }).then(response => {
           setDillutedMarketUp(response.data.value);
         });

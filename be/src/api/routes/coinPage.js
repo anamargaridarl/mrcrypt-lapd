@@ -23,6 +23,12 @@ module.exports = (app) => {
 
         try {
             const { coinNames } = req.params;
+            // check regex
+            const regex = /^(\w*,)*(\w+)$/gmi;
+            const matchArray = coinNames.match(regex);
+            if (matchArray === null) {
+                throw new Error('Invalid coin list');
+            }
             const names = coinNames.toUpperCase().split(',');
 
             const url = `${requestConfig.url}/cryptocurrency/listings/latest`;

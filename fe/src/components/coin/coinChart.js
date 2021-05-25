@@ -67,7 +67,7 @@ export default function CoinChart({ name, data }) {
 
   return (
     <>
-      <h2>{name.charAt(0).toUpperCase() + name.slice(1)} Charts (last year)</h2>
+      <h2>{name.charAt(0).toUpperCase() + name.slice(1)} Charts in dollars (last year)</h2>
       <Box>
         <Tabs
           value={value}
