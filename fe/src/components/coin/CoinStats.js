@@ -74,7 +74,7 @@ export default function CoinStats(props) {
                    <strong>{row.name.replace(/_/g," ").toLowerCase().replace(/\w/, firstLetter => firstLetter.toUpperCase())}</strong>
                   </TableCell>
                   <TableCell style={{ borderColor: "#aaa" }} align="right">
-                    {row.value.toFixed(3)}
+                    {row.value?.toFixed(3)}
                   </TableCell>
                 </TableRow>
               ))}
