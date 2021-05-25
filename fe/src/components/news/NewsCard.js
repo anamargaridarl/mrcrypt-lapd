@@ -40,13 +40,14 @@ const useStyles = makeStyles((theme) => ({
   },
   line: {
     margin: "15px 0 8px 0",
-    width: 200,
+    width: 200
   },
   tags: {
     display: "flex",
     justifyContent: "flex-start",
     listStyle: "none",
     padding: 0,
+    flexWrap: 'wrap'
   },
   tag: {
     padding: 3,
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid",
     borderColor: purple,
     fontSize: 12,
+    marginTop: 3
   },
   media: {
     flex: "1 0 0%",
