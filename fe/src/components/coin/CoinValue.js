@@ -83,10 +83,10 @@ export default function CoinValue(props) {
           </Grid>
         </Card>
       </Grid>
-      <Grid container item justify="flex-start" xs={8} sm={8} md={8} lg={8}>
+      <Grid container item justify="flex-end" xs={8} sm={8} md={8} lg={8}>
         <p className={marginCoin}>{data.bitcoinQuantity.toFixed(3)} BTC</p>
       </Grid>
-      <Grid container item justify="flex-start" xs={8} sm={8} md={8} lg={8}>
+      <Grid container item justify="flex-end" xs={8} sm={8} md={8} lg={8}>
         <p className={marginCoin}>{data.ethQuantity.toFixed(3)} ETH</p>
       </Grid>
     </Grid>
