@@ -4,27 +4,23 @@
 
 ### Backend
 
-To run the back either use npm with:
+Run with npm inside */be*:
 
 ```
 npm install #only in first use
 npm start
 ```
-
-Or using docker.
-
-First install Docker and Docker-compose, using the guide online [here](https://docs.docker.com/get-docker/).
-
-then simply run, in the *be* folder:
-
-```
-docker-compose up dev
-```
-
 ### Frontend
 
-Run with npm:
+Run with npm inside */fe*:
 ```
 npm install #only in first use
 npm start
+```
+
+### Dev Environment
+
+Run docker compose to launch both BE and FE in the root of the project:
+```
+docker-compose up
 ```

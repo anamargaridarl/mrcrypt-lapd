@@ -43,48 +43,31 @@ function a11yProps(index) {
 }
 
 const useStyles = makeStyles((theme) => ({}));
-const data = [
-  {
-    name: "2008",
-    pv: 2400,
-  },
-  {
-    name: "2010",
-    pv: 1398,
-  },
-  {
-    name: "2012",
-    pv: 9800,
-  },
-  {
-    name: "2014",
-    pv: 3908,
-  },
-  {
-    name: "2016",
-    pv: 4800,
-  },
-  {
-    name: "2018",
-    pv: 3800,
-  },
-  {
-    name: "2020",
-    pv: 4300,
-  },
-];
 
-export default function CoinChart({ name }) {
+
+export default function CoinChart({ name, data }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+
+  const price = [];
+  const marketPrice = [];
+
+  data.forEach(element => {
+    price.push({name: element.time, pv: element.open});
+    marketPrice.push({name: element.time, pv: element.market_cap})
+  });
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  if (price.length === 0 && marketPrice.length === 0) {
+    return <div>Loading charts....</div>
+  }
+
   return (
     <>
-      <h2>{name.charAt(0).toUpperCase() + name.slice(1)} Charts</h2>
+      <h2>{name.charAt(0).toUpperCase() + name.slice(1)} Charts in dollars (last year)</h2>
       <Box>
         <Tabs
           value={value}
@@ -98,20 +81,20 @@ export default function CoinChart({ name }) {
       <TabPanel value={value} index={0}>
         <Paper>
           <LineCharts
-            widthContainer={"90%"}
+            widthContainer={"100%"}
             heightContainer={180}
             strokeColor={purple}
-            dataAux={data}
+            dataAux={price}
           ></LineCharts>
         </Paper>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <Paper>
           <LineCharts
-            widthContainer={"90%"}
+            widthContainer={"100%"}
             heightContainer={180}
             strokeColor={purple}
-            dataAux={data}
+            dataAux={marketPrice}
           ></LineCharts>
         </Paper>
       </TabPanel>

@@ -16,27 +16,8 @@ const useStyles = makeStyles((_) => ({
   },
 }));
 
-// this data will need to be fetched from an api
-const rows = [
-  {
-    name: "Bitcoin price",
-    price: 53242.45,
-  },
-  {
-    name: "Bitcoin price",
-    price: 53242.45,
-  },
-  {
-    name: "Bitcoin price",
-    price: 53242.45,
-  },
-];
 
-const coin = {
-  name: "Bitcoin",
-};
-
-export default function CoinStats() {
+export default function CoinStats(props) {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -44,6 +25,20 @@ export default function CoinStats() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+  const data = props.data;
+
+
+  if (data === null) {
+    return <div>Loading coin statistics...</div>
+  }
+
+  const rows = [];
+
+  for(const key in data) {
+    if (data[key] )
+      rows.push({name: key, value: data[key]})
+  }
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -58,7 +53,7 @@ export default function CoinStats() {
             <TableRow>
               <TableCell style={{ borderColor: "#aaa" }}>
                 <Box mb={3} mt={1} fontSize={18} fontWeight="fontWeightBold">
-                  {coin.name} price statistics
+                  Statistics
                 </Box>
               </TableCell>
               <TableCell
@@ -77,13 +72,10 @@ export default function CoinStats() {
                     component="th"
                     scope="row"
                   >
-                    {row.name}
+                   <strong>{row.name.replace(/_/g," ").toLowerCase().replace(/\w/, firstLetter => firstLetter.toUpperCase())}</strong>
                   </TableCell>
                   <TableCell style={{ borderColor: "#aaa" }} align="right">
-                    {row.price.toLocaleString("en-US", {
-                      style: "currency",
-                      currency: "USD",
-                    })}
+                    {row.value?.toFixed(3)}
                   </TableCell>
                 </TableRow>
               ))}
