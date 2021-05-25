@@ -9,6 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TablePagination from "@material-ui/core/TablePagination";
 import { gray } from "../../styles/colors";
+import Loading from "../Loading";
 
 const useStyles = makeStyles((_) => ({
   bgGray: {
@@ -30,7 +31,7 @@ export default function CoinStats(props) {
 
 
   if (data === null) {
-    return <div>Loading coin statistics...</div>
+    return <Loading/>
   }
 
   const rows = [];

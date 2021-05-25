@@ -6,6 +6,7 @@ import Card from "@material-ui/core/Card";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 import { lightGreen, darkGray, white, red } from "../../styles/colors";
+import Loading from "../Loading";
 
 const useStyles = makeStyles((_) => ({
 
@@ -57,7 +58,7 @@ export default function CoinValue(props) {
 
 
   if (data === null || props.symbol === null || !props.percentage) {
-    return <div>Loading...</div>
+    return <><Loading/> <h1> </h1></>
   }
   const percentage = props.percentage;
 

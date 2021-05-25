@@ -4,6 +4,8 @@ import { makeStyles } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 //@styling
 import { lighterGray } from "../../styles/colors";
+import Loading from '../../components/Loading';
+
 
 
 const useStyles = makeStyles({
@@ -42,12 +44,12 @@ export default function CoinInfo(props) {
 
   if (props === null || !props.data) {
     return (
-      <div>Loading...</div>
-
+      <Loading/>
     );
   }
   else {
-    return ( <Grid container className={container}>
+    return ( 
+    <Grid container className={container}>
       <img width={"60px"} alt={data.name} src={data.logo} />
       <h2 style={{ marginLeft: "2em" }}>{data.name}</h2>
       <p> {linkfy(data.description)}</p>

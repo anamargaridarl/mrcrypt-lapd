@@ -3,8 +3,9 @@ import React from "react";
 import { makeStyles, Box } from "@material-ui/core";
 import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
-
 import { darkGray, lightGreen, red } from "../../styles/colors";
+import Loading from '../../components/Loading';
+
 
 const useStyles = makeStyles({
   root: {
@@ -39,7 +40,7 @@ export default function CardCoinInfo({data}) {
 
 
   if (data.data === undefined || data.data === null) {
-    return <div>Loading {data.title}...</div>
+    return <Loading/>
   }
 
 

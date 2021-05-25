@@ -11,6 +11,7 @@ import CardCoinInfo from "../components/coin/cardCoinInfo";
 import CoinChart from "../components/coin/coinChart";
 //@core-material-ui
 import { makeStyles, Container } from "@material-ui/core";
+import Loading from "../components/Loading";
 const axios = require('axios');
 
 
@@ -180,7 +181,13 @@ export default function CoinPage() {
               <CardCoinInfo data = {{data: dillutedMarketUp?.[coinInfo?.symbol], title: 'Fully dilluted market cap'}}></CardCoinInfo>
               <CardCoinInfo data = {{data: volume, title: 'Volume',  symbol : coinInfo?.symbol}}></CardCoinInfo>
             </Grid>
-            <CoinChart data={chartValue} name={coinName}></CoinChart>
+            {
+              chartValue.length === 0 ?  (
+              <>
+              <h1> </h1>
+              <Loading/> </> ) : 
+              (<CoinChart data={chartValue} name={coinName}></CoinChart>)
+            }
           </Grid>
           <Grid container item xs={12} sm={12} md={4} lg={4} direction="column">
             <CoinValue data = {coinValue} percentage = {dillutedMarketUp?.[coinInfo?.symbol]?.percentage} coinName={coinName} 
