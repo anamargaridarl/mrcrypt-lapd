@@ -5,13 +5,6 @@ import Grid from "@material-ui/core/Grid";
 //@styling
 import { lighterGray } from "../../styles/colors";
 
-// this data will need to be fetched from an api
-const coinData = {
-  name: "Bitcoin",
-  description:
-    "Bitcoin is a digital currency that was created in January 2009. It follows the ideas set out in a whitepaper by the mysterious and pseudonymous Satoshi Nakamoto The identity of the person or persons who created the technology is still a mystery. Bitcoin offers the promise of lower transaction fees than traditional online payment mechanisms and, unlike government-issued currencies, it is operated by a decentralized authority.",
-  imagePath: "/assets/bitcoin.png",
-};
 
 const useStyles = makeStyles({
   container: {
@@ -20,14 +13,46 @@ const useStyles = makeStyles({
   },
 });
 
-export default function CoinInfo() {
+const linkfy = (text) => {
+  let urlRegex =/(\b(?:https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig;
+
+
+  let strin = [];
+  let lastChar = 0;
+  let match;
+  let nr = 0;
+  while ((match = urlRegex.exec(text)) != null) {
+    strin.push(<span key= {nr++}>{text.substring(lastChar, match.index)}</span>)
+    const val = text.substring(match.index, match[0].length + match.index);
+    const link = <a rel="noreferrer" target="_blank" key= {nr++} href={val}>{val}</a>;
+    strin.push(link);
+    lastChar  = (match[0].length + match.index);
+  }
+
+  strin.push(<span key = {nr++}>{text.substring(lastChar, text.length)}</span>);
+
+  console.log(strin)
+  return <span>{strin}</span>
+}
+
+export default function CoinInfo(props) {
   const { container } = useStyles();
 
-  return (
-    <Grid container className={container}>
-      <img width={"60px"} alt={coinData.name} src={coinData.imagePath} />
-      <h2 style={{ marginLeft: "2em" }}>{coinData.name}</h2>
-      <p> {coinData.description}</p>
-    </Grid>
-  );
+  const data = props.data;
+
+  if (props === null || !props.data) {
+    return (
+      <div>Loading...</div>
+
+    );
+  }
+  else {
+    return ( <Grid container className={container}>
+      <img width={"60px"} alt={data.name} src={data.logo} />
+      <h2 style={{ marginLeft: "2em" }}>{data.name}</h2>
+      <p> {linkfy(data.description)}</p>
+  </Grid>);
+  }
+
+
 }
