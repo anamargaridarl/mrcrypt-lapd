@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
-import { white, purple } from "../../styles/colors";
+import { white, purple, black } from "../../styles/colors";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,9 +13,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row-reverse",
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     borderRadius: 0,
-    marginLeft: "4em",
     marginBottom: "2em",
-    padding: "10px 30px",
+    padding: "10px 15px 10px 15px",
   },
   content: {
     display: "flex",
@@ -23,10 +22,14 @@ const useStyles = makeStyles((theme) => ({
     flex: "2 0 0%",
     margin: "auto 0",
     justifyContent: "center",
-    fontSize: "11px",
+    fontSize: "14px",
+  },
+  url: {
+    color: black,
+    textDecoration: "none",
   },
   title: {
-    fontSize: "14px",
+    fontSize: "16px",
     fontWeight: "bold",
   },
   readMore: {
@@ -51,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
     color: purple,
     border: "1px solid",
     borderColor: purple,
+    fontSize: 12,
   },
   media: {
     flex: "1 0 0%",
@@ -59,32 +63,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let id = 0;
 const NewsCard = (props) => {
   const [readMore, setReadMore] = useState(false);
   const classes = useStyles();
-  const { title, content, extraContent, image, tags } = props;
+  const { url, title, content, extraContent, image, tags } = props;
 
   return (
     <Card className={classes.root}>
       <img className={classes.media} src={image} alt="News Source" />
       <CardContent className={classes.content}>
-        <p className={classes.title}>{title}</p>
+        <a href={url} className={classes.url}>
+          <p className={classes.title}>{title}</p>
+        </a>
         <p>
-          {content} {readMore ? extraContent : " ..."}{" "}
-          <a
-            className={classes.readMore}
-            onClick={() => {
-              setReadMore(!readMore);
-            }}
-          >
-            {readMore ? "(read less)" : "(read more)"}
-          </a>
+          {content}
+          {""}
+          {extraContent.length > 0 ? (readMore ? extraContent : " ...") : ""}
+          {extraContent.length > 0 ? (
+            <a
+              className={classes.readMore}
+              onClick={() => {
+                setReadMore(!readMore);
+              }}
+            >
+              {readMore ? " (read less)" : " (read more)"}
+            </a>
+          ) : (
+            ""
+          )}
         </p>
         <Divider className={classes.line} />
         <ul className={classes.tags}>
           {tags.map((element) => {
             return (
-              <li key={element} className={classes.tag}>
+              <li key={id++} className={classes.tag}>
                 {element}
               </li>
             );

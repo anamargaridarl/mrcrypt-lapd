@@ -1,10 +1,12 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Divider from "@material-ui/core/Divider";
 import { gray, darkGray, white, purple } from "../../styles/colors";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     margin: "auto 0",
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: "bold",
   },
   line: {
@@ -49,11 +51,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const tags = ["BTC", "Market", "ADA", "AltCoin", "BlockChain", "ETH"];
-
-const TagsCard = (props) => {
-  const { filter, onChange } = props;
+let id = 0;
+const TagsCard = () => {
   const classes = useStyles();
+  const [categories, setCategories] = useState([]);
+  const [filter, setFilter] = useState([]);
+  const history = useHistory();
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const categories = params.get("categories");
+    if (categories && categories.length > 0) setFilter(categories.split(","));
+    getCategories();
+  }, [location.search]);
+
+  const getCategories = async () => {
+    try {
+      axios({
+        method: "get",
+        url: "http://localhost:8080/api/news/categories",
+      }).then((response) => {
+        setCategories(response.data);
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const onChange = (category) => {
+    let index = filter.indexOf(category);
+    let arr = [...filter];
+    index === -1 ? arr.push(category) : arr.splice(index, 1);
+    setFilter(arr);
+    const config = { pathname: "news" };
+    if (arr.length > 0) config.search = `?categories=${arr.join(",")}`;
+    history.push(config);
+  };
 
   return (
     <Card className={classes.root}>
@@ -61,10 +95,10 @@ const TagsCard = (props) => {
         <p>Categories</p>
         <Divider variant="middle" className={classes.line} />
         <ul className={classes.tags}>
-          {tags.map((element) => {
+          {categories.map((element) => {
             return (
               <li
-                key={element}
+                key={id++}
                 className={`${classes.tag} ${
                   filter.includes(element)
                     ? classes.purpleTag
