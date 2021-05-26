@@ -63,26 +63,28 @@ export default function SocialTable({url, title, header, metric}) {
   return (
     <TableContainer className={classes.table} component={Paper}>
       <p  className={classes.title}>{title}</p>
-      <Table aria-label="simple table">
-        <TableHead >
-          <TableRow >
-            <TableCell className={classes.head}>#</TableCell>
-            <TableCell className={classes.head} align="right">{header}</TableCell>
-            <TableCell className={classes.head}  align="right">{metric}</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell component="th" scope="row">
-                {row.rank}
-              </TableCell>
-              <TableCell align="right">{row.name}</TableCell>
-              <TableCell align="right">{row.increase}</TableCell>
+      <div style={{ overflow: 'auto', height: '20em' }}>
+        <Table aria-label="simple table" style={{ tableLayout: 'fixed' }}>
+          <TableHead >
+            <TableRow >
+              <TableCell className={classes.head}>#</TableCell>
+              <TableCell className={classes.head} align="right">{header}</TableCell>
+              <TableCell className={classes.head}  align="right">{metric}</TableCell>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.id}>
+                <TableCell component="th" scope="row">
+                  {row.rank}
+                </TableCell>
+                <TableCell align="right">{row.name}</TableCell>
+                <TableCell align="right">{row.increase}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
     </TableContainer>
   );
 }

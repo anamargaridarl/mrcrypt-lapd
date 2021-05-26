@@ -2,6 +2,7 @@ require('dotenv-flow').config();
 
 module.exports = Object.freeze({
     port: process.env.PORT,
+    redis_url: process.env.REDIS_URL,
     cmc_api_key: process.env.CMC_API_KEY,
     lc_api_key: process.env.LC_API_KEY,
     cc_api_key: process.env.CC_API_KEY,

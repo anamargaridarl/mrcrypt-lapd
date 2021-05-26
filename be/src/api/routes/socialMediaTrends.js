@@ -6,6 +6,7 @@ const googleTrends = require('google-trends-api');
 const { Router } = require('express');
 const dateConvert = require('../middleware/dateConverter');
 const router = Router();
+const redisClient = require('../../redis/redisClient');
 
 module.exports = (app) => {
     app.use('/social-media-trends', router);
@@ -94,5 +95,13 @@ module.exports = (app) => {
                 console.error(err);
                 return next(err);
             });
+    });
+
+    /**
+     * Get the top 10 Cryptocurrency related subreddits growth
+     */
+    router.get('/topSubreddits', async (_, res) => {
+        const data = await redisClient.getAsync('topSubreddits');
+        return res.status(HTTPStatus.StatusCodes.OK).json({ results: JSON.parse(data) });
     });
 };

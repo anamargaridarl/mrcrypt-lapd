@@ -14,8 +14,7 @@ module.exports = (app) => {
         method: 'get',
         url: 'https://min-api.cryptocompare.com/data',
         headers: {
-            authorization: `Apikey ${config.crypto_compare_api_key}`,
-        },
+            authorization: `Apikey ${config.crypto_compare_api_key}`        },
     };
 
     /**

@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     borderRadius: 0,
     marginRight: "4em",
+    position: 'sticky',
+    top: '3rem',
   },
   content: {
     margin: "auto 0",
@@ -51,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let id = 0;
 const TagsCard = () => {
   const classes = useStyles();
   const [categories, setCategories] = useState([]);
@@ -97,7 +100,7 @@ const TagsCard = () => {
           {categories.map((element) => {
             return (
               <li
-                key={element}
+                key={id++}
                 className={`${classes.tag} ${
                   filter.includes(element)
                     ? classes.purpleTag

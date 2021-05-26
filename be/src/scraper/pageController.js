@@ -1,14 +1,14 @@
 const pageScraper = require('./pageScraper');
 
-const scrapeAll = async (browserInstance) => {
+const scrapeAll = async (browserInstance, topReddits) => {
     let browser;
     try {
         browser = await browserInstance;
-        await pageScraper.scraper(browser);
-
+        return pageScraper.scraper(browser, topReddits);
     } catch (err) {
         console.log('Could not resolve the browser instance => ', err);
+        return [];
     }
 };
 
-module.exports = (browserInstance) => scrapeAll(browserInstance);
+module.exports = (browserInstance, topReddits) => scrapeAll(browserInstance, topReddits);

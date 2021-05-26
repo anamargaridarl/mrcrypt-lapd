@@ -40,13 +40,14 @@ const useStyles = makeStyles((theme) => ({
   },
   line: {
     margin: "15px 0 8px 0",
-    width: 200,
+    width: 200
   },
   tags: {
     display: "flex",
     justifyContent: "flex-start",
     listStyle: "none",
     padding: 0,
+    flexWrap: 'wrap'
   },
   tag: {
     padding: 3,
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
     border: "1px solid",
     borderColor: purple,
     fontSize: 12,
+    marginTop: 3
   },
   media: {
     flex: "1 0 0%",
@@ -63,10 +65,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let id = 0;
 const NewsCard = (props) => {
   const [readMore, setReadMore] = useState(false);
   const classes = useStyles();
   const { url, title, content, extraContent, image, tags } = props;
+
+
+  const createDOMPurify = require('dompurify');
+  let jsdom = require('jsdom');
+  const { JSDOM } = jsdom;
+  const { window } = new JSDOM();
+
+  const DOMPurify = createDOMPurify(window);
+
 
   return (
     <Card className={classes.root}>
@@ -76,9 +88,9 @@ const NewsCard = (props) => {
           <p className={classes.title}>{title}</p>
         </a>
         <p>
-          {content}
+         <span dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content)}}></span>
           {""}
-          {extraContent.length > 0 ? (readMore ? extraContent : " ...") : ""}
+          {extraContent.length > 0 ? (readMore ? <span dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(extraContent)}}></span> : " ...") : ""}
           {extraContent.length > 0 ? (
             <a
               className={classes.readMore}
@@ -96,7 +108,7 @@ const NewsCard = (props) => {
         <ul className={classes.tags}>
           {tags.map((element) => {
             return (
-              <li key={element} className={classes.tag}>
+              <li key={id++} className={classes.tag}>
                 {element}
               </li>
             );

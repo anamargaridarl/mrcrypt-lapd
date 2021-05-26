@@ -12,6 +12,8 @@ module.exports = () => {
     homepage(app);
     socialMediaTrends(app);
     coinPage(app);
+    socialMediaTrends(app);
     news(app);
+
     return app;
 };
