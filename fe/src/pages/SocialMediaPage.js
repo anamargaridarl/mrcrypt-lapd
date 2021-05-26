@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   bottomPage: {
     marginTop: "2em",
     marginBottom: "3em",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   page: {
     backgroundColor: gray,
@@ -52,7 +52,7 @@ export default function SocialMediaPage() {
           <Grid item xs={12} sm={12} md={4} lg={4}>
             <p className={subTitle}>Reddit</p>
             <SocialTable
-              url="topSubreddits"
+              url="top-subreddits"
               title="SubReddits Weekly Growth"
               header="Subreddit"
               metric="Increase"
@@ -62,9 +62,16 @@ export default function SocialMediaPage() {
             <p className={subTitle}>Google</p>
             <GoogleCharts />
           </Grid>
-          <Grid item xs={12} sm={12} md={6} lg={4} style={{marginTop: "2.8em"}}>
+          <Grid
+            item
+            xs={12}
+            sm={12}
+            md={6}
+            lg={4}
+            style={{ marginTop: "2.8em" }}
+          >
             <SocialTable
-              url="topCryptoSearches"
+              url="top-crypto-searches"
               title="Cryptocurrency Related Google Searches"
               header="Name"
               metric="Increase"

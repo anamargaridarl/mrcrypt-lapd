@@ -44,7 +44,7 @@ export default function CoinPage() {
       try {
         axios({
           method: 'get',
-          url: `http://localhost:8080/api/coins/${coinName}/coinInfo`
+          url: `http://localhost:8080/api/coins/${coinName}/coin-info`
         })
         .then((response) => {
           setCoinInfo(response.data.value);
@@ -110,7 +110,7 @@ export default function CoinPage() {
 
         axios({
           method: 'get',
-          url: `http://localhost:8080/api/coins/${coinInfo.symbol}/coinEvolution`
+          url: `http://localhost:8080/api/coins/${coinInfo.symbol}/coin-evolution`
         }).then(response => {
           setChartValue(response.data.values);
         });

@@ -114,7 +114,7 @@ export default function GoogleCharts() {
     try {
       axios({
         method: 'get',
-        url: 'http://localhost:8080/api/social-media-trends/googleInterest',
+        url: 'http://localhost:8080/api/social-media-trends/google-interest',
         params: {
           coin: coin,
           location: location,

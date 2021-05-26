@@ -50,7 +50,7 @@ module.exports = (app) => {
     /**
      * Get the top 10 Cryptocurrency related searches
      */
-    router.get('/topCryptoSearches', (_, res, next) => {
+    router.get('/top-crypto-searches', (_, res, next) => {
         googleTrends.relatedQueries({ keyword: 'cryptocurrency', category: 814 })
             .then((data) => {
                 const results = JSON.parse(data).default.rankedList;
@@ -73,7 +73,7 @@ module.exports = (app) => {
      * @param {*} timePeriod - Time interval to search for. Valid values: "last week", "last month", "last year", and "last decade".
      * @param {*} searchType - The kind of Google Search to make. Ex: "web search", "image", "news", "youtube", or "froogle".
      */
-    router.get('/googleInterest', validators.googleInterest, (req, res, next) => {
+    router.get('/google-interest', validators.googleInterest, (req, res, next) => {
         const { coin, location, timePeriod, searchType } = req.query;
 
 
@@ -100,7 +100,7 @@ module.exports = (app) => {
     /**
      * Get the top 10 Cryptocurrency related subreddits growth
      */
-    router.get('/topSubreddits', async (_, res) => {
+    router.get('/top-subreddits', async (_, res) => {
         const data = await redisClient.getAsync('topSubreddits');
         return res.status(HTTPStatus.StatusCodes.OK).json({ results: JSON.parse(data) });
     });
