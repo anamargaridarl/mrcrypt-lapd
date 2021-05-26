@@ -62,7 +62,7 @@ module.exports = (app) => {
     /**
      * for the charts
      */
-    router.get('/:coinSymbol/coinEvolution', validators.coinSymbol, async (req, res, next) => {
+    router.get('/:coinSymbol/coin-evolution', validators.coinSymbol, async (req, res, next) => {
 
         const date = new Date().getTime() / 1000;
         const oneYearAgo = new Date().setFullYear(new Date().getFullYear() - 1) / 1000;
@@ -268,7 +268,7 @@ module.exports = (app) => {
     /**
      * some basic information regarding a coin (information in the top left)
      */
-    router.get('/:coinName/coinInfo', validators.coinName, async (req, res, next) => {
+    router.get('/:coinName/coin-info', validators.coinName, async (req, res, next) => {
 
         const PARAMS = ['slug', 'description', 'tags', 'name', 'symbol', 'logo'];
 
