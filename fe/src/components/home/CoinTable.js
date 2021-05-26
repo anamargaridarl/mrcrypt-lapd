@@ -167,8 +167,6 @@ export default function BasicTable() {
                     <Grid container onClick={() => { history.push("/coinpage/" + row.slug) }}>
                       {graphs.length === rows.length ? (<img alt="Coin" width={"25px"} src={graphs[row.nb - 1].imageUrl !== undefined ? graphs[row.nb - 1].imageUrl : ""} />) : ""}
                   &nbsp;{row.coin}
-
-                  {row.coin}
                     </Grid>
                   </TableCell >
                   <TableCell style={{ padding: "0" }} align="left">{Math.round(row.price * 1000) / 1000}</TableCell>
