@@ -171,11 +171,11 @@ export default function BasicTable() {
                   {row.coin}
                     </Grid>
                   </TableCell >
-                  <TableCell style={{ padding: "0" }} align="left">{row.price}</TableCell>
-                  <TableCell style={{ color: row.twentyfour < 0 ? red : green, padding: "0" }} align="left">{row.twentyfour < 0 ? <Grid container><ArrowDropDownIcon /> {Math.abs(row.twentyfour)} </Grid> : <Grid container><ArrowDropUpIcon /> {Math.abs(row.twentyfour)} </Grid>}</TableCell>
-                  <TableCell style={{ color: row.seven < 0 ? red : green, padding: "0" }} align="left">{row.seven < 0 ? <Grid container><ArrowDropDownIcon /> {Math.abs(row.seven)} </Grid> : <Grid container><ArrowDropUpIcon /> {Math.abs(row.seven)} </Grid>}</TableCell>
-                  <TableCell style={{ padding: "0" }} align="left"> $ {row.cap}</TableCell>
-                  <TableCell style={{ padding: "0" }} align="left">$ {row.volume}</TableCell>
+                  <TableCell style={{ padding: "0" }} align="left">{Math.round(row.price * 1000) / 1000}</TableCell>
+                  <TableCell style={{ color: row.twentyfour < 0 ? red : green, padding: "0" }} align="left">{Math.round(row.twentyfour * 1000) / 1000 < 0 ? <Grid container><ArrowDropDownIcon /> {Math.round(Math.abs(row.twentyfour) * 1000) / 1000} </Grid> : <Grid container><ArrowDropUpIcon /> {Math.round(Math.abs(row.twentyfour) * 1000) / 1000} </Grid>}</TableCell>
+                  <TableCell style={{ color: row.seven < 0 ? red : green, padding: "0" }} align="left">{Math.round(row.seven * 1000) / 1000 < 0 ? <Grid container><ArrowDropDownIcon /> {Math.round(Math.abs(row.seven) * 1000) / 1000} </Grid> : <Grid container><ArrowDropUpIcon /> {Math.round(Math.abs(row.seven) * 1000) / 1000} </Grid>}</TableCell>
+                  <TableCell style={{ padding: "0" }} align="left"> $ {Math.round(row.cap * 1000) / 1000 }</TableCell>
+                  <TableCell style={{ padding: "0" }} align="left">$ {Math.round(row.volume * 1000) / 1000}</TableCell>
                   <TableCell style={{ padding: "0" }} align="left">{graphs.length === rows.length ? <TinyChart
                     widthContainer={"50%"}
                     heightContainer={60}
