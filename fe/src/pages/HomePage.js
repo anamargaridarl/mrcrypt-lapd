@@ -24,7 +24,7 @@ export default function HomePage() {
       <TopBar></TopBar>
       <HomeCarousel></HomeCarousel>
       <PageHeader name="Market"></PageHeader>
-      <Container className={table}  maxWidth={false}>
+      <Container className={table} maxWidth={false}>
         <CoinTable></CoinTable>
       </Container>
       <Footer />

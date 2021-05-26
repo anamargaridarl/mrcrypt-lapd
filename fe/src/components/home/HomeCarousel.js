@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "react-multi-carousel";
 //@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -38,71 +38,37 @@ const useStyles = makeStyles({
   },
 });
 
-//TODO: fetch data from backend for the items
-const data = [
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: 163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: -163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  },
-  {
-    name: "ACTIVE CONTRIBUTERS",
-    value: 377.780,
-    growth: +163.50
-  }
-]
+const axios = require("axios");
 
 function HomeCarrousel() {
+  const [data, setData] = useState([]);
   const { background } = useStyles();
+  const getData = () => {
+    axios({
+      method: "get",
+      url: "http://localhost:8080/api/coins/global",
+    })
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <Carousel className={background} responsive={responsive}>
       {data.map((element) => {
         return (
           <HomeCarouselItem
-            name={element.name}
+            key={element.id}
+            tootltip={element.tooltip}
             value={element.value}
-            growth={element.growth}
+            name={element.name}
+            type={element.type}
+            dataTime={element.timestamp}
           />
         );
       })}

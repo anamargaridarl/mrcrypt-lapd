@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { LineChart, Line, ResponsiveContainer } from "recharts";
 //@core-material-ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,11 +21,10 @@ export default function TinyChart({
     strokeColor: strokeColor,
   };
   const { chart } = useStyles(props);
-  const [data] = useState(dataAux);
 
   return (
     <ResponsiveContainer width={widthContainer} height={heightContainer}>
-      <LineChart width={300} height={100} data={data}>
+      <LineChart width={300} height={100} data={dataAux}>
         <Line
           className={chart}
           type="monotone"

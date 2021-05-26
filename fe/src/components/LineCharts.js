@@ -34,18 +34,18 @@ const normalize = (data) => {
     return 1;
   }
 
-  const order = Math.floor(Math.log(max) / Math.LN10+ 0.000000001);
-  const magnitude =  Math.pow(10,order) / thresh;
+  const order = Math.floor(Math.log(max) / Math.LN10 + 0.000000001);
+  const magnitude = Math.pow(10, order) / thresh;
 
-  for(let i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     if (data[i] != null) {
-      data[i].pv  /= magnitude;
+      data[i].pv /= magnitude;
     }
   }
   return magnitude;
 
- 
-} 
+
+}
 
 export default function LineCharts({
   widthContainer,
@@ -60,7 +60,7 @@ export default function LineCharts({
 
   const units = normalize(dataAux)
 
-  
+
 
 
   return (
@@ -74,7 +74,7 @@ export default function LineCharts({
           strokeWidth={2}
           unit={ units === 1 ? '' : `* 10^ ${Math.log10(units)}`}
         />
-        <YAxis type= "number" tick={{ fontSize: 14, width: 300 }}/>
+        <YAxis type="number" tick={{ fontSize: 14, width: 300 }} />
         <XAxis dataKey="name" />
         <Tooltip />
       </LineChart>
