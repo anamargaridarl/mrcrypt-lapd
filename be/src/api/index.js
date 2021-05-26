@@ -10,7 +10,6 @@ module.exports = () => {
     const app = Router();
     converser(app);
     homepage(app);
-    socialMediaTrends(app);
     coinPage(app);
     socialMediaTrends(app);
     news(app);

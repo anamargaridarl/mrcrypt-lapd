@@ -35,9 +35,9 @@ const useStyles = makeStyles({
 
 function createData(
   nb,
+  symbol,
   coin,
   slug,
-  coinimage,
   price,
   twentyfour,
   seven,
@@ -47,9 +47,9 @@ function createData(
 ) {
   return {
     nb,
+    symbol,
     coin,
     slug,
-    coinimage,
     price,
     twentyfour,
     seven,
@@ -59,6 +59,9 @@ function createData(
   };
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 const imageCoin = (url) => {
   return <img alt="Coin" width={"25px"} src={url} />
@@ -68,42 +71,59 @@ export default function BasicTable() {
 
   const classes = useStyles();
   const [rows, setRows] = useState([])
+  const [graphs, setGraphs] = useState([])
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(6);
   const history = useHistory();
 
 
   const createRows = () => {
-
     axios({
       method: 'get',
       url: `http://localhost:8080/api/homepage/coinRanking`
     }).then(response => {
-      let i = 0;
+      let i = 1;
       const rows = response.data.map((element) => {
         if (element === null)
           return null
         return createData(
           i++,
+          element.symbol,
           element.coin,
           element.slug,
-          imageCoin(element.imageUrl),
           element.price,
           element.twentyfour,
           element.seven,
           element.cap,
-          element.volume,
-          <TinyChart
-            widthContainer={"50%"}
-            heightContainer={60}
-            strokeColor={lightGreen}
-            dataAux={element.data}
-          ></TinyChart>
+          element.volume
         )
       })
       setRows(rows)
     });
   };
+
+  console.log(rows)
+
+  const getGraphs = () => {
+
+    let i = 0;
+    for (i = 0; i < rows.length; i++) {
+      sleep(1000)
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/api/homepage/coinChart/` + rows[i].symbol + "/" + rows[i].slug
+      }).then(response => {
+        setGraphs(oldArray => [...oldArray, response.data !== undefined ? response.data : { data: null, imageUrl: null }])
+      })
+      .catch((err) => setGraphs(oldArray => [...oldArray, { data: null, imageUrl: null }]))
+    }
+
+  }
+
+
+  useEffect(() => {
+    getGraphs();
+  }, [rows])
 
   useEffect(() => {
     createRows();
@@ -117,7 +137,6 @@ export default function BasicTable() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
   return (
     <>
       <TableContainer component={Paper}>
@@ -141,13 +160,15 @@ export default function BasicTable() {
                 page * rowsPerPage + rowsPerPage
               ).map((row) => (
                 < TableRow key={row.nb} >
-                  <TableCell style={{ padding: "0", paddingLeft: "1em" }} component="th" scope="row">
+                  <TableCell style={{ paddingLeft: "1em" }} component="th" scope="row">
                     {row.nb}
                   </TableCell>
                   <TableCell style={{ padding: "0" }} align="left">
                     <Grid container onClick={() => { history.push("/coinpage/" + row.slug) }}>
-                      {row.coinimage !== undefined ? row.coinimage : ""}
+                      {graphs.length === rows.length ? (<img alt="Coin" width={"25px"} src={graphs[row.nb - 1].imageUrl !== undefined ? graphs[row.nb - 1].imageUrl : ""} />) : ""}
                   &nbsp;{row.coin}
+
+                  {row.coin}
                     </Grid>
                   </TableCell >
                   <TableCell style={{ padding: "0" }} align="left">{row.price}</TableCell>
@@ -155,7 +176,12 @@ export default function BasicTable() {
                   <TableCell style={{ color: row.seven < 0 ? red : green, padding: "0" }} align="left">{row.seven < 0 ? <Grid container><ArrowDropDownIcon /> {Math.abs(row.seven)} </Grid> : <Grid container><ArrowDropUpIcon /> {Math.abs(row.seven)} </Grid>}</TableCell>
                   <TableCell style={{ padding: "0" }} align="left"> $ {row.cap}</TableCell>
                   <TableCell style={{ padding: "0" }} align="left">$ {row.volume}</TableCell>
-                  <TableCell style={{ padding: "0" }} align="left">{row.lastdays}</TableCell>
+                  <TableCell style={{ padding: "0" }} align="left">{graphs.length === rows.length ? <TinyChart
+                    widthContainer={"50%"}
+                    heightContainer={60}
+                    strokeColor={lightGreen}
+                    dataAux={graphs[row.nb - 1].data}
+                  ></TinyChart> : ""}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
