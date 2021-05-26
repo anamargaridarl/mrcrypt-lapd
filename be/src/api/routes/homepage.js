@@ -4,7 +4,6 @@ const config = require('../../config/env');
 const { Router } = require('express');
 const router = Router();
 const globalParams = require('../../assets/globalMarketData.json');
-const validators = require('../middleware/validators/homepage');
 
 module.exports = (app) => {
     app.use('/homepage', router);
@@ -25,14 +24,6 @@ module.exports = (app) => {
         },
     };
 
-    const requestConfigCrypto = {
-        method: 'get',
-        url: 'https://min-api.cryptocompare.com/data/v2',
-        headers: {
-            Authorization: `Apikey ${config.cc_api_key}`
-        },
-    };
-
     router.get('/global', async (_, res, next) => {
         try {
             const coinsUrl = `${requestConfigLunar.url}?data=global&key=APIKey&data_points=24`;
@@ -46,39 +37,6 @@ module.exports = (app) => {
                 return { id: count++, tooltip: param.tooltip, name: param.name, value: value, timestamp: timestamp, type: param.type };
             });
             return res.status(HTTPStatus.StatusCodes.OK).json(values);
-        } catch (err) {
-            return next(err);
-        }
-
-    });
-
-    router.get('/coinChart/:symbol/:name', validators.coin, async (req, res, next) => {
-        try {
-            const { symbol, name } = req.params;
-            let i = 0;
-            const timeUrl = `${requestConfigCrypto.url}/histoday`;
-            const timeConfig = { ...requestConfigCrypto, url: timeUrl };
-            timeConfig.params = {
-                fsym: symbol,
-                tsym: 'USD',
-                aggregate: 7,
-                limit: 5
-            };
-
-            const imageUrl = `${requestConfigCoin.url}/cryptocurrency/info`;
-            const imageConfig = { ...requestConfigCoin, url: imageUrl };
-            imageConfig.params = {
-                slug: name
-            };
-
-            const responseLogo = await axios(imageConfig);
-            const response = await axios(timeConfig);
-            const chartResponse = response.data.Data.Data.map((element) => ({ name: i++, pv: element.high }));
-            const key = Object.keys(responseLogo.data.data);
-            const imageUrlData = responseLogo.data.data[key[0]].logo;
-            const toSend = { data: chartResponse, imageUrl: imageUrlData };
-
-            return res.status(HTTPStatus.StatusCodes.OK).json(toSend);
         } catch (err) {
             return next(err);
         }
