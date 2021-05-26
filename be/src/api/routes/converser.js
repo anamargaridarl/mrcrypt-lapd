@@ -24,10 +24,10 @@ module.exports = (app) => {
             const coinsUrl = `${requestConfig.url}/cryptocurrency/listings/latest`;
             const coinsConfig = { ...requestConfig, url: coinsUrl };
             coinsConfig.params = {
-                sort: 'symbol',
-                sort_dir: 'asc',
+                sort: 'market_cap',
+                sort_dir: 'desc',
                 cryptocurrency_type: 'coins',
-                limit: 5,
+                limit: 15,
             };
             const response = await axios(coinsConfig);
             const coins = response.data.data.map((coin) => ({ name: coin.name, code: coin.symbol }));
