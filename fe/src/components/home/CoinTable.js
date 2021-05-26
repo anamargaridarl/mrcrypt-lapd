@@ -10,15 +10,15 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import TablePagination from '@material-ui/core/TablePagination';
+import TablePagination from "@material-ui/core/TablePagination";
 //@core-material-ui:icons
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import ArrowDropUpIcon from "@material-ui/icons/ArrowDropUp";
 //@components
 import TinyChart from "../TinyChart";
 //@styling
 import { lightGreen, darkGray, red, green } from "../../styles/colors";
-const axios = require('axios');
+const axios = require("axios");
 
 const useStyles = makeStyles({
   table: {
@@ -28,9 +28,9 @@ const useStyles = makeStyles({
     padding: 0,
     "& .MuiTableCell-head": {
       fontWeight: "bold",
-      color: darkGray
-    }
-  }
+      color: darkGray,
+    },
+  },
 });
 
 function createData(
@@ -55,36 +55,33 @@ function createData(
     seven,
     cap,
     volume,
-    lastdays
+    lastdays,
   };
 }
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 const imageCoin = (url) => {
-  return <img alt="Coin" width={"25px"} src={url} />
-}
+  return <img alt="Coin" width={"25px"} src={url} />;
+};
 
 export default function BasicTable() {
-
   const classes = useStyles();
-  const [rows, setRows] = useState([])
-  const [page, setPage] = useState(0)
+  const [rows, setRows] = useState([]);
+  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(6);
   const history = useHistory();
 
-
   const createRows = () => {
     axios({
-      method: 'get',
-      url: `http://localhost:8080/api/homepage/coinRanking`
-    }).then(response => {
+      method: "get",
+      url: `http://localhost:8080/api/coins/coin-ranking`,
+    }).then((response) => {
       let i = 1;
       const rows = response.data.map((element) => {
-        if (element === null)
-          return null
+        if (element === null) return null;
         return createData(
           i++,
           element.symbol,
@@ -95,17 +92,15 @@ export default function BasicTable() {
           element.seven,
           element.cap,
           element.volume
-        )
-      })
-      setRows(rows)
+        );
+      });
+      setRows(rows);
     });
   };
 
-
-
   useEffect(() => {
     createRows();
-  }, [])
+  }, []);
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
@@ -120,9 +115,9 @@ export default function BasicTable() {
     <>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
-          <TableHead  >
+          <TableHead>
             <TableRow className={classes.tableHead}>
-              <TableCell align="left" >#</TableCell>
+              <TableCell align="left">#</TableCell>
               <TableCell align="left">Coin</TableCell>
               <TableCell align="left">Price</TableCell>
               <TableCell align="left">24H %</TableCell>
@@ -133,29 +128,76 @@ export default function BasicTable() {
           </TableHead>
           <TableBody>
             {rows
-              .slice(
-                page * rowsPerPage,
-                page * rowsPerPage + rowsPerPage
-              ).map((row) => (
-                < TableRow key={row.nb} >
-                  <TableCell style={{ paddingLeft: "1em" }} component="th" scope="row">
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => (
+                <TableRow key={row.nb}>
+                  <TableCell
+                    style={{ paddingLeft: "1em" }}
+                    component="th"
+                    scope="row"
+                  >
                     {row.nb}
                   </TableCell>
                   <TableCell style={{ padding: "0" }} align="left">
-                    <Grid container onClick={() => { history.push("/coinpage/" + row.slug) }}>
-                        {row.coin}
+                    <Grid
+                      container
+                      onClick={() => {
+                        history.push("/coinpage/" + row.slug);
+                      }}
+                    >
+                      {row.coin}
                     </Grid>
-                  </TableCell >
-                  <TableCell style={{ padding: "0" }} align="left">{Math.round(row.price * 1000) / 1000}</TableCell>
-                  <TableCell style={{ color: row.twentyfour < 0 ? red : green, padding: "0" }} align="left">{Math.round(row.twentyfour * 1000) / 1000 < 0 ? <Grid container><ArrowDropDownIcon /> {Math.round(Math.abs(row.twentyfour) * 1000) / 1000} </Grid> : <Grid container><ArrowDropUpIcon /> {Math.round(Math.abs(row.twentyfour) * 1000) / 1000} </Grid>}</TableCell>
-                  <TableCell style={{ color: row.seven < 0 ? red : green, padding: "0" }} align="left">{Math.round(row.seven * 1000) / 1000 < 0 ? <Grid container><ArrowDropDownIcon /> {Math.round(Math.abs(row.seven) * 1000) / 1000} </Grid> : <Grid container><ArrowDropUpIcon /> {Math.round(Math.abs(row.seven) * 1000) / 1000} </Grid>}</TableCell>
-                  <TableCell style={{ padding: "0" }} align="left"> $ {Math.round(row.cap * 1000) / 1000 }</TableCell>
-                  <TableCell style={{ padding: "0" }} align="left">$ {Math.round(row.volume * 1000) / 1000}</TableCell>
+                  </TableCell>
+                  <TableCell style={{ padding: "0" }} align="left">
+                    {Math.round(row.price * 1000) / 1000}
+                  </TableCell>
+                  <TableCell
+                    style={{
+                      color: row.twentyfour < 0 ? red : green,
+                      padding: "0",
+                    }}
+                    align="left"
+                  >
+                    {Math.round(row.twentyfour * 1000) / 1000 < 0 ? (
+                      <Grid container>
+                        <ArrowDropDownIcon />{" "}
+                        {Math.round(Math.abs(row.twentyfour) * 1000) / 1000}{" "}
+                      </Grid>
+                    ) : (
+                      <Grid container>
+                        <ArrowDropUpIcon />{" "}
+                        {Math.round(Math.abs(row.twentyfour) * 1000) / 1000}{" "}
+                      </Grid>
+                    )}
+                  </TableCell>
+                  <TableCell
+                    style={{ color: row.seven < 0 ? red : green, padding: "0" }}
+                    align="left"
+                  >
+                    {Math.round(row.seven * 1000) / 1000 < 0 ? (
+                      <Grid container>
+                        <ArrowDropDownIcon />{" "}
+                        {Math.round(Math.abs(row.seven) * 1000) / 1000}{" "}
+                      </Grid>
+                    ) : (
+                      <Grid container>
+                        <ArrowDropUpIcon />{" "}
+                        {Math.round(Math.abs(row.seven) * 1000) / 1000}{" "}
+                      </Grid>
+                    )}
+                  </TableCell>
+                  <TableCell style={{ padding: "0" }} align="left">
+                    {" "}
+                    $ {Math.round(row.cap * 1000) / 1000}
+                  </TableCell>
+                  <TableCell style={{ padding: "0" }} align="left">
+                    $ {Math.round(row.volume * 1000) / 1000}
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>
         </Table>
-      </TableContainer >
+      </TableContainer>
       <TablePagination
         rowsPerPageOptions={[6]}
         component="div"

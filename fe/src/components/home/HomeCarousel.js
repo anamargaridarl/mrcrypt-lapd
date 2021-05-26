@@ -38,25 +38,25 @@ const useStyles = makeStyles({
   },
 });
 
-const axios = require('axios');
+const axios = require("axios");
 
 function HomeCarrousel() {
-
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
   const { background } = useStyles();
   const getData = () => {
     axios({
-      method: 'get',
-      url: "http://localhost:8080/api/homepage/global"
-    }).then(response => {
-      setData(response.data)
-    }).catch((err) => console.log(err))
-  }
-
+      method: "get",
+      url: "http://localhost:8080/api/coins/global",
+    })
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   useEffect(() => {
-    getData()
-  }, [])
+    getData();
+  }, []);
 
   return (
     <Carousel className={background} responsive={responsive}>

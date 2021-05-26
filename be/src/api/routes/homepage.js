@@ -6,7 +6,7 @@ const router = Router();
 const globalParams = require('../../assets/globalMarketData.json');
 
 module.exports = (app) => {
-    app.use('/homepage', router);
+    app.use('/coins', router);
 
     const requestConfigCoin = {
         method: 'get',
@@ -46,7 +46,7 @@ module.exports = (app) => {
     /**
      * Retrieves table
      */
-    router.get('/coinranking', async (_, res, next) => {
+    router.get('/coin-ranking', async (_, res, next) => {
 
         const getValues = async () => {
             const coinsUrl = `${requestConfigCoin.url}/cryptocurrency/listings/latest`;
