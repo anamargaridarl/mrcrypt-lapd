@@ -137,6 +137,8 @@ export default function BasicTable() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+  console.log(graphs)
   return (
     <>
       <TableContainer component={Paper}>

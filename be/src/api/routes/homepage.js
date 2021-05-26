@@ -88,7 +88,7 @@ module.exports = (app) => {
     /**
      * Retrieves table
      */
-    router.get('/coinRanking', async (_, res, next) => {
+    router.get('/coinranking', async (_, res, next) => {
 
         const getValues = async () => {
             const coinsUrl = `${requestConfigCoin.url}/cryptocurrency/listings/latest`;
