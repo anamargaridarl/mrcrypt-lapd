@@ -6,10 +6,10 @@ const scraperObject = {
             const page = await browser.newPage();
             console.log(`Navigating to ${this.url}...`);
             await page.goto(this.url);
-            await page.waitForSelector('div.subreddit-list:nth-child(2)');
-            await page.waitForSelector('div.subreddit-list:nth-child(2) > .footer-area > button');
 
             while (result.length < 10) {
+                await page.waitForSelector('div.subreddit-list:nth-child(2)');
+                await page.waitForSelector('div.subreddit-list:nth-child(2) > .footer-area > button');
                 const rows = await page.evaluate(() =>
                     Array.from(
                         document.querySelectorAll('div.subreddit-list:nth-child(2) > .list-area > .list-wrapper > table > tbody > tr')
