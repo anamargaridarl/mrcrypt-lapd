@@ -24,8 +24,8 @@ module.exports = (app) => {
             const coinsUrl = `${requestConfig.url}/cryptocurrency/listings/latest`;
             const coinsConfig = { ...requestConfig, url: coinsUrl };
             coinsConfig.params = {
-                sort: 'market_cap',
-                sort_dir: 'desc',
+                sort: 'market_cap', // 'symbol'
+                sort_dir: 'desc', // 'asc'
                 cryptocurrency_type: 'coins',
                 limit: 15,
             };

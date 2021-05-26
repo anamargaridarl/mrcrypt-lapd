@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let id = 0;
 const TagsCard = () => {
   const classes = useStyles();
   const [categories, setCategories] = useState([]);
@@ -99,7 +100,7 @@ const TagsCard = () => {
           {categories.map((element) => {
             return (
               <li
-                key={element}
+                key={id++}
                 className={`${classes.tag} ${
                   filter.includes(element)
                     ? classes.purpleTag

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "react-multi-carousel/lib/styles.css";
 import Carousel from "react-multi-carousel";
 //@components
 import SocialCarouselItem from "./SocialCarrouselItem";
+
+const axios = require('axios');
 
 const responsive = {
   superLargeDesktop: {
@@ -28,71 +30,28 @@ const responsive = {
   },
 };
 
-//TODO: fetch data from backend for the items
-const data = [
-  {
-    title: "Documenting Bitcoin",
-    imageSrc: "assets/bitcoin.png",
-    weightedRank: 59,
-    engagementRank: 3,
-    followerRank: 109,
-    postRank: 63,
-  },
-  {
-    title: "Documenting Bitcoin",
-    imageSrc: "assets/bitcoin.png",
-    weightedRank: 59,
-    engagementRank: 3,
-    followerRank: 109,
-    postRank: 63,
-  },
-  {
-    title: "Documenting Bitcoin",
-    imageSrc: "assets/bitcoin.png",
-    weightedRank: 59,
-    engagementRank: 3,
-    followerRank: 109,
-    postRank: 63,
-  },
-  {
-    title: "Documenting Bitcoin",
-    imageSrc: "assets/bitcoin.png",
-    weightedRank: 59,
-    engagementRank: 3,
-    followerRank: 109,
-    postRank: 63,
-  },
-  {
-    title: "Documenting Bitcoin",
-    imageSrc: "assets/bitcoin.png",
-    weightedRank: 59,
-    engagementRank: 3,
-    followerRank: 109,
-    postRank: 63,
-  },
-  {
-    title: "Documenting Bitcoin",
-    imageSrc: "assets/bitcoin.png",
-    weightedRank: 59,
-    engagementRank: 3,
-    followerRank: 109,
-    postRank: 63,
-  },
-  {
-    title: "Documenting Bitcoin",
-    imageSrc: "assets/bitcoin.png",
-    weightedRank: 59,
-    engagementRank: 3,
-    followerRank: 109,
-    postRank: 63,
-  }
-];
 
 let i = 0;
-function SocialCarrousel() {
+ function SocialCarrousel() {
+  const [influencers,setInfluencers] = useState([]);
+
+  useEffect(() => {
+    getInfluencers();
+  },[]);
+
+  const getInfluencers = async () => {
+    try {
+      axios({
+        method: 'get',
+        url: 'http://localhost:8080/api/social-media-trends/influencers'
+      }).then((response) => setInfluencers(response.data.influencers));
+    } catch (e) {
+      console.error(e);
+    }
+  };
   return (
     <Carousel responsive={responsive}>
-      {data.map((element) => {
+      {influencers.map((element) => {
         return (
           <SocialCarouselItem
             key= {i++}

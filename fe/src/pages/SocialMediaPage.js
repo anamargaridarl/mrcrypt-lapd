@@ -19,8 +19,8 @@ const useStyles = makeStyles({
   header: {
     marginBottom: "0",
     marginTop: "2em",
-    marginLeft:"4em",
-    fontWeight:"bold"
+    marginLeft: "4em",
+    fontWeight: "bold",
   },
   subTitle: {
     marginTop: "0",
@@ -29,10 +29,11 @@ const useStyles = makeStyles({
   },
   bottomPage: {
     marginTop: "2em",
+    marginBottom: "3em",
+    justifyContent: "space-between"
   },
   page: {
     backgroundColor: gray,
-    height: "100vh"
   },
 });
 
@@ -42,26 +43,32 @@ export default function SocialMediaPage() {
 
   return (
     <div className={page}>
-      <TopBar></TopBar>
+      <TopBar />
       <p className={header}> Social Media Trends</p>
       <Container className={table} maxWidth={false}>
         <p className={subTitle}> Influencers</p>
-        <SocialMediaCarousel></SocialMediaCarousel>
+        <SocialMediaCarousel />
         <Grid container className={bottomPage}>
           <Grid item xs={12} sm={12} md={4} lg={4}>
             <p className={subTitle}>Reddit</p>
-            <SocialTable></SocialTable>
+            <SocialTable
+              url="topSubreddits"
+              title="SubReddits Weekly Growth"
+              header="Subreddit"
+              metric="Increase"
+            />
           </Grid>
-          <Grid item xs={12} sm={12} md={4} lg={8}>
+          <Grid item xs={12} sm={12} md={6} lg={4}>
             <p className={subTitle}>Google</p>
-            <Grid container>
-              <Grid item xs={12} sm={12} md={6} lg={6}>
-                <GoogleCharts></GoogleCharts>
-              </Grid>
-              <Grid item xs={12} sm={12} md={6} lg={6}>
-                <SocialTable></SocialTable>
-              </Grid>
-            </Grid>
+            <GoogleCharts />
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={4} style={{marginTop: "2.8em"}}>
+            <SocialTable
+              url="topCryptoSearches"
+              title="Cryptocurrency Related Google Searches"
+              header="Name"
+              metric="Increase"
+            />
           </Grid>
         </Grid>
       </Container>

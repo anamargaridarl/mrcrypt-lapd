@@ -57,16 +57,15 @@ export default function LineCharts({
     strokeColor: strokeColor,
   };
   const { chart } = useStyles(props);
-  const [data] = useState(dataAux);
 
-  const units = normalize(data)
+  const units = normalize(dataAux)
 
   
 
 
   return (
     <ResponsiveContainer width={widthContainer} height={heightContainer}>
-      <LineChart data={data}>
+      <LineChart data={dataAux}>
         <Line
           className={chart}
           type="monotone"

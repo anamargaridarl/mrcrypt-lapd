@@ -65,6 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let id = 0;
 const NewsCard = (props) => {
   const [readMore, setReadMore] = useState(false);
   const classes = useStyles();
@@ -107,7 +108,7 @@ const NewsCard = (props) => {
         <ul className={classes.tags}>
           {tags.map((element) => {
             return (
-              <li key={element} className={classes.tag}>
+              <li key={id++} className={classes.tag}>
                 {element}
               </li>
             );

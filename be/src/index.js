@@ -2,8 +2,8 @@ const config = require('./config/env');
 const setupLoaders = require('./loaders');
 const express = require('express');
 const port = process.env.PORT;
-
 const app = express();
+const startScraper = require('./scraper');
 
 const startServer = async () => {
     await setupLoaders({ expressApp: app });
@@ -19,5 +19,6 @@ const startServer = async () => {
 };
 
 startServer();
+startScraper();
 
 module.exports = app;

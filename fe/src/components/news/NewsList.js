@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+let id = 0;
 const NewsList = () => {
   const [news, setNews] = useState([]);
   const [page, setPage] = useState(1);
@@ -69,7 +70,7 @@ const NewsList = () => {
     >
       {news.map((element) => {
         return (
-          <Box>
+          <Box key={id++}>
             <NewsCard
               url={element.url}
               title={element.title}
