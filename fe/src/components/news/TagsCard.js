@@ -14,6 +14,8 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     borderRadius: 0,
     marginRight: "4em",
+    position: 'sticky',
+    top: '3rem',
   },
   content: {
     margin: "auto 0",

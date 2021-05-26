@@ -27,7 +27,7 @@ module.exports = (app) => {
                 sort: 'market_cap', // 'symbol'
                 sort_dir: 'desc', // 'asc'
                 cryptocurrency_type: 'coins',
-                limit: 5,
+                limit: 15,
             };
             const response = await axios(coinsConfig);
             const coins = response.data.data.map((coin) => ({ name: coin.name, code: coin.symbol }));
